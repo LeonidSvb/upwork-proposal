@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Make.com Automation Review & Optimization</title>
+    <title>AI & Automation Specialist - Leonid</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -83,18 +83,58 @@
             }
         }
 
-        /* Problem Section */
-        .problem {
+        /* Services Section */
+        .services {
             padding: 50px 40px;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            text-align: center;
         }
 
         .section-title {
             font-size: 2rem;
             font-weight: 600;
             margin-bottom: 30px;
-            text-align: center;
             color: #2d3748;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .service-item {
+            background: white;
+            padding: 25px 15px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .service-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .service-name {
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 0.9rem;
+        }
+
+        /* Problem Section */
+        .problem {
+            padding: 50px 40px;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
         }
 
         .problem-grid {
@@ -131,7 +171,7 @@
         /* Solution Section */
         .solution {
             padding: 50px 40px;
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
         }
 
         .solution-steps {
@@ -178,7 +218,7 @@
         /* Deliverables Section */
         .deliverables {
             padding: 50px 40px;
-            background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+            background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
         }
 
         .deliverables-grid {
@@ -242,7 +282,7 @@
         /* Partnership Section */
         .partnership {
             padding: 40px;
-            background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
             text-align: center;
         }
 
@@ -330,8 +370,17 @@
                 font-size: 1.6rem;
             }
             
-            .problem, .solution, .deliverables, .about, .partnership, .cta {
+            .services, .problem, .solution, .deliverables, .about, .partnership, .cta {
                 padding: 30px 20px;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 15px;
+            }
+
+            .service-icon {
+                font-size: 2.5rem;
             }
         }
     </style>
@@ -341,77 +390,102 @@
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
-                <h1>🔧 Make.com Automation Review & Optimization</h1>
-                <p>Expert analysis + long-term partnership for peak automation performance</p>
+                <h1>🤖 AI & Automation Specialist</h1>
+                <p>Expert workflow automation + AI integration for maximum productivity</p>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services">
+            <h2 class="section-title">🛠️ My Platform Expertise</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <span class="service-icon">⚙️</span>
+                    <div class="service-name">Make.com</div>
+                </div>
+                <div class="service-item">
+                    <span class="service-icon">⚡</span>
+                    <div class="service-name">Zapier</div>
+                </div>
+                <div class="service-item">
+                    <span class="service-icon">🗂️</span>
+                    <div class="service-name">Airtable</div>
+                </div>
+                <div class="service-item">
+                    <span class="service-icon">📊</span>
+                    <div class="service-name">Google Workspace</div>
+                </div>
+                <div class="service-item">
+                    <span class="service-icon">🧠</span>
+                    <div class="service-name">OpenAI</div>
+                </div>
+                <div class="service-item">
+                    <span class="service-icon">👥</span>
+                    <div class="service-name">CRM Systems</div>
+                </div>
+                <div class="service-item">
+                    <span class="service-icon">🔗</span>
+                    <div class="service-name">API Integration</div>
+                </div>
+                <div class="service-item">
+                    <span class="service-icon">💬</span>
+                    <div class="service-name">Slack</div>
+                </div>
             </div>
         </section>
 
         <!-- Problem Section -->
         <section class="problem">
-            <h2 class="section-title">❌ Current Automation Issues Cost You</h2>
+            <h2 class="section-title">❌ Manual Work is Killing Your Productivity</h2>
             <div class="problem-grid">
                 <div class="problem-card">
-                    <h3>⚠️ Efficiency Loss</h3>
-                    <div class="loss-percentage">40-60%</div>
-                    <p>Poorly optimized workflows waste time and resources on every execution</p>
+                    <h3>⏰ Time Waste</h3>
+                    <div class="loss-percentage">50-70%</div>
+                    <p>Team spends majority of time on repetitive tasks instead of strategic work</p>
                 </div>
                 <div class="problem-card">
-                    <h3>🐛 Hidden Errors</h3>
-                    <div class="loss-percentage">3-5x</div>
-                    <p>Slower processing due to undetected bottlenecks and error loops</p>
+                    <h3>🔥 Burnout Risk</h3>
+                    <div class="loss-percentage">3x Higher</div>
+                    <p>Manual processes lead to errors, stress, and team exhaustion</p>
                 </div>
                 <div class="problem-card">
-                    <h3>💸 Revenue Impact</h3>
+                    <h3>📈 Scaling Bottleneck</h3>
                     <div class="loss-percentage">$$$</div>
-                    <p>Failed automations = missed opportunities and manual work overhead</p>
+                    <p>Unable to grow without exponentially increasing manual workload</p>
                 </div>
             </div>
         </section>
 
         <!-- Solution Section -->
         <section class="solution">
-            <h2 class="section-title">✅ My Comprehensive Review Process</h2>
+            <h2 class="section-title">✅ My Automation Framework</h2>
             <div class="solution-steps">
                 <div class="step">
                     <div class="step-number">1</div>
                     <div>
-                        <h3>Deep Automation Audit</h3>
-                        <p>Complete analysis of current scenarios, triggers, and data flow paths</p>
+                        <h3>Process Analysis & Mapping</h3>
+                        <p>Identify automation opportunities and create detailed workflow blueprints</p>
                     </div>
                 </div>
                 <div class="step">
                     <div class="step-number">2</div>
                     <div>
-                        <h3>Error Detection & Mapping</h3>
-                        <p>Identify failure points, timeout issues, and inefficient routing</p>
+                        <h3>Multi-Platform Integration</h3>
+                        <p>Connect Make.com, Zapier, APIs and AI tools for seamless data flow</p>
                     </div>
                 </div>
                 <div class="step">
                     <div class="step-number">3</div>
                     <div>
-                        <h3>Performance Optimization</h3>
-                        <p>Streamline operations, reduce complexity, implement best practices</p>
+                        <h3>AI-Powered Optimization</h3>
+                        <p>Implement OpenAI and smart triggers for intelligent decision-making</p>
                     </div>
                 </div>
                 <div class="step">
                     <div class="step-number">4</div>
                     <div>
-                        <h3>Testing & Validation</h3>
-                        <p>Comprehensive testing of optimized workflows with real scenarios</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">5</div>
-                    <div>
-                        <h3>Documentation & Training</h3>
-                        <p>Complete documentation plus video guides for your team</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">6</div>
-                    <div>
-                        <h3>Ongoing Partnership Setup</h3>
-                        <p>Establish monitoring protocols and regular optimization schedule</p>
+                        <h3>Testing & Error Handling</h3>
+                        <p>Robust scenario testing with comprehensive error handling protocols</p>
                     </div>
                 </div>
             </div>
@@ -419,34 +493,34 @@
 
         <!-- Deliverables Section -->
         <section class="deliverables">
-            <h2 class="section-title">📋 What You'll Receive</h2>
+            <h2 class="section-title">📋 What You'll Get</h2>
             <div class="deliverables-grid">
                 <div class="deliverable-item">
                     <span class="check-icon">✅</span>
                     <div>
-                        <h3>Fixed & Optimized Automations</h3>
-                        <p>All errors resolved, workflows streamlined for maximum efficiency</p>
+                        <h3>Complete Automation Suite</h3>
+                        <p>Fully integrated workflows connecting all your tools and platforms</p>
                     </div>
                 </div>
                 <div class="deliverable-item">
                     <span class="check-icon">✅</span>
                     <div>
-                        <h3>Detailed Audit Report</h3>
-                        <p>Complete analysis with before/after metrics and improvement recommendations</p>
+                        <h3>AI-Enhanced Processes</h3>
+                        <p>Smart automations with OpenAI integration for intelligent responses</p>
                     </div>
                 </div>
                 <div class="deliverable-item">
                     <span class="check-icon">✅</span>
                     <div>
-                        <h3>Video Documentation</h3>
-                        <p>Step-by-step walkthroughs of optimizations and maintenance procedures</p>
+                        <h3>Error-Proof Architecture</h3>
+                        <p>Bulletproof error handling and monitoring for 99.9% reliability</p>
                     </div>
                 </div>
                 <div class="deliverable-item">
                     <span class="check-icon">✅</span>
                     <div>
-                        <h3>30-Day Support Period</h3>
-                        <p>Post-delivery monitoring and quick fixes for any issues</p>
+                        <h3>Team Training & Documentation</h3>
+                        <p>Complete guides and video tutorials for seamless team adoption</p>
                     </div>
                 </div>
             </div>
@@ -456,24 +530,24 @@
         <section class="about">
             <div class="about-content">
                 <h2 class="section-title">👨‍💻 About Leonid</h2>
-                <p style="font-size: 1.1rem; margin-bottom: 30px;">7+ years optimizing marketing and sales automation systems for maximum ROI</p>
+                <p style="font-size: 1.1rem; margin-bottom: 30px;">7+ years building automation systems that scale businesses efficiently</p>
                 
                 <div class="stats-grid">
                     <div class="stat-item">
                         <div class="stat-number">$75K/month</div>
-                        <p>Generated for financial company through automation optimization</p>
+                        <p>Generated for financial company through automation workflows</p>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number">2x Growth</div>
-                        <p>Achieved for real estate agency via streamlined lead workflows</p>
+                        <div class="stat-number">$25K+ Revenue</div>
+                        <p>Automated sales funnel performance for DTC brand</p>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number">1,500+ Leads</div>
-                        <p>Delivered through AI-chatbot automation integration</p>
+                        <p>AI-chatbot automation generated qualified prospects</p>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number">100+ Sales</div>
-                        <p>Software sales generated through YouTube automation funnels</p>
+                        <p>Software automation funnels via YouTube integration</p>
                     </div>
                 </div>
             </div>
@@ -482,38 +556,38 @@
         <!-- Partnership Section -->
         <section class="partnership">
             <div class="partnership-content">
-                <h2>🤝 Long-Term Partnership Vision</h2>
-                <p style="color: #4a5568; margin-bottom: 25px;">Beyond this initial review, I'm looking to build lasting partnerships with clients who value continuous optimization and growth.</p>
+                <h2>🤝 Long-Term Partnership Approach</h2>
+                <p style="color: #4a5568; margin-bottom: 25px;">I don't just build automations - I become your dedicated automation partner, ensuring your systems evolve and scale with your business growth.</p>
                 
                 <div class="partnership-features">
                     <div class="partnership-feature">
-                        <h4>🔄 Monthly Reviews</h4>
-                        <p>Regular optimization check-ups</p>
+                        <h4>🔄 Ongoing Optimization</h4>
+                        <p>Regular reviews and improvements</p>
                     </div>
                     <div class="partnership-feature">
-                        <h4>⚡ Priority Support</h4>
-                        <p>Fast response for urgent issues</p>
+                        <h4>⚡ Priority Maintenance</h4>
+                        <p>Quick response for any issues</p>
                     </div>
                     <div class="partnership-feature">
                         <h4>📈 Scaling Support</h4>
-                        <p>Automation expansion as you grow</p>
+                        <p>Expand automations as you grow</p>
                     </div>
                     <div class="partnership-feature">
                         <h4>🎯 Strategic Planning</h4>
-                        <p>Long-term automation roadmap</p>
+                        <p>Future automation roadmap</p>
                     </div>
                 </div>
                 
-                <p style="color: #4a5568; margin-top: 20px; font-style: italic;">My goal is to become your trusted automation partner, ensuring your systems evolve with your business needs.</p>
+                <p style="color: #4a5568; margin-top: 20px; font-style: italic;">My goal is to become your trusted automation architect for sustainable, long-term growth.</p>
             </div>
         </section>
 
         <!-- CTA Section -->
         <section class="cta">
             <div class="cta-content">
-                <h2>🚀 Let's Start Building</h2>
-                <p>Ready to optimize your automations and scale faster?</p>
-                <p style="font-weight: 600; margin-top: 15px;">I'm available to start immediately and excited about the possibility of a long-term partnership!</p>
+                <h2>🚀 Let's Automate Everything</h2>
+                <p>Ready to eliminate manual work and scale your operations?</p>
+                <p style="font-weight: 600; margin-top: 15px;">I'm available to start immediately and build a lasting automation partnership!</p>
             </div>
         </section>
     </div>
