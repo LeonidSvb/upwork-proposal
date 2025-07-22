@@ -3,447 +3,664 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zapier Driving School Automation Expert - Leonid</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Social Media Automation Project</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            body {
+                background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%) !important;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+                color: white !important;
+            }
+            
+            .next-steps-section {
+                background: linear-gradient(135deg, #48bb78 0%, #38a169 100%) !important;
+                color: white !important;
+            }
+            
+            .problem-card {
+                background: #fef5e7 !important;
+                border-left: 4px solid #ed8936 !important;
+            }
+            
+            .step {
+                background: #f7fafc !important;
+                border-left: 4px solid #3182ce !important;
+            }
+            
+            .deliverables {
+                background: #f0fff4 !important;
+                border-left: 4px solid #38a169 !important;
+            }
+            
+            .about-section {
+                background: rgba(255,255,255,0.15) !important;
+                border: 1px solid rgba(255,255,255,0.2) !important;
+            }
+            
+            .cta-box {
+                background: rgba(255,255,255,0.15) !important;
+                border: 1px solid rgba(255,255,255,0.2) !important;
+            }
+            
+            .step-number {
+                background: #3182ce !important;
+                color: white !important;
+            }
+            
+            .icon {
+                color: white !important;
+            }
+            
+            .problem-section .icon {
+                background: #e53e3e !important;
+            }
+            
+            .solution-section .icon {
+                background: #3182ce !important;
+            }
+            
+            .next-steps-section .icon {
+                background: rgba(255,255,255,0.2) !important;
+            }
+            
+            .problem-card .metric {
+                color: #e53e3e !important;
+            }
+            
+            .deliverable-item::before {
+                color: #38a169 !important;
+            }
+            
+            .arrow-down {
+                border-top: 12px solid #3182ce !important;
+            }
+            
+            .container {
+                box-shadow: 0 20px 40px rgba(0,0,0,0.08) !important;
+            }
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-        @media print {
-            * {
-                print-color-adjust: exact !important;
-                -webkit-print-color-adjust: exact !important;
-            }
-        }
-
+        
         body {
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: #f8fafc;
+            color: #1a202c;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            min-height: 100vh;
+            padding: 20px;
         }
-
+        
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             background: white;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
         }
-
-        /* Hero Section */
-        .hero {
+        
+        .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 60px 40px;
+            padding: 50px 40px;
             text-align: center;
             position: relative;
             overflow: hidden;
         }
-
-        .hero::before {
+        
+        .header::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" fill-opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.05)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="20" cy="80" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
             opacity: 0.3;
         }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
+        
+        .header h1 {
             font-size: 2.4rem;
             font-weight: 700;
-            margin-bottom: 15px;
-            animation: fadeInUp 1s ease-out;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-
-        .hero p {
+        
+        .header .subtitle {
             font-size: 1.2rem;
-            opacity: 0.9;
-            animation: fadeInUp 1s ease-out 0.2s both;
+            opacity: 0.95;
+            font-weight: 500;
+            position: relative;
+            z-index: 2;
+            letter-spacing: 0.5px;
         }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        
+        .content {
+            padding: 0;
         }
-
-        /* Problem Section */
-        .problem {
-            padding: 50px 40px;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+        
+        .section {
+            padding: 40px;
+            border-bottom: 1px solid #e2e8f0;
         }
-
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
         .section-title {
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 600;
-            margin-bottom: 30px;
-            text-align: center;
+            margin-bottom: 25px;
             color: #2d3748;
-        }
-
-        .problem-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .problem-card {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border-left: 5px solid #e53e3e;
-        }
-
-        .problem-card h3 {
-            color: #e53e3e;
-            font-weight: 600;
-            margin-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
-
-        .loss-percentage {
-            font-size: 2rem;
+        
+        .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+        }
+        
+        .problem-section .icon {
+            background: #e53e3e;
+        }
+        
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 25px;
+        }
+        
+        .problem-card {
+            background: #fef5e7;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #ed8936;
+        }
+        
+        .problem-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #c05621;
+        }
+        
+        .problem-card .metric {
+            font-size: 1.8rem;
             font-weight: 700;
             color: #e53e3e;
-            margin-bottom: 5px;
+            margin: 8px 0;
         }
-
-        /* Solution Section */
-        .solution {
-            padding: 50px 40px;
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        
+        .solution-section .icon {
+            background: #3182ce;
         }
-
-        .solution-steps {
-            max-width: 650px;
-            margin: 0 auto;
+        
+        .steps-container {
+            margin-top: 25px;
         }
-
+        
         .step {
-            background: white;
-            margin-bottom: 20px;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            border-left: 5px solid #3182ce;
             display: flex;
             align-items: flex-start;
-            gap: 20px;
+            margin-bottom: 20px;
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #3182ce;
             position: relative;
         }
-
+        
         .step-number {
+            width: 40px;
+            height: 40px;
             background: #3182ce;
             color: white;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 600;
+            margin-right: 20px;
             flex-shrink: 0;
+            font-size: 16px;
         }
-
-        .step:not(:last-child)::after {
-            content: '↓';
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #2d3748;
+            font-size: 1.05rem;
+        }
+        
+        .step-description {
+            color: #4a5568;
+            font-size: 0.95rem;
+        }
+        
+        .arrow-down {
             position: absolute;
-            bottom: -25px;
-            left: 42px;
-            color: #3182ce;
-            font-size: 1.5rem;
+            left: 50%;
+            bottom: -15px;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 12px solid #3182ce;
+        }
+        
+        .step:last-child .arrow-down {
+            display: none;
+        }
+        
+        .visual-example {
+            background: #edf2f7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 12px;
+            border: 1px solid #cbd5e0;
+        }
+        
+        .visual-example h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        
+        .workflow-demo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .workflow-step {
+            background: #4299e1;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .workflow-arrow {
+            color: #4299e1;
             font-weight: bold;
         }
-
-        /* Deliverables Section */
-        .deliverables {
-            padding: 50px 40px;
-            background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
-        }
-
-        .deliverables-grid {
+        
+        .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 8px;
         }
-
-        .deliverable-item {
+        
+        .metric-item {
+            text-align: center;
             background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
         }
-
-        .check-icon {
-            color: #48bb78;
-            font-size: 1.5rem;
-            margin-top: 2px;
+        
+        .metric-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #38a169;
         }
-
-        /* About Section */
-        .about {
-            padding: 50px 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+        
+        .metric-label {
+            font-size: 0.75rem;
+            color: #718096;
         }
-
-        .about-content {
-            max-width: 700px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 25px;
+        
+        .deliverables {
             margin-top: 30px;
+            background: #f0fff4;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #38a169;
         }
-
-        .stat-item {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
+        
+        .deliverables h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+            color: #2f855a;
         }
-
-        .stat-number {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #ffd700;
-            margin-bottom: 5px;
+        
+        .deliverable-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            color: #2d3748;
+            font-weight: 500;
         }
-
-        /* CTA Section */
-        .cta {
-            padding: 50px 40px;
+        
+        .deliverable-item::before {
+            content: '✓';
+            margin-right: 12px;
+            color: #38a169;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .next-steps-section {
             background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
             color: white;
-            text-align: center;
             position: relative;
             overflow: hidden;
         }
-
-        .cta::before {
+        
+        .next-steps-section::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 15px,
+                rgba(255,255,255,0.05) 15px,
+                rgba(255,255,255,0.05) 30px
+            );
+            animation: slide 15s linear infinite;
         }
-
-        .cta-content {
+        
+        @keyframes slide {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        .next-steps-section .section-title {
+            color: white;
             position: relative;
             z-index: 2;
-            animation: pulse 2s infinite;
         }
 
-        .cta h2 {
-            font-size: 2.2rem;
+        .next-steps-section .icon {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+        
+        .about-section {
+            background: rgba(255,255,255,0.15);
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .about-section h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
             margin-bottom: 15px;
+            color: white;
         }
-
-        .cta p {
-            font-size: 1.3rem;
+        
+        .about-section p {
+            color: rgba(255,255,255,0.95);
+            font-weight: 400;
+            line-height: 1.6;
+        }
+        
+        .cta-container {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta-box {
+            background: rgba(255,255,255,0.15);
+            padding: 25px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            display: inline-block;
+            margin: 0 auto;
+        }
+        
+        .cta-text {
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
             margin-bottom: 10px;
         }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
+        
+        .cta-subtext {
+            color: rgba(255,255,255,0.9);
+            font-size: 0.95rem;
+            font-weight: 400;
         }
-
+        
+        .footer {
+            text-align: center;
+            padding: 25px;
+            background: #f7fafc;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+        
         @media (max-width: 768px) {
-            .hero {
-                padding: 40px 20px;
+            .problem-grid {
+                grid-template-columns: 1fr;
             }
             
-            .hero h1 {
+            .header h1 {
                 font-size: 1.8rem;
             }
             
-            .section-title {
-                font-size: 1.6rem;
+            .section {
+                padding: 25px 20px;
             }
             
-            .problem, .solution, .deliverables, .about, .cta {
-                padding: 30px 20px;
+            .workflow-demo {
+                justify-content: center;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <h1>⚡ Zapier Expert for Non-Compatible Tools</h1>
-                <p>DSS + email parsing workarounds for seamless driving school automation</p>
-            </div>
-        </section>
-
-        <!-- Problem Section -->
-        <section class="problem">
-            <h2 class="section-title">❌ Manual Student Management is Killing Growth</h2>
-            <div class="problem-grid">
-                <div class="problem-card">
-                    <h3>📋 Data Entry Hell</h3>
-                    <div class="loss-percentage">6-10 hrs/week</div>
-                    <p>Staff manually copying student data between DSS, HubSpot, and spreadsheets every day</p>
+        <div class="header">
+            <h1>🚀 Social Media Automation System</h1>
+            <div class="subtitle">n8n Multi-Platform Integration & Workflow Optimization</div>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <div class="section-title">
+                    <div class="icon">📊</div>
+                    Current Social Media Challenges
                 </div>
-                <div class="problem-card">
-                    <h3>🔍 Lost Revenue</h3>
-                    <div class="loss-percentage">25-30%</div>
-                    <p>Course completions missed due to no automated follow-up, killing conversion rates</p>
-                </div>
-                <div class="problem-card">
-                    <h3>⚠️ Human Errors</h3>
-                    <div class="loss-percentage">3x Slower</div>
-                    <p>Wrong pipeline stages and missed notifications = frustrated students leaving</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Solution Section -->
-        <section class="solution">
-            <h2 class="section-title">✅ My DSS Integration Strategy</h2>
-            <div class="solution-steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div>
-                        <h3>DSS Workaround Setup</h3>
-                        <p>Email parsing with Parseur to capture course completion data from DSS notifications</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div>
-                        <h3>HubSpot CRM Automation</h3>
-                        <p>Auto-create contacts, update pipeline stages, trigger follow-up sequences based on completion status</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div>
-                        <h3>Multi-Source Data Sync</h3>
-                        <p>Connect Improv Traffic School + Google Sheets for centralized student record management</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <div>
-                        <h3>Notification & Monitoring</h3>
-                        <p>Slack alerts for completions, errors, and pipeline changes with comprehensive error handling</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">5</div>
-                    <div>
-                        <h3>Testing & Optimization</h3>
-                        <p>Delay controls, rate limit handling, and Zap performance optimization for bulletproof automation</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Deliverables Section -->
-        <section class="deliverables">
-            <h2 class="section-title">📋 What You'll Receive</h2>
-            <div class="deliverables-grid">
-                <div class="deliverable-item">
-                    <span class="check-icon">✅</span>
-                    <div>
-                        <h3>Complete Zapier Automation Suite</h3>
-                        <p>Fully functional Zaps connecting DSS, Improv, HubSpot, and Google Sheets with smart workarounds</p>
-                    </div>
-                </div>
-                <div class="deliverable-item">
-                    <span class="check-icon">✅</span>
-                    <div>
-                        <h3>Email Parser Configuration</h3>
-                        <p>Parseur templates extracting structured student data from DSS completion emails automatically</p>
-                    </div>
-                </div>
-                <div class="deliverable-item">
-                    <span class="check-icon">✅</span>
-                    <div>
-                        <h3>HubSpot Pipeline Automation</h3>
-                        <p>Automated contact creation, stage updates, and follow-up sequences for maximum conversion</p>
-                    </div>
-                </div>
-                <div class="deliverable-item">
-                    <span class="check-icon">✅</span>
-                    <div>
-                        <h3>Complete Loom Documentation</h3>
-                        <p>Step-by-step video walkthrough showing how everything works plus troubleshooting guide</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section class="about">
-            <div class="about-content">
-                <h2 class="section-title">👨‍💻 About Leonid</h2>
-                <p style="font-size: 1.1rem; margin-bottom: 30px;">7+ years specializing in non-Zapier tool integrations and e-learning automation</p>
                 
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-number">$75K/month</div>
-                        <p>Generated for financial company through automated lead management workflows</p>
+                <div class="problem-grid">
+                    <div class="problem-card">
+                        <h3>Manual Process Overhead</h3>
+                        <div class="metric">3-4 hours</div>
+                        <p>Daily time spent on repetitive posting, responding, and cross-platform content management</p>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number">2x Growth</div>
-                        <p>Achieved for real estate agency via streamlined client pipeline automation</p>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">1,500+ Leads</div>
-                        <p>Delivered through AI-chatbot integration with automated follow-up sequences</p>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">100+ Sales</div>
-                        <p>Software sales generated through YouTube automation funnel integration</p>
+                    
+                    <div class="problem-card">
+                        <h3>Missed Engagement Opportunities</h3>
+                        <div class="metric">60%</div>
+                        <p>Potential customer interactions lost due to delayed responses and inconsistent posting schedules</p>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="cta">
-            <div class="cta-content">
-                <h2>🚀 Let's Start Building</h2>
-                <p>Ready to automate your student management and scale faster?</p>
-                <p style="font-weight: 600; margin-top: 15px;">I'm available to start immediately</p>
+            
+            <div class="section">
+                <div class="section-title">
+                    <div class="icon">⚙️</div>
+                    n8n Automation Implementation
+                </div>
+                
+                <div class="steps-container">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <div class="step-title">Platform API Integration & Mapping</div>
+                            <div class="step-description">Connect Instagram, Facebook, Twitter, LinkedIn, and TikTok APIs to n8n workflows</div>
+                        </div>
+                        <div class="arrow-down"></div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <div class="step-title">Content Distribution Automation</div>
+                            <div class="step-description">Build smart cross-posting workflows with platform-specific formatting and scheduling</div>
+                            <div class="visual-example">
+                                <h4>Automated Content Flow:</h4>
+                                <div class="workflow-demo">
+                                    <div class="workflow-step">Content Input</div>
+                                    <div class="workflow-arrow">→</div>
+                                    <div class="workflow-step">Format for Each Platform</div>
+                                    <div class="workflow-arrow">→</div>
+                                    <div class="workflow-step">Schedule & Post</div>
+                                    <div class="workflow-arrow">→</div>
+                                    <div class="workflow-step">Track Performance</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="arrow-down"></div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <div class="step-title">Engagement & Response Management</div>
+                            <div class="step-description">Automated comment moderation, DM responses, and engagement tracking across all platforms</div>
+                        </div>
+                        <div class="arrow-down"></div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <div class="step-title">Analytics & Reporting Dashboard</div>
+                            <div class="step-description">Consolidated performance metrics, audience insights, and automated reporting workflows</div>
+                            <div class="visual-example">
+                                <h4>Daily Performance Metrics:</h4>
+                                <div class="metrics-grid">
+                                    <div class="metric-item">
+                                        <div class="metric-value">1.2K</div>
+                                        <div class="metric-label">Total Reach</div>
+                                    </div>
+                                    <div class="metric-item">
+                                        <div class="metric-value">89</div>
+                                        <div class="metric-label">Engagements</div>
+                                    </div>
+                                    <div class="metric-item">
+                                        <div class="metric-value">12</div>
+                                        <div class="metric-label">New Followers</div>
+                                    </div>
+                                    <div class="metric-item">
+                                        <div class="metric-value">3.4%</div>
+                                        <div class="metric-label">Engagement Rate</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="arrow-down"></div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <div class="step-title">Lead Capture & CRM Integration</div>
+                            <div class="step-description">Automatic lead qualification from social interactions and integration with your existing CRM system</div>
+                        </div>
+                        <div class="arrow-down"></div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">6</div>
+                        <div class="step-content">
+                            <div class="step-title">Testing, Optimization & Handover</div>
+                            <div class="step-description">Complete workflow testing, performance optimization, and comprehensive documentation delivery</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="deliverables">
+                    <h3>What You'll Receive</h3>
+                    <div class="deliverable-item">Complete n8n automation workflows for all your social platforms</div>
+                    <div class="deliverable-item">Automated content distribution and scheduling system</div>
+                    <div class="deliverable-item">Real-time engagement monitoring and response workflows</div>
+                    <div class="deliverable-item">Consolidated analytics dashboard with automated reports</div>
+                    <div class="deliverable-item">Video tutorials and step-by-step operation guides</div>
+                    <div class="deliverable-item">30-day optimization period and technical support</div>
+                </div>
             </div>
-        </section>
+            
+            <div class="section next-steps-section">
+                <div class="section-title">
+                    <div class="icon">🚀</div>
+                    Let's Start Building
+                </div>
+                
+                <div class="about-section">
+                    <h3>About Me</h3>
+                    <p><strong>Leonid</strong> - n8n Automation Specialist with 7+ years in marketing and sales automation. I build systems that drive results — AI chatbot processed 1,500+ leads for a credit funnel, 100+ software sales from automated YouTube-to-Telegram workflows, and $25K+ in additional revenue for e-commerce brands through marketplace automation.</p>
+                </div>
+                
+                <div class="cta-container">
+                    <div class="cta-box">
+                        <div class="cta-text">Ready to automate your social media and scale faster?</div>
+                        <div class="cta-subtext">I'm available to start immediately. Let's discuss your specific platforms and requirements.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Questions about the automation setup? Reply to this proposal for clarification.
+        </div>
     </div>
 </body>
 </html>
