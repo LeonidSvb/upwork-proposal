@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated Insurance Lead Funnel - Canada</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            position: relative;
+        }
+        
+        /* SLIDE 1 - PROJECT OVERVIEW */
+        .slide-1 {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: #fef2f2;
+        }
+        
+        .client-info {
+            margin-bottom: 40px;
+            text-align: center;
+            animation: slideUp 0.6s ease;
+        }
+        
+        .client-badge {
+            background: rgba(248, 113, 113, 0.15);
+            border: 1px solid rgba(248, 113, 113, 0.4);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #fca5a5;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+        
+        .client-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fef2f2;
+        }
+        
+        .client-details {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-weight: 300;
+            color: #fecaca;
+        }
+        
+        .quote-block {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 24px 32px;
+            border-radius: 12px;
+            border-left: 4px solid #f87171;
+            margin-bottom: 24px;
+            font-size: 1rem;
+            line-height: 1.6;
+            backdrop-filter: blur(20px);
+            max-width: 900px;
+            animation: slideUp 0.8s ease;
+            border: 1px solid rgba(248, 113, 113, 0.2);
+        }
+        
+        .project-overview {
+            background: rgba(15, 23, 42, 0.4);
+            padding: 32px;
+            border-radius: 16px;
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(248, 113, 113, 0.3);
+            text-align: center;
+            max-width: 900px;
+            margin-bottom: 40px;
+            animation: slideUp 1s ease;
+        }
+        
+        .overview-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #fca5a5;
+        }
+        
+        .overview-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 32px;
+            opacity: 0.9;
+            color: #fef2f2;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 800px;
+            animation: slideUp 1.2s ease;
+        }
+        
+        .project-card {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(248, 113, 113, 0.25);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #f87171, transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        .project-card:hover { 
+            transform: translateY(-4px);
+            border-color: rgba(248, 113, 113, 0.4);
+        }
+        
+        .project-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fca5a5, #f87171);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .project-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+            opacity: 0.9;
+            color: #fef2f2;
+        }
+        
+        .project-desc {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            color: #fecaca;
+        }
+        
+        /* SLIDE 2 - FUNNEL ROADMAP */
+        .slide-2 {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 80px 40px;
+        }
+        
+        .roadmap-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #dc2626, #f87171);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .roadmap-container {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .roadmap-line {
+            position: absolute;
+            left: 30px;
+            top: 60px;
+            bottom: 60px;
+            width: 3px;
+            background: linear-gradient(180deg, #dc2626, #f87171, #fca5a5);
+            border-radius: 2px;
+            z-index: 1;
+            box-shadow: 0 0 10px rgba(248, 113, 113, 0.3);
+        }
+        
+        .step {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 80px;
+            animation: roadmapStep 0.8s ease forwards;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        
+        .step:nth-child(1) { animation-delay: 0.2s; }
+        .step:nth-child(2) { animation-delay: 0.4s; }
+        .step:nth-child(3) { animation-delay: 0.6s; }
+        .step:nth-child(4) { animation-delay: 0.8s; }
+        .step:nth-child(5) { animation-delay: 1s; }
+        .step:nth-child(6) { animation-delay: 1.2s; }
+        
+        .step-marker {
+            position: absolute;
+            left: -50px;
+            top: 8px;
+            width: 24px;
+            height: 24px;
+            background: #dc2626;
+            border: 4px solid #0f172a;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(248, 113, 113, 0.2);
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .step-content {
+            background: rgba(30, 41, 59, 0.8);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(248, 113, 113, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .step-content:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(248, 113, 113, 0.15);
+            border-color: rgba(248, 113, 113, 0.4);
+        }
+        
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fca5a5;
+        }
+        
+        .step-desc {
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        
+        .artifact {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(248, 113, 113, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.75rem;
+        }
+        
+        .form-preview {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 0.65rem;
+            margin-bottom: 8px;
+        }
+        
+        .form-field {
+            margin: 6px 0;
+            padding: 4px 8px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(248, 113, 113, 0.3);
+            border-radius: 4px;
+            color: #e2e8f0;
+        }
+        
+        .logic-example {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 10px;
+            font-family: 'SF Mono', monospace;
+            font-size: 0.65rem;
+        }
+        
+        .condition {
+            margin: 3px 0;
+            color: #e2e8f0;
+        }
+        
+        .condition.pass { color: #86efac; }
+        .condition.fail { color: #fca5a5; }
+        
+        .spreadsheet-preview {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 0.6rem;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th, .table td {
+            border: 1px solid rgba(71, 85, 105, 0.3);
+            padding: 4px 6px;
+            text-align: left;
+        }
+        
+        .table th {
+            background: rgba(15, 23, 42, 0.8);
+            color: #f87171;
+            font-weight: 600;
+        }
+        
+        .table td {
+            color: #e2e8f0;
+        }
+        
+        .email-preview {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 0.65rem;
+        }
+        
+        .email-header {
+            font-weight: 600;
+            color: #f87171;
+            margin-bottom: 6px;
+        }
+        
+        .email-body {
+            color: #e2e8f0;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+        
+        .email-button {
+            background: #dc2626;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 500;
+        }
+        
+        .calendar-preview {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.65rem;
+        }
+        
+        .time-slot {
+            background: #dc2626;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin: 2px;
+            display: inline-block;
+            font-size: 0.6rem;
+        }
+        
+        .notification-box {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 0.65rem;
+        }
+        
+        .notification {
+            margin: 3px 0;
+            padding: 4px 8px;
+            background: rgba(15, 23, 42, 0.8);
+            border-left: 3px solid #f87171;
+            color: #e2e8f0;
+        }
+        
+        .platform-badge {
+            background: #dc2626;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: 500;
+            margin-top: 4px;
+            display: inline-block;
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+        }
+        
+        .canada-flag {
+            font-size: 1.2rem;
+            margin-right: 8px;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes roadmapStep {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+        
+        @media (max-width: 768px) {
+            .project-grid { grid-template-columns: 1fr; gap: 16px; }
+            .roadmap-title { font-size: 2.2rem; }
+            .quote-block { font-size: 0.95rem; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- SLIDE 1: PROJECT OVERVIEW -->
+    <div class="slide slide-1">
+        <div class="client-info">
+            <div class="client-badge">🇨🇦 Canada • 4.5★ Rating • Fixed $150 • 5 Days</div>
+            <div class="client-title">Insurance Lead Automation - Moncton</div>
+            <div class="client-details">Fixed-price $150 | Expert Level | Contract-to-hire Opportunity</div>
+        </div>
+        
+        <div class="quote-block">
+            "Build a fully automated funnel to recruit and qualify individuals eligible to purchase insurance in Canada using free tools preferred"
+        </div>
+        
+        <div class="quote-block">
+            "Complete automation system from first interaction to qualification and appointment booking - lead capture, auto-qualification, follow-ups, booking, and CRM integration"
+        </div>
+        
+        <div class="project-overview">
+            <div class="overview-title"><span class="canada-flag">🇨🇦</span>Complete Insurance Lead Automation System</div>
+            <div class="overview-text">
+                Fully autonomous client acquisition funnel managing the entire process from first contact to qualified appointment booking using free/freemium tools.
+            </div>
+            
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-value">100%</div>
+                    <div class="project-label">Automation</div>
+                    <div class="project-desc">Zero manual intervention</div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-value">$0</div>
+                    <div class="project-label">Tool Costs</div>
+                    <div class="project-desc">Free/freemium only</div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-value">5 Days</div>
+                    <div class="project-label">Delivery</div>
+                    <div class="project-desc">Fully tested system</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: AUTOMATION ROADMAP -->
+    <div class="slide slide-2">
+        <div class="roadmap-title">Insurance Lead Funnel System</div>
+        
+        <div class="roadmap-container">
+            <div class="roadmap-line"></div>
+            
+            <div class="step">
+                <div class="step-marker">1</div>
+                <div class="step-content">
+                    <div class="step-title">Lead Capture Form (Tally.so)</div>
+                    <div class="step-desc">Smart form with conditional logic for instant qualification</div>
+                    <div class="artifact">
+                        <div class="form-preview">
+                            <div style="font-weight: 600; color: #f87171; margin-bottom: 6px;">📋 Qualification Form:</div>
+                            <div class="form-field">Name: ________________</div>
+                            <div class="form-field">Age: [18-25] [26-40] [41-60] [60+]</div>
+                            <div class="form-field">Province: [ON] [BC] [AB] [QC] [Other]</div>
+                            <div class="form-field">Employment: [Full-time] [Part-time] [Self-employed]</div>
+                            <div class="form-field">Current Insurance: [Yes] [No] [Unsure]</div>
+                        </div>
+                        <div class="logic-example">
+                            <div style="color: #f87171; font-weight: 600; margin-bottom: 4px;">🔄 Logic Example:</div>
+                            <div class="condition pass">✅ Age: 26-40 → Continue</div>
+                            <div class="condition pass">✅ Province: Ontario → Continue</div>
+                            <div class="condition pass">✅ Employed: Yes → Qualified!</div>
+                            <div class="condition fail">❌ Age: Under 18 → "Thank you" page</div>
+                        </div>
+                        <div class="platform-badge">100% Free + Canadian Compliant</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">2</div>
+                <div class="step-content">
+                    <div class="step-title">Auto-Qualification via Make.com</div>
+                    <div class="step-desc">Webhook triggers instant qualification check and data routing</div>
+                    <div class="artifact">
+                        <div class="logic-example">
+                            <div style="color: #f87171; font-weight: 600; margin-bottom: 6px;">⚡ Make.com Workflow:</div>
+                            <div class="condition">1. Tally form submission → Webhook trigger</div>
+                            <div class="condition">2. Check age ≥ 18 AND province in target list</div>
+                            <div class="condition">3. If qualified → Send to email automation</div>
+                            <div class="condition">4. If not qualified → Tag as "Not Eligible"</div>
+                            <div class="condition">5. All data → Google Sheets logging</div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #94a3b8;">
+                            Instant qualification + automatic data routing
+                        </div>
+                        <div class="platform-badge">Free Make.com tier (1000/month)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">3</div>
+                <div class="step-content">
+                    <div class="step-title">CRM & Lead Tracking (Google Sheets)</div>
+                    <div class="step-desc">Centralized database with automatic tagging and status updates</div>
+                    <div class="artifact">
+                        <div class="spreadsheet-preview">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Age</th>
+                                        <th>Province</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>John Smith</td>
+                                        <td>35</td>
+                                        <td>Ontario</td>
+                                        <td style="color: #86efac;">✅ Qualified</td>
+                                        <td>2025-07-27</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sarah Johnson</td>
+                                        <td>16</td>
+                                        <td>BC</td>
+                                        <td style="color: #fca5a5;">❌ Too Young</td>
+                                        <td>2025-07-27</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #94a3b8;">
+                            Auto-tags: new, qualified, booked, not_eligible
+                        </div>
+                        <div class="platform-badge">Free Google Sheets</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">4</div>
+                <div class="step-content">
+                    <div class="step-title">Auto-Follow-Up Email (MailerLite)</div>
+                    <div class="step-desc">Instant welcome email with Calendly booking link for qualified leads</div>
+                    <div class="artifact">
+                        <div class="email-preview">
+                            <div class="email-header">📧 Automated Email Template:</div>
+                            <div style="color: #f87171; font-size: 0.6rem; margin-bottom: 6px;">Subject: Your Insurance Assessment is Ready!</div>
+                            <div class="email-body">
+                                Hi {{First_Name}},<br><br>
+                                Great news! You're eligible for a free insurance assessment.<br>
+                                Our Canadian insurance specialist will review your needs.<br><br>
+                                👇 Book your 15-minute call:
+                            </div>
+                            <a href="#" class="email-button">📅 Schedule Your Call</a>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #94a3b8;">
+                            Triggers immediately after qualification
+                        </div>
+                        <div class="platform-badge">Free MailerLite (1000 contacts)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">5</div>
+                <div class="step-content">
+                    <div class="step-title">Appointment Booking (Calendly)</div>
+                    <div class="step-desc">Self-service booking with automatic calendar integration</div>
+                    <div class="artifact">
+                        <div class="calendar-preview">
+                            <div style="color: #f87171; font-weight: 600; margin-bottom: 6px;">📅 Available Time Slots:</div>
+                            <div class="time-slot">Mon 2:00 PM</div>
+                            <div class="time-slot">Tue 10:30 AM</div>
+                            <div class="time-slot">Wed 3:15 PM</div>
+                            <div class="time-slot">Thu 1:45 PM</div>
+                            <div class="time-slot">Fri 11:00 AM</div>
+                            <div style="margin-top: 8px; font-size: 0.6rem; color: #94a3b8;">
+                                • Automatic timezone detection<br>
+                                • Email & SMS reminders<br>
+                                • Buffer time between calls
+                            </div>
+                        </div>
+                        <div class="platform-badge">Free Calendly (1 calendar)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">6</div>
+                <div class="step-content">
+                    <div class="step-title">Final CRM Update + Notifications</div>
+                    <div class="step-desc">Instant manager alerts and lead status updates</div>
+                    <div class="artifact">
+                        <div class="notification-box">
+                            <div style="color: #f87171; font-weight: 600; margin-bottom: 6px;">🚨 Real-time Notifications:</div>
+                            <div class="notification">📧 Email: New qualified lead - John S.</div>
+                            <div class="notification">📱 Slack: Appointment booked for Tuesday 2PM</div>
+                            <div class="notification">📊 Sheet: Status updated to "Booked"</div>
+                            <div class="notification">📅 Calendar: Auto-added to manager calendar</div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #94a3b8;">
+                            Zero delays - instant alerts via multiple channels
+                        </div>
+                        <div class="platform-badge">Multi-channel notifications</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Deliverables Summary -->
+        <div style="background: rgba(30, 41, 59, 0.8); padding: 32px; border-radius: 16px; box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3); border: 1px solid rgba(248, 113, 113, 0.2); text-align: center; max-width: 800px; margin: 60px auto 0; animation: slideUp 1.4s ease; backdrop-filter: blur(10px);">
+            <div style="font-size: 1.4rem; font-weight: 600; margin-bottom: 24px; color: #fca5a5;">🎯 Complete Deliverables Package</div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 12px; border: 1px solid rgba(248, 113, 113, 0.3);">
+                    <div style="font-size: 2rem; font-weight: 700; color: #f87171; margin-bottom: 8px;">🚀</div>
+                    <div style="font-size: 0.9rem; color: #cbd5e1; font-weight: 500;">Live System</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8;">Fully tested & ready</div>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 12px; border: 1px solid rgba(248, 113, 113, 0.3);">
+                    <div style="font-size: 2rem; font-weight: 700; color: #f87171; margin-bottom: 8px;">📹</div>
+                    <div style="font-size: 0.9rem; color: #cbd5e1; font-weight: 500;">Video Guide</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8;">Loom walkthrough</div>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 12px; border: 1px solid rgba(248, 113, 113, 0.3);">
+                    <div style="font-size: 2rem; font-weight: 700; color: #f87171; margin-bottom: 8px;">📈</div>
+                    <div style="font-size: 0.9rem; color: #cbd5e1; font-weight: 500;">Optimization</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8;">Scaling suggestions</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === ' ') {
+                currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            } else if (e.key === 'ArrowUp') {
+                currentSlide = Math.max(currentSlide
