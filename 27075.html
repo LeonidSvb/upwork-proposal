@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Personal Assistant Solution</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #1e293b;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            position: relative;
+        }
+        
+        /* SLIDE 1 - PROBLEM */
+        .slide-1 {
+            background: linear-gradient(135deg, #0c4a6e 0%, #0369a1 100%);
+            color: white;
+        }
+        
+        .client-info {
+            margin-bottom: 40px;
+            text-align: center;
+            animation: slideUp 0.6s ease;
+        }
+        
+        .client-badge {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #22c55e;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+        
+        .client-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .client-details {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+        
+        .quote-block {
+            background: rgba(255,255,255,0.08);
+            padding: 24px 32px;
+            border-radius: 12px;
+            border-left: 4px solid #0ea5e9;
+            margin-bottom: 24px;
+            font-family: 'SF Mono', monospace;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            backdrop-filter: blur(20px);
+            max-width: 850px;
+            animation: slideUp 0.8s ease;
+        }
+        
+        .problem-reframe {
+            background: rgba(255,255,255,0.05);
+            padding: 32px;
+            border-radius: 16px;
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            max-width: 900px;
+            margin-bottom: 40px;
+            animation: slideUp 1s ease;
+        }
+        
+        .problem-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #7dd3fc;
+        }
+        
+        .problem-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 32px;
+            opacity: 0.9;
+        }
+        
+        .cost-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 800px;
+            animation: slideUp 1.2s ease;
+        }
+        
+        .cost-card {
+            background: rgba(255,255,255,0.1);
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cost-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #0ea5e9, transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        .cost-card:hover { transform: translateY(-4px); }
+        
+        .cost-value {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #7dd3fc, #0ea5e9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cost-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+            opacity: 0.9;
+        }
+        
+        .cost-desc {
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+        
+        /* SLIDE 2 - ROADMAP */
+        .slide-2 {
+            background: #ffffff;
+            padding: 80px 40px;
+        }
+        
+        .roadmap-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #0c4a6e, #0369a1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .roadmap-container {
+            max-width: 650px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .roadmap-line {
+            position: absolute;
+            left: 30px;
+            top: 60px;
+            bottom: 60px;
+            width: 3px;
+            background: linear-gradient(180deg, #0c4a6e, #0369a1, #0ea5e9);
+            border-radius: 2px;
+            z-index: 1;
+        }
+        
+        .step {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 80px;
+            animation: roadmapStep 0.8s ease forwards;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        
+        .step:nth-child(1) { animation-delay: 0.2s; }
+        .step:nth-child(2) { animation-delay: 0.4s; }
+        .step:nth-child(3) { animation-delay: 0.6s; }
+        .step:nth-child(4) { animation-delay: 0.8s; }
+        .step:nth-child(5) { animation-delay: 1s; }
+        .step:nth-child(6) { animation-delay: 1.2s; }
+        
+        .step-marker {
+            position: absolute;
+            left: -50px;
+            top: 8px;
+            width: 24px;
+            height: 24px;
+            background: #0369a1;
+            border: 4px solid #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px #e0f2fe;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .step-content {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(3, 105, 161, 0.08);
+            border: 1px solid #e0f2fe;
+            transition: all 0.3s ease;
+        }
+        
+        .step-content:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(3, 105, 161, 0.12);
+        }
+        
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #0c4a6e;
+        }
+        
+        .step-desc {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        
+        .artifact {
+            background: #f0f9ff;
+            border: 1px solid #e0f2fe;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.75rem;
+        }
+        
+        .email-draft {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 10px;
+            font-family: 'SF Mono', monospace;
+        }
+        
+        .email-header {
+            font-weight: 600;
+            color: #0369a1;
+            margin-bottom: 6px;
+            font-size: 0.7rem;
+        }
+        
+        .email-body {
+            font-size: 0.65rem;
+            color: #374151;
+            line-height: 1.4;
+        }
+        
+        .digest-preview {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 10px;
+            font-family: 'SF Mono', monospace;
+        }
+        
+        .digest-title {
+            font-weight: 600;
+            color: #0369a1;
+            margin-bottom: 6px;
+            font-size: 0.7rem;
+        }
+        
+        .digest-item {
+            font-size: 0.65rem;
+            color: #374151;
+            margin: 2px 0;
+            line-height: 1.3;
+        }
+        
+        .automation-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.65rem;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        
+        .flow-box {
+            background: #0369a1;
+            color: white;
+            padding: 4px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 0.6rem;
+        }
+        
+        .flow-arrow {
+            color: #94a3b8;
+            font-size: 0.7rem;
+        }
+        
+        .call-summary {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 8px;
+            font-family: 'SF Mono', monospace;
+        }
+        
+        .call-header {
+            font-weight: 600;
+            color: #0369a1;
+            margin-bottom: 4px;
+            font-size: 0.7rem;
+        }
+        
+        .morning-brief {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 10px;
+            font-family: 'SF Mono', monospace;
+        }
+        
+        .brief-title {
+            font-weight: 600;
+            color: #0369a1;
+            margin-bottom: 6px;
+            font-size: 0.7rem;
+        }
+        
+        .brief-section {
+            margin: 4px 0;
+            font-size: 0.65rem;
+            color: #374151;
+        }
+        
+        .platform-badge {
+            background: #0369a1;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: 500;
+            margin-top: 4px;
+            display: inline-block;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes roadmapStep {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+        
+        @media (max-width: 768px) {
+            .cost-grid { grid-template-columns: 1fr; gap: 16px; }
+            .roadmap-title { font-size: 2.2rem; }
+            .quote-block { font-size: 0.95rem; padding: 20px; }
+            .automation-flow { flex-direction: column; align-items: stretch; }
+            .flow-arrow { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- SLIDE 1: PROBLEM & OPPORTUNITY COST -->
+    <div class="slide slide-1">
+        <div class="client-info">
+            <div class="client-badge">🇸🇦 Payment Verified • 5.0★ Rating • Fashion Industry</div>
+            <div class="client-title">Managing Director</div>
+            <div class="client-details">Jeddah, Saudi Arabia | $200-1500 Budget | Individual Client</div>
+        </div>
+        
+        <div class="quote-block">
+            > "We're looking for a skilled AI automation expert to help us build a fully personalized AI assistant for a Managing Director who wants to save at least 2 hours per day"
+        </div>
+        
+        <div class="quote-block">
+            > "This assistant must handle: Email reading, summarizing, and drafting intelligent replies, receiving and filtering phone calls, scheduling meetings and creating daily digests"
+        </div>
+        
+        <div class="problem-reframe">
+            <div class="problem-title">What Your Executive Productivity Really Needs</div>
+            <div class="problem-text">
+                Stop drowning in emails and calls. Get an AI assistant that reads, replies, and schedules for you - so you can focus on running your business, not managing your inbox.
+            </div>
+            
+            <div class="cost-grid">
+                <div class="cost-card">
+                    <div class="cost-value">2hrs</div>
+                    <div class="cost-label">Saved Daily</div>
+                    <div class="cost-desc">Email & call management</div>
+                </div>
+                
+                <div class="cost-card">
+                    <div class="cost-value">$8.4K</div>
+                    <div class="cost-label">Monthly Value</div>
+                    <div class="cost-desc">Executive time savings</div>
+                </div>
+                
+                <div class="cost-card">
+                    <div class="cost-value">90%</div>
+                    <div class="cost-label">Auto-handled</div>
+                    <div class="cost-desc">Communications</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ROI Summary -->
+        <div style="background: rgba(255,255,255,0.05); padding: 24px; border-radius: 16px; backdrop-filter: blur(30px); border: 1px solid rgba(255,255,255,0.1); text-align: center; max-width: 700px; margin-top: 40px; animation: slideUp 1.4s ease;">
+            <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 16px; color: #7dd3fc;">💰 Expected ROI</div>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                <div>
+                    <div style="font-size: 1.8rem; font-weight: 700; color: #ffffff; margin-bottom: 4px;">14hrs</div>
+                    <div style="font-size: 0.85rem; opacity: 0.8;">Saved per week</div>
+                </div>
+                <div>
+                    <div style="font-size: 1.8rem; font-weight: 700; color: #ffffff; margin-bottom: 4px;">$33.6K</div>
+                    <div style="font-size: 0.85rem; opacity: 0.8;">Annual value gained</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: SOLUTION ROADMAP -->
+    <div class="slide slide-2">
+        <div class="roadmap-title">AI Assistant MVP</div>
+        
+        <div class="roadmap-container">
+            <div class="roadmap-line"></div>
+            
+            <div class="step">
+                <div class="step-marker">1</div>
+                <div class="step-content">
+                    <div class="step-title">Email Processing & Smart Replies</div>
+                    <div class="step-desc">Gmail integration with GPT-4 for personalized responses in your tone</div>
+                    <div class="artifact">
+                        <div class="email-draft">
+                            <div class="email-header">From: John Doe | Subject: Meeting Follow-Up</div>
+                            <div class="email-body">
+                                <strong>AI Reply (draft):</strong><br>
+                                Hi John, thanks for the follow-up. I'm aligned on the next steps — let's touch base early next week.<br><br>
+                                Best,<br>
+                                [MD Name]
+                            </div>
+                        </div>
+                        <div class="platform-badge">Make.com + OpenAI integration</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">2</div>
+                <div class="step-content">
+                    <div class="step-title">Daily Email Digest</div>
+                    <div class="step-desc">Morning summary of priority messages sent to Telegram/Slack</div>
+                    <div class="artifact">
+                        <div class="digest-preview">
+                            <div class="digest-title">🗞️ Daily Email Digest</div>
+                            <div class="digest-item">- 3 priority messages from clients (John, Kate, Leo)</div>
+                            <div class="digest-item">- 2 meeting invites for today</div>
+                            <div class="digest-item">- 1 marketing update from internal team</div>
+                        </div>
+                        <div class="platform-badge">Scheduled automation daily</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">3</div>
+                <div class="step-content">
+                    <div class="step-title">Calendar & Meeting Management</div>
+                    <div class="step-desc">Google Calendar integration with automated meeting scheduling</div>
+                    <div class="artifact">
+                        <div class="automation-flow">
+                            <div class="flow-box">Email Scan</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box">Find Meeting Request</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box">Check Calendar</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box">Auto Schedule</div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #64748b;">
+                            GPT extracts meeting requests and proposes time slots
+                        </div>
+                        <div class="platform-badge">Smart scheduling system</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">4</div>
+                <div class="step-content">
+                    <div class="step-title">Call Processing & Transcription</div>
+                    <div class="step-desc">Twilio integration with AI voice + Whisper transcription</div>
+                    <div class="artifact">
+                        <div class="call-summary">
+                            <div class="call-header">📞 Missed Call from +966 555123456</div>
+                            <div style="font-size: 0.65rem; color: #374151; margin: 4px 0;">
+                                <strong>Summary:</strong> Client asked to confirm availability for next Monday's product launch meeting. Requested call-back.
+                            </div>
+                        </div>
+                        <div class="platform-badge">Twilio + Whisper + GPT pipeline</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">5</div>
+                <div class="step-content">
+                    <div class="step-title">Task Management Integration</div>
+                    <div class="step-desc">Extract action items and sync with Notion/ClickUp</div>
+                    <div class="artifact">
+                        <div class="automation-flow">
+                            <div class="flow-box">Email/Call</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box">GPT Extract</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box">Create Task</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box">Notion/ClickUp</div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #64748b;">
+                            Auto-generated tasks with context and deadlines
+                        </div>
+                        <div class="platform-badge">Task automation system</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">6</div>
+                <div class="step-content">
+                    <div class="step-title">Morning Executive Brief</div>
+                    <div class="step-desc">8 AM comprehensive digest of day's priorities</div>
+                    <div class="artifact">
+                        <div class="morning-brief">
+                            <div class="brief-title">🌅 Good Morning! Here's your brief:</div>
+                            <div class="brief-section">- 3 meetings: 10:00 (Team), 13:00 (Client), 17:00 (Vendor)</div>
+                            <div class="brief-section">- 5 critical emails to reply</div>
+                            <div class="brief-section">- 2 tasks overdue in ClickUp</div>
+                        </div>
+                        <div class="platform-badge">Daily executive dashboard</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === ' ') {
+                currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            } else if (e.key === 'ArrowUp') {
+                currentSlide = Math.max(currentSlide - 1, 0);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        
+        document.addEventListener('click', () => {
+            currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+            slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
