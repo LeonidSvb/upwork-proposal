@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot & Salesforce Integration Solution</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #1e293b;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            position: relative;
+        }
+        
+        /* SLIDE 1 - PROBLEM */
+        .slide-1 {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+        }
+        
+        .client-info {
+            margin-bottom: 40px;
+            text-align: center;
+            animation: slideUp 0.6s ease;
+        }
+        
+        .client-badge {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #22c55e;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+        
+        .client-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .client-details {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+        
+        .quote-block {
+            background: rgba(255,255,255,0.08);
+            padding: 24px 32px;
+            border-radius: 12px;
+            border-left: 4px solid #06b6d4;
+            margin-bottom: 24px;
+            font-family: 'SF Mono', monospace;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            backdrop-filter: blur(20px);
+            max-width: 850px;
+            animation: slideUp 0.8s ease;
+        }
+        
+        .problem-reframe {
+            background: rgba(255,255,255,0.05);
+            padding: 32px;
+            border-radius: 16px;
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            max-width: 900px;
+            margin-bottom: 40px;
+            animation: slideUp 1s ease;
+        }
+        
+        .problem-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #06b6d4;
+        }
+        
+        .problem-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 32px;
+            opacity: 0.9;
+        }
+        
+        .cost-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 800px;
+            animation: slideUp 1.2s ease;
+        }
+        
+        .cost-card {
+            background: rgba(255,255,255,0.1);
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cost-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #06b6d4, transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        .cost-card:hover { transform: translateY(-4px); }
+        
+        .cost-value {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cost-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+            opacity: 0.9;
+        }
+        
+        .cost-desc {
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+        
+        /* SLIDE 2 - ROADMAP */
+        .slide-2 {
+            background: #ffffff;
+            padding: 80px 40px;
+        }
+        
+        .roadmap-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .roadmap-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .roadmap-line {
+            position: absolute;
+            left: 30px;
+            top: 60px;
+            bottom: 60px;
+            width: 3px;
+            background: linear-gradient(180deg, #0891b2, #06b6d4, #67e8f9);
+            border-radius: 2px;
+            z-index: 1;
+        }
+        
+        .step {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 80px;
+            animation: roadmapStep 0.8s ease forwards;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        
+        .step:nth-child(1) { animation-delay: 0.2s; }
+        .step:nth-child(2) { animation-delay: 0.4s; }
+        .step:nth-child(3) { animation-delay: 0.6s; }
+        .step:nth-child(4) { animation-delay: 0.8s; }
+        .step:nth-child(5) { animation-delay: 1s; }
+        
+        .step-marker {
+            position: absolute;
+            left: -50px;
+            top: 8px;
+            width: 24px;
+            height: 24px;
+            background: #0891b2;
+            border: 4px solid #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px #cffafe;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .step-content {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(8, 145, 178, 0.08);
+            border: 1px solid #cffafe;
+            transition: all 0.3s ease;
+        }
+        
+        .step-content:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(8, 145, 178, 0.12);
+        }
+        
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #0f172a;
+        }
+        
+        .step-desc {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        
+        .artifact {
+            background: #f0fdff;
+            border: 1px solid #cffafe;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.75rem;
+        }
+        
+        .chatbot-preview {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 10px;
+        }
+        
+        .chat-message {
+            background: #0891b2;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 12px;
+            margin-bottom: 4px;
+            font-size: 0.7rem;
+        }
+        
+        .user-message {
+            background: #f1f5f9;
+            color: #1e293b;
+            text-align: right;
+        }
+        
+        .dashboard-mini {
+            background: #0f172a;
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+        }
+        
+        .metric-box {
+            background: #1e293b;
+            padding: 6px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .metric-val {
+            font-weight: 600;
+            color: #06b6d4;
+            font-size: 0.8rem;
+        }
+        
+        .integration-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .flow-box {
+            background: #0891b2;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 0.65rem;
+        }
+        
+        .flow-arrow {
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
+        
+        .platform-badge {
+            background: #0891b2;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: 500;
+            margin-top: 4px;
+            display: inline-block;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes roadmapStep {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+        
+        @media (max-width: 768px) {
+            .cost-grid { grid-template-columns: 1fr; gap: 16px; }
+            .roadmap-title { font-size: 2.2rem; }
+            .quote-block { font-size: 0.95rem; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- SLIDE 1: PROBLEM & OPPORTUNITY COST -->
+    <div class="slide slide-1">
+        <div class="client-info">
+            <div class="client-badge">✅ Payment Verified • 4.5★ Rating • $109K Spent</div>
+            <div class="client-title">Real Estate Lead Generation Company</div>
+            <div class="client-details">Austin, TX | 112 Jobs Posted | 50% Hire Rate</div>
+        </div>
+        
+        <div class="quote-block">
+            > "We're looking for a no-code or low-code chatbot specialist to help us integrate an AI chatbot on our WordPress website using plug-and-play tools"
+        </div>
+        
+        <div class="quote-block">
+            > "The chatbot should qualify leads, gather key information, and integrate with Salesforce to create and manage leads automatically"
+        </div>
+        
+        <div class="problem-reframe">
+            <div class="problem-title">What Your Real Estate Business Really Needs</div>
+            <div class="problem-text">
+                Transform website visitors into qualified real estate leads through an intelligent chatbot that operates 24/7, pre-qualifies prospects, and automatically feeds your Salesforce pipeline without manual intervention.
+            </div>
+            
+            <div class="cost-grid">
+                <div class="cost-card">
+                    <div class="cost-value">40hrs</div>
+                    <div class="cost-label">Saved Weekly</div>
+                    <div class="cost-desc">Manual lead qualification</div>
+                </div>
+                
+                <div class="cost-card">
+                    <div class="cost-value">$18K</div>
+                    <div class="cost-label">Monthly Loss</div>
+                    <div class="cost-desc">Unqualified leads</div>
+                </div>
+                
+                <div class="cost-card">
+                    <div class="cost-value">300%</div>
+                    <div class="cost-label">Lead Quality</div>
+                    <div class="cost-desc">Improvement with AI</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: SOLUTION ROADMAP -->
+    <div class="slide slide-2">
+        <div class="roadmap-title">No-Code Chatbot Roadmap</div>
+        
+        <div class="roadmap-container">
+            <div class="roadmap-line"></div>
+            
+            <div class="step">
+                <div class="step-marker">1</div>
+                <div class="step-content">
+                    <div class="step-title">AI Chatbot Website Integration</div>
+                    <div class="step-desc">Deploy Tidio or Landbot on your WordPress site</div>
+                    <div class="artifact">
+                        <div style="background: #f8fafc; border: 2px dashed #0891b2; border-radius: 8px; padding: 10px; position: relative;">
+                            <div style="background: #0891b2; color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.65rem; position: absolute; bottom: 8px; right: 8px;">
+                                💬 Hi! Want to know more about land investment? I can help.
+                            </div>
+                            <div style="height: 40px;"></div>
+                        </div>
+                        <div class="platform-badge">Modern popup widget - bottom right</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">2</div>
+                <div class="step-content">
+                    <div class="step-title">Lead Qualification Dialog</div>
+                    <div class="step-desc">Collect name, email, budget, request type through chat</div>
+                    <div class="artifact">
+                        <div class="chatbot-preview">
+                            <div class="chat-message">What's your budget range?</div>
+                            <div style="display: flex; gap: 4px; margin: 6px 0;">
+                                <div style="background: #e2e8f0; padding: 4px 8px; border-radius: 12px; font-size: 0.6rem;">$25K-50K</div>
+                                <div style="background: #e2e8f0; padding: 4px 8px; border-radius: 12px; font-size: 0.6rem;">$50K-100K</div>
+                                <div style="background: #e2e8f0; padding: 4px 8px; border-radius: 12px; font-size: 0.6rem;">$100K+</div>
+                            </div>
+                            <div class="chat-message user-message">$50K-100K</div>
+                            <div class="chat-message">Perfect! → Tagged as "Hot Lead"</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">3</div>
+                <div class="step-content">
+                    <div class="step-title">AI-Powered FAQ Responses</div>
+                    <div class="step-desc">Smart answers via Chatbase/Tidio AI knowledge base</div>
+                    <div class="artifact">
+                        <div class="chatbot-preview">
+                            <div class="chat-message user-message">What's the price?</div>
+                            <div class="chat-message">Our land prices start from $25K. Final price depends on location and size. Would you like to see available properties?</div>
+                            <div style="text-align: center; margin: 4px 0;">
+                                <div style="background: #ef4444; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.6rem; display: inline-block;">🗣️ Talk to human</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">4</div>
+                <div class="step-content">
+                    <div class="step-title">Salesforce Integration via Make</div>
+                    <div class="step-desc">Auto-create leads/contacts with chat data</div>
+                    <div class="artifact">
+                        <div style="background: #f0fdff; padding: 8px; border-radius: 6px; font-size: 0.7rem;">
+                            <div style="font-weight: 600; color: #0891b2; margin-bottom: 4px;">✅ New Lead Created in Salesforce</div>
+                            <div><strong>Name:</strong> Sarah Johnson</div>
+                            <div><strong>Budget:</strong> $50K-100K</div>
+                            <div><strong>Source:</strong> Website Chatbot</div>
+                            <div><strong>Tag:</strong> Hot Lead - Ready to Buy</div>
+                        </div>
+                        <div class="platform-badge">Auto-tagged & qualified</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">5</div>
+                <div class="step-content">
+                    <div class="step-title">Scalable Foundation & Support</div>
+                    <div class="step-desc">Ready for client support, Spanish, and new integrations</div>
+                    <div class="artifact">
+                        <div style="background: #f0fdff; padding: 8px; border-radius: 6px;">
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; font-size: 0.65rem;">
+                                <div style="background: #e0f2fe; padding: 4px 6px; border-radius: 4px; text-align: center;">🌍 Spanish Support</div>
+                                <div style="background: #e0f2fe; padding: 4px 6px; border-radius: 4px; text-align: center;">👥 Client Portal</div>
+                                <div style="background: #e0f2fe; padding: 4px 6px; border-radius: 4px; text-align: center;">📧 Email Integration</div>
+                                <div style="background: #e0f2fe; padding: 4px 6px; border-radius: 4px; text-align: center;">📊 Advanced Analytics</div>
+                            </div>
+                        </div>
+                        <div class="platform-badge">Visual editor - no coding needed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === ' ') {
+                currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            } else if (e.key === 'ArrowUp') {
+                currentSlide = Math.max(currentSlide - 1, 0);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        
+        document.addEventListener('click', () => {
+            currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+            slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
