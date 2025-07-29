@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Marketing Tools - Website Integration Ideas</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #1e293b;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            position: relative;
+        }
+        
+        /* SLIDE 1 - PROBLEM */
+        .slide-1 {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            color: white;
+        }
+        
+        .client-section {
+            margin-bottom: 40px;
+            text-align: center;
+            animation: slideUp 0.6s ease;
+        }
+        
+        .client-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 8px;
+        }
+        
+        .client-tagline {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-weight: 300;
+            color: #a7f3d0;
+        }
+        
+        .quote-block {
+            background: rgba(255,255,255,0.08);
+            padding: 24px 32px;
+            border-radius: 12px;
+            border-left: 4px solid #34d399;
+            margin-bottom: 24px;
+            font-family: 'SF Mono', monospace;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            backdrop-filter: blur(20px);
+            max-width: 850px;
+            animation: slideUp 0.8s ease;
+        }
+        
+        .problem-reframe {
+            background: rgba(255,255,255,0.05);
+            padding: 32px;
+            border-radius: 16px;
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            max-width: 900px;
+            margin-bottom: 40px;
+            animation: slideUp 1s ease;
+        }
+        
+        .problem-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #86efac;
+        }
+        
+        .problem-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 32px;
+            opacity: 0.9;
+        }
+        
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 800px;
+            animation: slideUp 1.2s ease;
+        }
+        
+        .value-card {
+            background: rgba(255,255,255,0.1);
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #34d399, transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        .value-card:hover { transform: translateY(-4px); }
+        
+        .value-icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            color: #86efac;
+        }
+        
+        .value-label {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .value-desc {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+        
+        /* SLIDE 2 - ROADMAP */
+        .slide-2 {
+            background: #ffffff;
+            padding: 80px 40px;
+        }
+        
+        .roadmap-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #059669, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .roadmap-container {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .roadmap-line {
+            position: absolute;
+            left: 30px;
+            top: 60px;
+            bottom: 60px;
+            width: 3px;
+            background: linear-gradient(180deg, #059669, #10b981, #34d399);
+            border-radius: 2px;
+            z-index: 1;
+        }
+        
+        .step {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 80px;
+            animation: roadmapStep 0.8s ease forwards;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        
+        .step:nth-child(1) { animation-delay: 0.2s; }
+        .step:nth-child(2) { animation-delay: 0.4s; }
+        .step:nth-child(3) { animation-delay: 0.6s; }
+        .step:nth-child(4) { animation-delay: 0.8s; }
+        .step:nth-child(5) { animation-delay: 1s; }
+        .step:nth-child(6) { animation-delay: 1.2s; }
+        
+        .step-marker {
+            position: absolute;
+            left: -50px;
+            top: 8px;
+            width: 24px;
+            height: 24px;
+            background: #059669;
+            border: 4px solid #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px #d1fae5;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .step-content {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(5, 150, 105, 0.08);
+            border: 1px solid #d1fae5;
+            transition: all 0.3s ease;
+        }
+        
+        .step-content:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(5, 150, 105, 0.12);
+        }
+        
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #047857;
+        }
+        
+        .step-desc {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        
+        .artifact {
+            background: #f0fdf4;
+            border: 1px solid #d1fae5;
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 0.75rem;
+        }
+        
+        .website-mockup {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .mockup-header {
+            background: #f9fafb;
+            padding: 6px 12px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-size: 0.65rem;
+            color: #6b7280;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .mockup-content {
+            font-size: 0.65rem;
+            line-height: 1.4;
+        }
+        
+        .form-element {
+            background: #f8fafc;
+            border: 1px solid #d1d5db;
+            padding: 6px 8px;
+            border-radius: 4px;
+            margin: 4px 0;
+            font-size: 0.6rem;
+        }
+        
+        .generate-btn {
+            background: #059669;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            font-size: 0.65rem;
+            font-weight: 600;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+        
+        .result-box {
+            background: #ecfdf5;
+            border: 1px solid #10b981;
+            border-radius: 6px;
+            padding: 10px;
+            margin-top: 8px;
+            font-size: 0.65rem;
+        }
+        
+        .result-label {
+            font-weight: 600;
+            color: #047857;
+            margin-bottom: 4px;
+        }
+        
+        .result-content {
+            color: #374151;
+            line-height: 1.3;
+        }
+        
+        .integration-note {
+            background: #f1f5f9;
+            border-left: 3px solid #059669;
+            padding: 8px 12px;
+            margin-top: 10px;
+            font-size: 0.65rem;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: 500;
+            margin-top: 6px;
+            display: inline-block;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes roadmapStep {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+        
+        @media (max-width: 768px) {
+            .value-grid { grid-template-columns: 1fr; gap: 16px; }
+            .roadmap-title { font-size: 2.2rem; }
+            .quote-block { font-size: 0.95rem; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- SLIDE 1: PROBLEM & VALUE -->
+    <div class="slide slide-1">
+        <div class="client-section">
+            <div class="client-logo">AI Marketing Tools Integration</div>
+            <div class="client-tagline">Ready-to-Embed Features for Your SaaS Platform</div>
+        </div>
+        
+        <div class="quote-block">
+            > "I have a SaaS website with tools for CMO's / marketing people. I want to add some more AI workflows they can use."
+        </div>
+        
+        <div class="quote-block">
+            > "I want to be able to launch them via a webhook and return something that adds instant value to my users."
+        </div>
+        
+        <div class="problem-reframe">
+            <div class="problem-title">6 AI Tools Your CMO Users Will Love</div>
+            <div class="problem-text">
+                Turn your marketing SaaS into an AI powerhouse with these proven workflows. Each tool can be embedded as a simple form on your website that generates instant, professional results.
+            </div>
+            
+            <div class="value-grid">
+                <div class="value-card">
+                    <div class="value-icon">⚡</div>
+                    <div class="value-label">Instant Results</div>
+                    <div class="value-desc">Users get professional copy, emails, and strategies in under 30 seconds</div>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">🎯</div>
+                    <div class="value-label">Higher Engagement</div>
+                    <div class="value-desc">AI tools keep users on your platform longer and coming back daily</div>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">🚀</div>
+                    <div class="value-label">Easy Integration</div>
+                    <div class="value-desc">Simple webhook calls - embed anywhere on your site in minutes</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: AI TOOLS SHOWCASE -->
+    <div class="slide slide-2">
+        <div class="roadmap-title">6 AI Marketing Tools</div>
+        
+        <div class="roadmap-container">
+            <div class="roadmap-line"></div>
+            
+            <div class="step">
+                <div class="step-marker">1</div>
+                <div class="step-content">
+                    <div class="step-title">📧 Smart Email Generator</div>
+                    <div class="step-desc">Generate marketing emails from simple inputs - perfect for email campaigns</div>
+                    <div class="artifact">
+                        <div class="website-mockup">
+                            <div class="mockup-header">📱 Your Website Integration:</div>
+                            <div class="mockup-content">
+                                <div style="font-weight: 600; margin-bottom: 8px;">✉️ AI Email Generator</div>
+                                <input class="form-element" placeholder="Email goal: Announce new feature" readonly />
+                                <input class="form-element" placeholder="Product name: YourSaaS" readonly />
+                                <select class="form-element">
+                                    <option>Target audience: B2B Marketers</option>
+                                </select>
+                                <textarea class="form-element" placeholder="Key features: AI automation, real-time analytics" readonly></textarea>
+                                <button class="generate-btn">Generate Professional Email ✨</button>
+                            </div>
+                        </div>
+                        
+                        <div class="result-box">
+                            <div class="result-label">📬 Generated Result:</div>
+                            <div class="result-content">
+                                <strong>Subject:</strong> Introducing Real-Time Analytics in YourSaaS<br>
+                                <strong>Body:</strong> Professional email copy with your branding, CTAs, and persuasive messaging
+                            </div>
+                        </div>
+                        
+                        <div class="integration-note">
+                            💡 <strong>How it works:</strong> User fills form → webhook to AI → instant professional email copy
+                        </div>
+                        <div class="tech-badge">One-Click Website Integration</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">2</div>
+                <div class="step-content">
+                    <div class="step-title">🎯 Landing Page Copywriter</div>
+                    <div class="step-desc">Generate headlines, bullets, and CTAs for any landing page instantly</div>
+                    <div class="artifact">
+                        <div class="website-mockup">
+                            <div class="mockup-header">📱 Your Website Integration:</div>
+                            <div class="mockup-content">
+                                <div style="font-weight: 600; margin-bottom: 8px;">🎯 Landing Page Copy AI</div>
+                                <input class="form-element" placeholder="Product: AI Writing Assistant" readonly />
+                                <input class="form-element" placeholder="Main benefit: Write blog posts 10x faster" readonly />
+                                <select class="form-element">
+                                    <option>Audience: Content creators</option>
+                                </select>
+                                <input class="form-element" placeholder="Desired action: Start free trial" readonly />
+                                <button class="generate-btn">Create Landing Page Copy 🚀</button>
+                            </div>
+                        </div>
+                        
+                        <div class="result-box">
+                            <div class="result-label">📝 Generated Result:</div>
+                            <div class="result-content">
+                                <strong>Headline:</strong> Write Blog Posts 10x Faster with AI<br>
+                                <strong>Subheadline:</strong> Professional copy + bullet points + compelling CTAs<br>
+                                <strong>Ready to use:</strong> Copy-paste into any landing page builder
+                            </div>
+                        </div>
+                        
+                        <div class="integration-note">
+                            💡 <strong>Perfect for:</strong> Agencies, freelancers, and marketers who need landing page copy fast
+                        </div>
+                        <div class="tech-badge">High-Converting Copy Generator</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">3</div>
+                <div class="step-content">
+                    <div class="step-title">📋 Content Strategy Planner</div>
+                    <div class="step-desc">Create detailed content briefs and article outlines for any topic</div>
+                    <div class="artifact">
+                        <div class="website-mockup">
+                            <div class="mockup-header">📱 Your Website Integration:</div>
+                            <div class="mockup-content">
+                                <div style="font-weight: 600; margin-bottom: 8px;">📋 Content Strategy AI</div>
+                                <input class="form-element" placeholder="Topic: Email marketing automation" readonly />
+                                <select class="form-element">
+                                    <option>Content type: SEO blog post</option>
+                                </select>
+                                <input class="form-element" placeholder="Target audience: SaaS marketers" readonly />
+                                <select class="form-element">
+                                    <option>Length: 2000-3000 words</option>
+                                </select>
+                                <button class="generate-btn">Generate Content Plan 📚</button>
+                            </div>
+                        </div>
+                        
+                        <div class="result-box">
+                            <div class="result-label">📖 Generated Result:</div>
+                            <div class="result-content">
+                                <strong>Title:</strong> Complete guide title optimized for SEO<br>
+                                <strong>Outline:</strong> 8-section detailed structure with H2/H3 headings<br>
+                                <strong>Bonus:</strong> Meta description + keyword suggestions + call-to-action ideas
+                            </div>
+                        </div>
+                        
+                        <div class="integration-note">
+                            💡 <strong>Perfect for:</strong> Content teams who need structured article plans and SEO optimization
+                        </div>
+                        <div class="tech-badge">SEO-Optimized Content Planning</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">4</div>
+                <div class="step-content">
+                    <div class="step-title">📱 Social Media Campaign Builder</div>
+                    <div class="step-desc">Generate complete social media campaigns with posts for all platforms</div>
+                    <div class="artifact">
+                        <div class="website-mockup">
+                            <div class="mockup-header">📱 Your Website Integration:</div>
+                            <div class="mockup-content">
+                                <div style="font-weight: 600; margin-bottom: 8px;">📱 Social Campaign AI</div>
+                                <input class="form-element" placeholder="Campaign goal: Product launch" readonly />
+                                <input class="form-element" placeholder="Product: New mobile app" readonly />
+                                <select class="form-element">
+                                    <option>Platforms: LinkedIn, Twitter, Instagram</option>
+                                </select>
+                                <input class="form-element" placeholder="Campaign duration: 2 weeks" readonly />
+                                <button class="generate-btn">Create Social Campaign 📢</button>
+                            </div>
+                        </div>
+                        
+                        <div class="result-box">
+                            <div class="result-label">📱 Generated Result:</div>
+                            <div class="result-content">
+                                <strong>14 Days of Posts:</strong> Platform-specific content for each day<br>
+                                <strong>Optimized Copy:</strong> Character limits, hashtags, and best posting times<br>
+                                <strong>Ready to Schedule:</strong> Copy-paste into any social media tool
+                            </div>
+                        </div>
+                        
+                        <div class="integration-note">
+                            💡 <strong>Perfect for:</strong> Marketing managers who need consistent social media content
+                        </div>
+                        <div class="tech-badge">Multi-Platform Campaign Generator</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">5</div>
+                <div class="step-content">
+                    <div class="step-title">💰 Ad Copy Optimizer</div>
+                    <div class="step-desc">Create high-converting Facebook and Google ad copy with A/B test variants</div>
+                    <div class="artifact">
+                        <div class="website-mockup">
+                            <div class="mockup-header">📱 Your Website Integration:</div>
+                            <div class="mockup-content">
+                                <div style="font-weight: 600; margin-bottom: 8px;">💰 Ad Copy AI</div>
+                                <input class="form-element" placeholder="Product: Online course platform" readonly />
+                                <input class="form-element" placeholder="Main benefit: Learn new skills faster" readonly />
+                                <select class="form-element">
+                                    <option>Ad platform: Facebook Ads</option>
+                                </select>
+                                <input class="form-element" placeholder="Budget range: $1000-5000/month" readonly />
+                                <button class="generate-btn">Generate Ad Variations 🎯</button>
+                            </div>
+                        </div>
+                        
+                        <div class="result-box">
+                            <div class="result-label">💸 Generated Result:</div>
+                            <div class="result-content">
+                                <strong>5 Headlines:</strong> Different angles and psychological triggers<br>
+                                <strong>3 Descriptions:</strong> Short, medium, and long copy versions<br>
+                                <strong>A/B Ready:</strong> Each variant optimized for different audiences
+                            </div>
+                        </div>
+                        
+                        <div class="integration-note">
+                            💡 <strong>Perfect for:</strong> Performance marketers running paid campaigns who need proven copy
+                        </div>
+                        <div class="tech-badge">Conversion-Optimized Ad Copy</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">6</div>
+                <div class="step-content">
+                    <div class="step-title">🎤 Webinar Script Generator</div>
+                    <div class="step-desc">Create complete webinar scripts with slides, talking points, and CTAs</div>
+                    <div class="artifact">
+                        <div class="website-mockup">
+                            <div class="mockup-header">📱 Your Website Integration:</div>
+                            <div class="mockup-content">
+                                <div style="font-weight: 600; margin-bottom: 8px;">🎤 Webinar Script AI</div>
+                                <input class="form-element" placeholder="Topic: Email marketing mastery" readonly />
+                                <input class="form-element" placeholder="Duration: 45 minutes" readonly />
+                                <select class="form-element">
+                                    <option>Audience: Small business owners</option>
+                                </select>
+                                <input class="form-element" placeholder="Offer: Email course signup" readonly />
+                                <button class="generate-btn">Create Webinar Script 🎙️</button>
+                            </div>
+                        </div>
+                        
+                        <div class="result-box">
+                            <div class="result-label">🎙️ Generated Result:</div>
+                            <div class="result-content">
+                                <strong>Complete Script:</strong> Opening, 3 main sections, Q&A, and closing<br>
+                                <strong>Slide Suggestions:</strong> What to show on each slide<br>
+                                <strong>Timing Guide:</strong> How long to spend on each section
+                            </div>
+                        </div>
+                        
+                        <div class="integration-note">
+                            💡 <strong>Perfect for:</strong> Coaches, consultants, and SaaS founders who run educational webinars
+                        </div>
+                        <div class="tech-badge">Professional Webinar Framework</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Integration Summary -->
+        <div style="background: #ffffff; padding: 32px; border-radius: 16px; box-shadow: 0 4px 24px rgba(5, 150, 105, 0.08); border: 1px solid #d1fae5; text-align: center; max-width: 800px; margin: 60px auto 0; animation: slideUp 1.4s ease;">
+            <div style="font-size: 1.4rem; font-weight: 600; margin-bottom: 24px; color: #047857;">🚀 Ready to Integrate Into Your SaaS</div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+                <div style="background: #f0fdf4; padding: 20px; border-radius: 12px; border: 1px solid #d1fae5;">
+                    <div style="font-size: 2rem; font-weight: 700; color: #059669; margin-bottom: 8px;">6</div>
+                    <div style="font-size: 0.9rem; color: #64748b; font-weight: 500;">AI Tools</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8;">Proven & tested workflows</div>
+                </div>
+                <div style="background: #f0fdf4; padding: 20px; border-radius: 12px; border: 1px solid #d1fae5;">
+                    <div style="font-size: 2rem; font-weight: 700; color: #059669; margin-bottom: 8px;">⚡</div>
+                    <div style="font-size: 0.9rem; color: #64748b; font-weight: 500;">Instant Results</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8;">30-second response time</div>
+                </div>
+                <div style="background: #f0fdf4; padding: 20px; border-radius: 12px; border: 1px solid #d1fae5;">
+                    <div style="font-size: 2rem; font-weight: 700; color: #059669; margin-bottom: 8px;">🔗</div>
+                    <div style="font-size: 0.9rem; color: #64748b; font-weight: 500;">Webhook Ready</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8;">Simple API integration</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === ' ') {
+                currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            } else if (e.key === 'ArrowUp') {
+                currentSlide = Math.max(currentSlide - 1, 0);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        
+        document.addEventListener('click', () => {
+            currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+            slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
