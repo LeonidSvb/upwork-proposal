@@ -667,10 +667,7 @@
             }
         });
         
-        document.addEventListener('click', () => {
-            currentSlide = Math.min(currentSlide + 1, slides.length - 1);
-            slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
-        });
+        // Removed auto-scroll on click for better text selection
     </script>
 </body>
 </html>
