@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N8n Instagram Reels Automation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            position: relative;
+        }
+        
+        /* SLIDE 1 - PROJECT OVERVIEW */
+        .slide-1 {
+            background: linear-gradient(135deg, #e11d48 0%, #be185d 100%);
+            color: #fdf2f8;
+        }
+        
+        .client-info {
+            margin-bottom: 40px;
+            text-align: center;
+            animation: slideUp 0.6s ease;
+        }
+        
+        .client-badge {
+            background: rgba(251, 113, 133, 0.15);
+            border: 1px solid rgba(251, 113, 133, 0.4);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #fda4af;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+        
+        .client-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fef7ff;
+        }
+        
+        .client-details {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-weight: 300;
+            color: #fce7f3;
+        }
+        
+        .quote-block {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 24px 32px;
+            border-radius: 12px;
+            border-left: 4px solid #fb7185;
+            margin-bottom: 24px;
+            font-size: 1rem;
+            line-height: 1.6;
+            backdrop-filter: blur(20px);
+            max-width: 900px;
+            animation: slideUp 0.8s ease;
+            border: 1px solid rgba(251, 113, 133, 0.2);
+        }
+        
+        .project-overview {
+            background: rgba(15, 23, 42, 0.4);
+            padding: 32px;
+            border-radius: 16px;
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(251, 113, 133, 0.3);
+            text-align: center;
+            max-width: 900px;
+            margin-bottom: 40px;
+            animation: slideUp 1s ease;
+        }
+        
+        .overview-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #fda4af;
+        }
+        
+        .overview-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 32px;
+            opacity: 0.9;
+            color: #fdf2f8;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 800px;
+            animation: slideUp 1.2s ease;
+        }
+        
+        .project-card {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(251, 113, 133, 0.25);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #fb7185, transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        .project-card:hover { 
+            transform: translateY(-4px);
+            border-color: rgba(251, 113, 133, 0.4);
+        }
+        
+        .project-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fda4af, #fb7185);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .project-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+            opacity: 0.9;
+            color: #fef7ff;
+        }
+        
+        .project-desc {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            color: #fce7f3;
+        }
+        
+        /* SLIDE 2 - AUTOMATION WORKFLOW */
+        .slide-2 {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 80px 40px;
+        }
+        
+        .roadmap-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #e11d48, #fb7185);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .roadmap-container {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .roadmap-line {
+            position: absolute;
+            left: 30px;
+            top: 60px;
+            bottom: 60px;
+            width: 3px;
+            background: linear-gradient(180deg, #e11d48, #fb7185, #fda4af);
+            border-radius: 2px;
+            z-index: 1;
+            box-shadow: 0 0 10px rgba(251, 113, 133, 0.3);
+        }
+        
+        .step {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 80px;
+            animation: roadmapStep 0.8s ease forwards;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        
+        .step:nth-child(1) { animation-delay: 0.2s; }
+        .step:nth-child(2) { animation-delay: 0.4s; }
+        .step:nth-child(3) { animation-delay: 0.6s; }
+        .step:nth-child(4) { animation-delay: 0.8s; }
+        .step:nth-child(5) { animation-delay: 1s; }
+        
+        .step-marker {
+            position: absolute;
+            left: -50px;
+            top: 8px;
+            width: 24px;
+            height: 24px;
+            background: #e11d48;
+            border: 4px solid #0f172a;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(251, 113, 133, 0.2);
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .step-content {
+            background: rgba(30, 41, 59, 0.8);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(251, 113, 133, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .step-content:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(251, 113, 133, 0.15);
+            border-color: rgba(251, 113, 133, 0.4);
+        }
+        
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fda4af;
+        }
+        
+        .step-desc {
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        
+        .artifact {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(251, 113, 133, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.75rem;
+        }
+        
+        .cron-schedule {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+            font-size: 0.7rem;
+            font-family: 'SF Mono', monospace;
+        }
+        
+        .time-display {
+            font-size: 1.5rem;
+            color: #fb7185;
+            font-weight: 600;
+            margin: 8px 0;
+        }
+        
+        .api-request {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 12px;
+            font-family: 'SF Mono', monospace;
+            font-size: 0.65rem;
+        }
+        
+        .api-line {
+            margin: 4px 0;
+            color: #e2e8f0;
+            padding: 2px 6px;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 3px;
+        }
+        
+        .video-example {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 0.65rem;
+        }
+        
+        .video-item {
+            margin: 4px 0;
+            padding: 4px 8px;
+            background: rgba(15, 23, 42, 0.8);
+            border-left: 3px solid #fb7185;
+            color: #e2e8f0;
+        }
+        
+        .folder-structure {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 12px;
+            font-family: 'SF Mono', monospace;
+            font-size: 0.65rem;
+        }
+        
+        .folder-line {
+            margin: 2px 0;
+            color: #e2e8f0;
+        }
+        
+        .folder-name { color: #fda4af; }
+        .file-name { color: #94a3b8; }
+        
+        .status-report {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 0.65rem;
+        }
+        
+        .status-item {
+            margin: 3px 0;
+            color: #e2e8f0;
+        }
+        
+        .status-success { color: #86efac; }
+        .status-info { color: #93c5fd; }
+        .status-notification { color: #fda4af; }
+        
+        .platform-badge {
+            background: #e11d48;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: 500;
+            margin-top: 4px;
+            display: inline-block;
+            box-shadow: 0 2px 8px rgba(225, 29, 72, 0.3);
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes roadmapStep {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+        
+        @media (max-width: 768px) {
+            .project-grid { grid-template-columns: 1fr; gap: 16px; }
+            .roadmap-title { font-size: 2.2rem; }
+            .quote-block { font-size: 0.95rem; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- SLIDE 1: PROJECT OVERVIEW -->
+    <div class="slide slide-1">
+        <div class="client-info">
+            <div class="client-badge">🇩🇪 Germany • 3.3★ Rating • Fixed $80 • Ongoing</div>
+            <div class="client-title">N8n Instagram Reels Automation</div>
+            <div class="client-details">Strande | Intermediate Level | Video Automation Project</div>
+        </div>
+        
+        <div class="quote-block">
+            "Create n8n automation to download reels from Instagram accounts every day (all uploads) and put them into Google Drive folder"
+        </div>
+        
+        <div class="quote-block">
+            "No watermark and optimally no metadata attached to files - shouldn't be too complicated, just can't figure out some steps"
+        </div>
+        
+        <div class="project-overview">
+            <div class="overview-title">📱 Daily Instagram Reels Auto-Downloader</div>
+            <div class="overview-text">
+                Fully automated n8n workflow that monitors Instagram accounts, downloads fresh Reels daily without watermarks, and organizes them in Google Drive with clean metadata.
+            </div>
+            
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-value">Daily</div>
+                    <div class="project-label">Automated</div>
+                    <div class="project-desc">Zero manual work</div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-value">Clean</div>
+                    <div class="project-label">No Watermarks</div>
+                    <div class="project-desc">Original quality</div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-value">$80</div>
+                    <div class="project-label">Fixed Price</div>
+                    <div class="project-desc">Complete solution</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: AUTOMATION WORKFLOW -->
+    <div class="slide slide-2">
+        <div class="roadmap-title">N8n Instagram Automation</div>
+        
+        <div class="roadmap-container">
+            <div class="roadmap-line"></div>
+            
+            <div class="step">
+                <div class="step-marker">1</div>
+                <div class="step-content">
+                    <div class="step-title">Automatic Daily Schedule (Cron Trigger)</div>
+                    <div class="step-desc">N8n workflow runs automatically every day at specified time</div>
+                    <div class="artifact">
+                        <div class="cron-schedule">
+                            <div style="color: #fb7185; font-weight: 600; margin-bottom: 6px;">🕙 Daily Schedule</div>
+                            <div class="time-display">10:00 AM</div>
+                            <div style="color: #94a3b8;">Every day → Start workflow</div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #94a3b8;">
+                            Cron trigger inside n8n - fully automated execution
+                        </div>
+                        <div class="platform-badge">N8n Cron Trigger</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">2</div>
+                <div class="step-content">
+                    <div class="step-title">Collect Reels via Apify API</div>
+                    <div class="step-desc">Instagram Reels Scraper extracts latest videos through API calls</div>
+                    <div class="artifact">
+                        <div class="api-request">
+                            <div style="color: #fb7185; font-weight: 600; margin-bottom: 6px;">⚡ Apify API Call:</div>
+                            <div class="api-line">POST https://api.apify.com/v2/actor-tasks/.../run-sync</div>
+                            <div class="api-line">{</div>
+                            <div class="api-line">  "tags": ["travelvibes", "designhub"],</div>
+                            <div class="api-line">  "reels_count": 5</div>
+                            <div class="api-line">}</div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #94a3b8;">
+                            Managed through API requests - returns current Reels data
+                        </div>
+                        <div class="platform-badge">Apify Instagram Scraper</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">3</div>
+                <div class="step-content">
+                    <div class="step-title">Extract Clean Video Links</div>
+                    <div class="step-desc">Process data to get direct MP4 links without watermarks</div>
+                    <div class="artifact">
+                        <div class="video-example">
+                            <div style="color: #fb7185; font-weight: 600; margin-bottom: 6px;">📱 Extracted Videos:</div>
+                            <div class="video-item">@travelvibes — "Sunset in Bali 🌅"</div>
+                            <div class="video-item">🎬 https://instagram.cdn/xyz123.mp4</div>
+                            <div class="video-item">📅 29 July 2025</div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #94a3b8;">
+                            Direct video links with descriptions, dates, and author info
+                        </div>
+                        <div class="platform-badge">Watermark-free extraction</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">4</div>
+                <div class="step-content">
+                    <div class="step-title">Download & Upload to Google Drive</div>
+                    <div class="step-desc">Auto-download videos and organize in Drive with clean filenames</div>
+                    <div class="artifact">
+                        <div class="folder-structure">
+                            <div style="color: #fb7185; font-weight: 600; margin-bottom: 6px;">📁 Google Drive Structure:</div>
+                            <div class="folder-line"><span class="folder-name">📁 /Instagram_Reels/</span></div>
+                            <div class="folder-line">├── <span class="file-name">travelvibes_2025-07-29_sunset-in-bali.mp4</span></div>
+                            <div class="folder-line">├── <span class="file-name">designhub_2025-07-29_clean-desk.mp4</span></div>
+                            <div class="folder-line">└── <span class="file-name">foodblogger_2025-07-29_pasta-recipe.mp4</span></div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #94a3b8;">
+                            Clear naming: author + date + description + no metadata
+                        </div>
+                        <div class="platform-badge">Google Drive Integration</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">5</div>
+                <div class="step-content">
+                    <div class="step-title">Background Automation & Notifications</div>
+                    <div class="step-desc">Silent operation with optional status updates and error handling</div>
+                    <div class="artifact">
+                        <div class="status-report">
+                            <div style="color: #fb7185; font-weight: 600; margin-bottom: 6px;">📊 Daily Status Report:</div>
+                            <div class="status-item status-success">✅ Downloaded: 3 Reels</div>
+                            <div class="status-item status-info">📤 Drive: Updated successfully</div>
+                            <div class="status-item status-notification">📬 Telegram: "3 new videos added"</div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #94a3b8;">
+                            Runs automatically in background - notifications on completion/errors
+                        </div>
+                        <div class="platform-badge">Fully automated workflow</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Technical Benefits & Features -->
+        <div style="background: rgba(30, 41, 59, 0.8); padding: 32px; border-radius: 16px; box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3); border: 1px solid rgba(251, 113, 133, 0.2); text-align: center; max-width: 800px; margin: 60px auto 0; animation: slideUp 1.4s ease; backdrop-filter: blur(10px);">
+            <div style="font-size: 1.4rem; font-weight: 600; margin-bottom: 24px; color: #fda4af;">🔧 Complete N8n Automation Features</div>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 24px;">
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 12px; border: 1px solid rgba(251, 113, 133, 0.3);">
+                    <div style="font-size: 0.9rem; color: #fda4af; font-weight: 600; margin-bottom: 12px;">🛠️ Technical Setup</div>
+                    <div style="font-size: 0.75rem; color: #cbd5e1; line-height: 1.4;">
+                        • N8n workflow automation<br>
+                        • Apify Instagram scraper<br>
+                        • Google Drive API integration<br>
+                        • Cron scheduling system<br>
+                        • Error handling & notifications
+                    </div>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 12px; border: 1px solid rgba(251, 113, 133, 0.3);">
+                    <div style="font-size: 0.9rem; color: #fda4af; font-weight: 600; margin-bottom: 12px;">✨ Key Benefits</div>
+                    <div style="font-size: 0.75rem; color: #cbd5e1; line-height: 1.4;">
+                        • No watermarks on videos<br>
+                        • Clean metadata removal<br>
+                        • Organized file structure<br>
+                        • Daily automatic execution<br>
+                        • Multiple account monitoring
+                    </div>
+                </div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 8px; border: 1px solid rgba(251, 113, 133, 0.3);">
+                    <div style="font-size: 1.8rem; font-weight: 700; color: #fb7185; margin-bottom: 4px;">24/7</div>
+                    <div style="font-size: 0.8rem; color: #cbd5e1;">Automation</div>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 8px; border: 1px solid rgba(251, 113, 133, 0.3);">
+                    <div style="font-size: 1.8rem; font-weight: 700; color: #fb7185; margin-bottom: 4px;">HD</div>
+                    <div style="font-size: 0.8rem; color: #cbd5e1;">Quality</div>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 8px; border: 1px solid rgba(251, 113, 133, 0.3);">
+                    <div style="font-size: 1.8rem; font-weight: 700; color: #fb7185; margin-bottom: 4px;">$80</div>
+                    <div style="font-size: 0.8rem; color: #cbd5e1;">Fixed Price</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === ' ') {
+                currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            } else if (e.key === 'ArrowUp') {
+                currentSlide = Math.max(currentSlide - 1, 0);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        
+        document.addEventListener('click', () => {
+            currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+            slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
