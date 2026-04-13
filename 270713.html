@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GHL Call Automation Workflow</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            position: relative;
+        }
+        
+        /* SLIDE 1 - PROJECT OVERVIEW */
+        .slide-1 {
+            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+            color: #f3f4f6;
+        }
+        
+        .client-info {
+            margin-bottom: 40px;
+            text-align: center;
+            animation: slideUp 0.6s ease;
+        }
+        
+        .client-badge {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #c4b5fd;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+        
+        .client-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #f9fafb;
+        }
+        
+        .client-details {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-weight: 300;
+            color: #ddd6fe;
+        }
+        
+        .quote-block {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 24px 32px;
+            border-radius: 12px;
+            border-left: 4px solid #8b5cf6;
+            margin-bottom: 24px;
+            font-size: 1rem;
+            line-height: 1.6;
+            backdrop-filter: blur(20px);
+            max-width: 900px;
+            animation: slideUp 0.8s ease;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+        
+        .project-overview {
+            background: rgba(15, 23, 42, 0.4);
+            padding: 32px;
+            border-radius: 16px;
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            text-align: center;
+            max-width: 900px;
+            margin-bottom: 40px;
+            animation: slideUp 1s ease;
+        }
+        
+        .overview-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #c4b5fd;
+        }
+        
+        .overview-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 32px;
+            opacity: 0.9;
+            color: #f3f4f6;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 800px;
+            animation: slideUp 1.2s ease;
+        }
+        
+        .project-card {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #8b5cf6, transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        .project-card:hover { 
+            transform: translateY(-4px);
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+        
+        .project-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #c4b5fd, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .project-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+            opacity: 0.9;
+            color: #f9fafb;
+        }
+        
+        .project-desc {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            color: #ddd6fe;
+        }
+        
+        /* SLIDE 2 - AUTOMATION WORKFLOW */
+        .slide-2 {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 80px 40px;
+        }
+        
+        .roadmap-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .roadmap-container {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .roadmap-line {
+            position: absolute;
+            left: 30px;
+            top: 60px;
+            bottom: 60px;
+            width: 3px;
+            background: linear-gradient(180deg, #7c3aed, #8b5cf6, #c4b5fd);
+            border-radius: 2px;
+            z-index: 1;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
+        }
+        
+        .step {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 80px;
+            animation: roadmapStep 0.8s ease forwards;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        
+        .step:nth-child(1) { animation-delay: 0.2s; }
+        .step:nth-child(2) { animation-delay: 0.4s; }
+        .step:nth-child(3) { animation-delay: 0.6s; }
+        .step:nth-child(4) { animation-delay: 0.8s; }
+        .step:nth-child(5) { animation-delay: 1s; }
+        
+        .step-marker {
+            position: absolute;
+            left: -50px;
+            top: 8px;
+            width: 24px;
+            height: 24px;
+            background: #7c3aed;
+            border: 4px solid #0f172a;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2);
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .step-content {
+            background: rgba(30, 41, 59, 0.8);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .step-content:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(139, 92, 246, 0.15);
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+        
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #c4b5fd;
+        }
+        
+        .step-desc {
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        
+        .artifact {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.75rem;
+        }
+        
+        .webhook-preview {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 12px;
+            font-family: 'SF Mono', monospace;
+            font-size: 0.65rem;
+        }
+        
+        .api-call {
+            margin: 4px 0;
+            color: #e2e8f0;
+            padding: 2px 6px;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 3px;
+        }
+        
+        .audio-file {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.65rem;
+        }
+        
+        .file-icon {
+            font-size: 2rem;
+            margin-bottom: 6px;
+            color: #8b5cf6;
+        }
+        
+        .transcription-example {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 0.65rem;
+            font-style: italic;
+        }
+        
+        .transcript-text {
+            color: #e2e8f0;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+        
+        .summary-box {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 0.65rem;
+        }
+        
+        .summary-header {
+            font-weight: 600;
+            color: #8b5cf6;
+            margin-bottom: 6px;
+        }
+        
+        .summary-content {
+            color: #e2e8f0;
+            line-height: 1.4;
+        }
+        
+        .crm-update {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 0.65rem;
+        }
+        
+        .field-update {
+            margin: 3px 0;
+            padding: 4px 8px;
+            background: rgba(15, 23, 42, 0.8);
+            border-left: 3px solid #8b5cf6;
+            color: #e2e8f0;
+        }
+        
+        .email-preview {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 0.65rem;
+        }
+        
+        .email-header {
+            font-weight: 600;
+            color: #8b5cf6;
+            margin-bottom: 6px;
+        }
+        
+        .email-body {
+            color: #e2e8f0;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+        
+        .platform-badge {
+            background: #7c3aed;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: 500;
+            margin-top: 4px;
+            display: inline-block;
+            box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes roadmapStep {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+        
+        @media (max-width: 768px) {
+            .project-grid { grid-template-columns: 1fr; gap: 16px; }
+            .roadmap-title { font-size: 2.2rem; }
+            .quote-block { font-size: 0.95rem; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- SLIDE 1: PROJECT OVERVIEW -->
+    <div class="slide slide-1">
+        <div class="client-info">
+            <div class="client-badge">🇦🇺 Australia • 5.0★ Rating • $8-15/hr • Ongoing</div>
+            <div class="client-title">GHL Call Automation with AI</div>
+            <div class="client-details">Henley Beach South | Intermediate Level | 1-3 months duration</div>
+        </div>
+        
+        <div class="quote-block">
+            "Build a streamlined workflow for recording GHL calls that transcribes calls and summarizes content using ChatGPT"
+        </div>
+        
+        <div class="quote-block">
+            "System should automatically add summaries to client notes and email them to both leads and internal team - automation and AI-driven solutions"
+        </div>
+        
+        <div class="project-overview">
+            <div class="overview-title">🤖 Complete GHL Call Automation System</div>
+            <div class="overview-text">
+                End-to-end automation workflow that captures call recordings, transcribes with AI, generates intelligent summaries, and automatically updates CRM with notifications.
+            </div>
+            
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-value">100%</div>
+                    <div class="project-label">Automated</div>
+                    <div class="project-desc">Zero manual work</div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-value">AI</div>
+                    <div class="project-label">Powered</div>
+                    <div class="project-desc">Whisper + ChatGPT</div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-value">Real-time</div>
+                    <div class="project-label">Processing</div>
+                    <div class="project-desc">Instant summaries</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: AUTOMATION WORKFLOW -->
+    <div class="slide slide-2">
+        <div class="roadmap-title">GHL Call Automation Workflow</div>
+        
+        <div class="roadmap-container">
+            <div class="roadmap-line"></div>
+            
+            <div class="step">
+                <div class="step-marker">1</div>
+                <div class="step-content">
+                    <div class="step-title">Call Recording Capture from GHL</div>
+                    <div class="step-desc">Webhook monitors completed calls and extracts audio recordings automatically</div>
+                    <div class="artifact">
+                        <div class="webhook-preview">
+                            <div style="color: #8b5cf6; font-weight: 600; margin-bottom: 6px;">⚡ GHL Webhook Trigger:</div>
+                            <div class="api-call">POST /webhook/call-completed</div>
+                            <div class="api-call">GET /calls/{callId}/recording</div>
+                            <div class="api-call">DOWNLOAD audio.mp3</div>
+                        </div>
+                        <div class="audio-file">
+                            <div class="file-icon">🎵</div>
+                            <div style="color: #e2e8f0;">call_2025-07-27_14-30.mp3</div>
+                            <div style="color: #94a3b8; margin-top: 4px;">Duration: 12:45 | Size: 2.3MB</div>
+                        </div>
+                        <div class="platform-badge">GHL API + Webhook automation</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">2</div>
+                <div class="step-content">
+                    <div class="step-title">AI Audio Transcription (Whisper API)</div>
+                    <div class="step-desc">OpenAI Whisper converts audio to accurate text with speaker identification</div>
+                    <div class="artifact">
+                        <div class="transcription-example">
+                            <div style="color: #8b5cf6; font-weight: 600; margin-bottom: 6px;">📝 Transcription Output:</div>
+                            <div class="transcript-text">
+                                <strong>Agent:</strong> "Hello John, thank you for your interest in our life insurance policies. I understand you're looking for coverage options?"<br><br>
+                                <strong>Client:</strong> "Yes, I'm 35 years old and want to ensure my family is protected. What are my best options for a $500K policy?"<br><br>
+                                <strong>Agent:</strong> "Perfect! Based on your age and needs, I'd recommend our Term Life or Whole Life options. Let me explain the differences..."
+                            </div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #94a3b8;">
+                            Accurate transcription with speaker labels + timestamps
+                        </div>
+                        <div class="platform-badge">OpenAI Whisper API</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">3</div>
+                <div class="step-content">
+                    <div class="step-title">Intelligent Summary Generation (ChatGPT)</div>
+                    <div class="step-desc">GPT-4 analyzes transcript and creates structured business summary</div>
+                    <div class="artifact">
+                        <div class="summary-box">
+                            <div class="summary-header">🤖 AI-Generated Summary:</div>
+                            <div class="summary-content">
+                                <strong>Call Summary:</strong> Client John (35yo) interested in $500K life insurance policy. Discussed Term vs Whole Life options.<br><br>
+                                <strong>Client Needs:</strong> Family protection, budget-conscious, prefers 20-year term<br><br>
+                                <strong>Next Steps:</strong> Email quote comparison, schedule follow-up Friday 2PM<br><br>
+                                <strong>Status:</strong> Hot lead - ready to purchase pending quote review
+                            </div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #94a3b8;">
+                            Structured format: summary, needs, next steps, lead score
+                        </div>
+                        <div class="platform-badge">GPT-4 Analysis Engine</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">4</div>
+                <div class="step-content">
+                    <div class="step-title">CRM Auto-Update (GHL Integration)</div>
+                    <div class="step-desc">Summary automatically added to client profile with tags and status updates</div>
+                    <div class="artifact">
+                        <div class="crm-update">
+                            <div style="color: #8b5cf6; font-weight: 600; margin-bottom: 6px;">📊 CRM Updates:</div>
+                            <div class="field-update">📋 Notes: Call summary added to contact</div>
+                            <div class="field-update">🏷️ Tags: "Hot Lead", "Life Insurance", "Follow-up"</div>
+                            <div class="field-update">📅 Task: "Send quote Friday 2PM"</div>
+                            <div class="field-update">📈 Pipeline: Moved to "Proposal" stage</div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #94a3b8;">
+                            Automatic field updates + task creation + pipeline movement
+                        </div>
+                        <div class="platform-badge">GHL API Integration</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">5</div>
+                <div class="step-content">
+                    <div class="step-title">Automated Email Notifications</div>
+                    <div class="step-desc">Summary sent to team and optional follow-up email to client</div>
+                    <div class="artifact">
+                        <div class="email-preview">
+                            <div class="email-header">📧 Team Notification:</div>
+                            <div style="color: #8b5cf6; font-size: 0.6rem; margin-bottom: 6px;">To: sales-team@company.com</div>
+                            <div style="color: #8b5cf6; font-size: 0.6rem; margin-bottom: 8px;">Subject: Call Summary - John Doe (Hot Lead)</div>
+                            <div class="email-body">
+                                <strong>Call completed:</strong> July 27, 2:30 PM<br>
+                                <strong>Duration:</strong> 12:45<br>
+                                <strong>Summary:</strong> Client interested in $500K life insurance...<br>
+                                <strong>Action needed:</strong> Send quote by Friday
+                            </div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #94a3b8;">
+                            + Optional client follow-up email with key points
+                        </div>
+                        <div class="platform-badge">Multi-recipient automation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Technical Stack & Benefits -->
+        <div style="background: rgba(30, 41, 59, 0.8); padding: 32px; border-radius: 16px; box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3); border: 1px solid rgba(139, 92, 246, 0.2); text-align: center; max-width: 800px; margin: 60px auto 0; animation: slideUp 1.4s ease; backdrop-filter: blur(10px);">
+            <div style="font-size: 1.4rem; font-weight: 600; margin-bottom: 24px; color: #c4b5fd;">🔧 Technical Implementation & Benefits</div>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 24px;">
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 12px; border: 1px solid rgba(139, 92, 246, 0.3);">
+                    <div style="font-size: 0.9rem; color: #c4b5fd; font-weight: 600; margin-bottom: 12px;">🛠️ Tech Stack</div>
+                    <div style="font-size: 0.75rem; color: #cbd5e1; line-height: 1.4;">
+                        • GHL API & Webhooks<br>
+                        • OpenAI Whisper (transcription)<br>
+                        • GPT-4 (summarization)<br>
+                        • Make.com/Zapier (automation)<br>
+                        • Email automation (SMTP)
+                    </div>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 12px; border: 1px solid rgba(139, 92, 246, 0.3);">
+                    <div style="font-size: 0.9rem; color: #c4b5fd; font-weight: 600; margin-bottom: 12px;">📈 Business Impact</div>
+                    <div style="font-size: 0.75rem; color: #cbd5e1; line-height: 1.4;">
+                        • 90% time savings on call notes<br>
+                        • Consistent follow-up tracking<br>
+                        • Improved lead qualification<br>
+                        • Better team coordination<br>
+                        • Enhanced client experience
+                    </div>
+                </div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 8px; border: 1px solid rgba(139, 92, 246, 0.3);">
+                    <div style="font-size: 1.8rem; font-weight: 700; color: #8b5cf6; margin-bottom: 4px;">95%</div>
+                    <div style="font-size: 0.8rem; color: #cbd5e1;">Accuracy Rate</div>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 8px; border: 1px solid rgba(139, 92, 246, 0.3);">
+                    <div style="font-size: 1.8rem; font-weight: 700; color: #8b5cf6; margin-bottom: 4px;">&lt;2min</div>
+                    <div style="font-size: 0.8rem; color: #cbd5e1;">Processing Time</div>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 8px; border: 1px solid rgba(139, 92, 246, 0.3);">
+                    <div style="font-size: 1.8rem; font-weight: 700; color: #8b5cf6; margin-bottom: 4px;">24/7</div>
+                    <div style="font-size: 0.8rem; color: #cbd5e1;">Automation</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === ' ') {
+                currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            } else if (e.key === 'ArrowUp') {
+                currentSlide = Math.max(currentSlide - 1, 0);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        
+        document.addEventListener('click', () => {
+            currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+            slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

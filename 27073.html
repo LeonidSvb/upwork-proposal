@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n8n Email Automation & Dashboard Solution</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #1e293b;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            position: relative;
+        }
+        
+        /* SLIDE 1 - PROBLEM */
+        .slide-1 {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+        }
+        
+        .client-info {
+            margin-bottom: 40px;
+            text-align: center;
+            animation: slideUp 0.6s ease;
+        }
+        
+        .client-badge {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #22c55e;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+        
+        .client-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .client-details {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+        
+        .quote-block {
+            background: rgba(255,255,255,0.08);
+            padding: 24px 32px;
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+            margin-bottom: 24px;
+            font-family: 'SF Mono', monospace;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            backdrop-filter: blur(20px);
+            max-width: 850px;
+            animation: slideUp 0.8s ease;
+        }
+        
+        .problem-reframe {
+            background: rgba(255,255,255,0.05);
+            padding: 32px;
+            border-radius: 16px;
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            max-width: 900px;
+            margin-bottom: 40px;
+            animation: slideUp 1s ease;
+        }
+        
+        .problem-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #60a5fa;
+        }
+        
+        .problem-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 32px;
+            opacity: 0.9;
+        }
+        
+        .cost-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 800px;
+            animation: slideUp 1.2s ease;
+        }
+        
+        .cost-card {
+            background: rgba(255,255,255,0.1);
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cost-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        .cost-card:hover { transform: translateY(-4px); }
+        
+        .cost-value {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cost-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+            opacity: 0.9;
+        }
+        
+        .cost-desc {
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+        
+        /* SLIDE 2 - ROADMAP */
+        .slide-2 {
+            background: #ffffff;
+            padding: 80px 40px;
+        }
+        
+        .roadmap-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .roadmap-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .roadmap-line {
+            position: absolute;
+            left: 30px;
+            top: 60px;
+            bottom: 60px;
+            width: 3px;
+            background: linear-gradient(180deg, #0f172a, #1e293b, #3b82f6);
+            border-radius: 2px;
+            z-index: 1;
+        }
+        
+        .step {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 80px;
+            animation: roadmapStep 0.8s ease forwards;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        
+        .step:nth-child(1) { animation-delay: 0.2s; }
+        .step:nth-child(2) { animation-delay: 0.4s; }
+        .step:nth-child(3) { animation-delay: 0.6s; }
+        .step:nth-child(4) { animation-delay: 0.8s; }
+        .step:nth-child(5) { animation-delay: 1s; }
+        
+        .step-marker {
+            position: absolute;
+            left: -50px;
+            top: 8px;
+            width: 24px;
+            height: 24px;
+            background: #3b82f6;
+            border: 4px solid #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px #dbeafe;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .step-content {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(59, 130, 246, 0.08);
+            border: 1px solid #dbeafe;
+            transition: all 0.3s ease;
+        }
+        
+        .step-content:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.12);
+        }
+        
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1e293b;
+        }
+        
+        .step-desc {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        
+        .artifact {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.75rem;
+        }
+        
+        .email-preview {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 10px;
+            font-family: 'SF Mono', monospace;
+        }
+        
+        .email-header {
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 6px;
+        }
+        
+        .code-block {
+            background: #1f2937;
+            color: #e5e7eb;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: 'SF Mono', monospace;
+            font-size: 0.7rem;
+            overflow-x: auto;
+        }
+        
+        .json-preview {
+            background: #1f2937;
+            color: #10b981;
+            padding: 8px;
+            border-radius: 6px;
+            font-family: 'SF Mono', monospace;
+            font-size: 0.65rem;
+        }
+        
+        .table-preview {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .table-header {
+            background: #f8fafc;
+            padding: 6px;
+            border-bottom: 1px solid #e5e7eb;
+            font-weight: 600;
+            font-size: 0.65rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            gap: 4px;
+        }
+        
+        .table-row {
+            padding: 6px;
+            font-size: 0.65rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            gap: 4px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        
+        .slack-notification {
+            background: #4ade80;
+            color: white;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            line-height: 1.3;
+        }
+        
+        .dashboard-mockup {
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.7rem;
+        }
+        
+        .platform-badge {
+            background: #3b82f6;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: 500;
+            margin-top: 4px;
+            display: inline-block;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes roadmapStep {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+        
+        @media (max-width: 768px) {
+            .cost-grid { grid-template-columns: 1fr; gap: 16px; }
+            .roadmap-title { font-size: 2.2rem; }
+            .quote-block { font-size: 0.95rem; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- SLIDE 1: PROBLEM & OPPORTUNITY COST -->
+    <div class="slide slide-1">
+        <div class="client-info">
+            <div class="client-badge">✅ Payment Verified • Member since 2009</div>
+            <div class="client-title">Business Professional</div>
+            <div class="client-details">Gainesville, FL | 8 Jobs Posted | $20-50/hr Budget</div>
+        </div>
+        
+        <div class="quote-block">
+            > "I am seeking a skilled freelancer to develop an n8n automation workflow that will monitor my email for specific requests"
+        </div>
+        
+        <div class="quote-block">
+            > "Your expertise will help streamline my workflow and ensure efficient management of incoming requests"
+        </div>
+        
+        <div class="problem-reframe">
+            <div class="problem-title">What Your Business Really Needs</div>
+            <div class="problem-text">
+                Transform chaotic email-based requests into an automated, organized system that captures every inquiry, eliminates manual data entry, and provides real-time visibility into your business pipeline.
+            </div>
+            
+            <div class="cost-grid">
+                <div class="cost-card">
+                    <div class="cost-value">20hrs</div>
+                    <div class="cost-label">Saved Weekly</div>
+                    <div class="cost-desc">Manual email processing</div>
+                </div>
+                
+                <div class="cost-card">
+                    <div class="cost-value">$1.8K</div>
+                    <div class="cost-label">Monthly Loss</div>
+                    <div class="cost-desc">Missed opportunities</div>
+                </div>
+                
+                <div class="cost-card">
+                    <div class="cost-value">85%</div>
+                    <div class="cost-label">Error Reduction</div>
+                    <div class="cost-desc">With automation</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: SOLUTION ROADMAP -->
+    <div class="slide slide-2">
+        <div class="roadmap-title">n8n Automation Workflow</div>
+        
+        <div class="roadmap-container">
+            <div class="roadmap-line"></div>
+            
+            <div class="step">
+                <div class="step-marker">1</div>
+                <div class="step-content">
+                    <div class="step-title">Email Monitoring Setup</div>
+                    <div class="step-desc">n8n connects to Gmail/IMAP, checks every 5-10 minutes for request emails</div>
+                    <div class="artifact">
+                        <div class="email-preview">
+                            <div class="email-header">Subject: Service Request – Project ABC</div>
+                            <div style="margin: 8px 0; font-size: 0.65rem;">
+                                Body: Hi, I'd like to book a consultation on Monday, 11am
+                            </div>
+                        </div>
+                        <div class="platform-badge">Auto-detects request emails</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">2</div>
+                <div class="step-content">
+                    <div class="step-title">Smart Data Extraction</div>
+                    <div class="step-desc">Auto-extract name, contact info, dates - no manual processing</div>
+                    <div class="artifact">
+                        <div class="json-preview">
+{<br>
+&nbsp;&nbsp;"name": "Emily Turner",<br>
+&nbsp;&nbsp;"service": "Project ABC",<br>
+&nbsp;&nbsp;"date": "2025-07-28",<br>
+&nbsp;&nbsp;"time": "11:00 AM"<br>
+}
+                        </div>
+                        <div class="platform-badge">Smart text parsing with n8n</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">3</div>
+                <div class="step-content">
+                    <div class="step-title">Dashboard Integration</div>
+                    <div class="step-desc">Save to Google Sheets or Airtable - your live requests tracker</div>
+                    <div class="artifact">
+                        <div class="table-preview">
+                            <div class="table-header">
+                                <div>Name</div>
+                                <div>Service</div>
+                                <div>Date</div>
+                                <div>Time</div>
+                                <div>Status</div>
+                            </div>
+                            <div class="table-row">
+                                <div>Emily Turner</div>
+                                <div>Project ABC</div>
+                                <div>2025-07-28</div>
+                                <div>11:00 AM</div>
+                                <div>New</div>
+                            </div>
+                        </div>
+                        <div class="platform-badge">Google Sheets or Airtable integration</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">4</div>
+                <div class="step-content">
+                    <div class="step-title">Instant Notifications</div>
+                    <div class="step-desc">Real-time alerts via Email or Slack for each new request</div>
+                    <div class="artifact">
+                        <div class="slack-notification">
+                            📬 <strong>New Request:</strong><br>
+                            Emily – Project ABC – Monday @ 11am
+                        </div>
+                        <div class="platform-badge">Email/Slack notifications</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">5</div>
+                <div class="step-content">
+                    <div class="step-title">Scalable Foundation</div>
+                    <div class="step-desc">Future features: status filters, auto-reminders, reporting</div>
+                    <div class="artifact">
+                        <div style="background: #f8fafc; padding: 8px; border-radius: 6px;">
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; font-size: 0.65rem; margin-bottom: 8px;">
+                                <div style="background: #e0f2fe; padding: 4px 6px; border-radius: 4px; text-align: center;">📋 Status Filters</div>
+                                <div style="background: #e0f2fe; padding: 4px 6px; border-radius: 4px; text-align: center;">⏰ Auto Reminders</div>
+                                <div style="background: #e0f2fe; padding: 4px 6px; border-radius: 4px; text-align: center;">📊 Reports Export</div>
+                                <div style="background: #e0f2fe; padding: 4px 6px; border-radius: 4px; text-align: center;">✅ Status Updates</div>
+                            </div>
+                            <div style="font-size: 0.7rem; color: #3b82f6; font-weight: 500;">
+                                Simple Airtable/Sheets interface with filters
+                            </div>
+                        </div>
+                        <div class="platform-badge">Scalable foundation ready</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === ' ') {
+                currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            } else if (e.key === 'ArrowUp') {
+                currentSlide = Math.max(currentSlide - 1, 0);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        
+        document.addEventListener('click', () => {
+            currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+            slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

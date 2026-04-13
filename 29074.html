@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Email-to-Task Agent - Zoho Projects Integration</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #1e293b;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            position: relative;
+        }
+        
+        /* SLIDE 1 - PROBLEM */
+        .slide-1 {
+            background: linear-gradient(135deg, #7c2d12 0%, #9a3412 100%);
+            color: white;
+        }
+        
+        .client-section {
+            margin-bottom: 40px;
+            text-align: center;
+            animation: slideUp 0.6s ease;
+        }
+        
+        .client-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 8px;
+        }
+        
+        .client-tagline {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-weight: 300;
+            color: #fed7aa;
+        }
+        
+        .quote-block {
+            background: rgba(255,255,255,0.08);
+            padding: 24px 32px;
+            border-radius: 12px;
+            border-left: 4px solid #fb923c;
+            margin-bottom: 24px;
+            font-family: 'SF Mono', monospace;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            backdrop-filter: blur(20px);
+            max-width: 850px;
+            animation: slideUp 0.8s ease;
+        }
+        
+        .problem-reframe {
+            background: rgba(255,255,255,0.05);
+            padding: 32px;
+            border-radius: 16px;
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            max-width: 900px;
+            margin-bottom: 40px;
+            animation: slideUp 1s ease;
+        }
+        
+        .problem-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #fb923c;
+        }
+        
+        .problem-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 32px;
+            opacity: 0.9;
+        }
+        
+        .cost-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 800px;
+            animation: slideUp 1.2s ease;
+        }
+        
+        .cost-card {
+            background: rgba(255,255,255,0.1);
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cost-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #fb923c, transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        .cost-card:hover { transform: translateY(-4px); }
+        
+        .cost-value {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fb923c, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cost-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+            opacity: 0.9;
+        }
+        
+        .cost-desc {
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+        
+        /* SLIDE 2 - ROADMAP */
+        .slide-2 {
+            background: #ffffff;
+            padding: 80px 40px;
+        }
+        
+        .roadmap-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #7c2d12, #9a3412);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .roadmap-container {
+            max-width: 650px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .roadmap-line {
+            position: absolute;
+            left: 30px;
+            top: 60px;
+            bottom: 60px;
+            width: 3px;
+            background: linear-gradient(180deg, #9a3412, #f97316, #fb923c);
+            border-radius: 2px;
+            z-index: 1;
+        }
+        
+        .step {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 80px;
+            animation: roadmapStep 0.8s ease forwards;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        
+        .step:nth-child(1) { animation-delay: 0.2s; }
+        .step:nth-child(2) { animation-delay: 0.4s; }
+        .step:nth-child(3) { animation-delay: 0.6s; }
+        .step:nth-child(4) { animation-delay: 0.8s; }
+        .step:nth-child(5) { animation-delay: 1s; }
+        .step:nth-child(6) { animation-delay: 1.2s; }
+        
+        .step-marker {
+            position: absolute;
+            left: -50px;
+            top: 8px;
+            width: 24px;
+            height: 24px;
+            background: #9a3412;
+            border: 4px solid #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px #fed7aa;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .step-content {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(156, 52, 18, 0.08);
+            border: 1px solid #fed7aa;
+            transition: all 0.3s ease;
+        }
+        
+        .step-content:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(156, 52, 18, 0.12);
+        }
+        
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #7c2d12;
+        }
+        
+        .step-desc {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        
+        .artifact {
+            background: #fef7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.75rem;
+        }
+        
+        .email-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .flow-box {
+            background: #9a3412;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 0.65rem;
+            text-align: center;
+            min-width: 70px;
+        }
+        
+        .flow-arrow {
+            color: #9a3412;
+            font-size: 0.8rem;
+            margin: 0 4px;
+        }
+        
+        .email-example {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 10px;
+            font-family: 'SF Mono', monospace;
+            font-size: 0.65rem;
+            margin-top: 8px;
+        }
+        
+        .email-header {
+            font-weight: 600;
+            color: #9a3412;
+            border-bottom: 1px solid #f3f4f6;
+            padding-bottom: 4px;
+            margin-bottom: 6px;
+        }
+        
+        .ai-parsing {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 0.65rem;
+        }
+        
+        .parsed-field {
+            margin: 4px 0;
+            padding: 3px 6px;
+            background: #fef7ed;
+            border-left: 3px solid #fb923c;
+            border-radius: 3px;
+        }
+        
+        .field-label {
+            font-weight: 600;
+            color: #9a3412;
+        }
+        
+        .zoho-task {
+            background: #9a3412;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.65rem;
+        }
+        
+        .task-field {
+            margin: 4px 0;
+            padding: 2px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .task-field:last-child {
+            border-bottom: none;
+        }
+        
+        .task-label {
+            font-weight: 600;
+            color: #fed7aa;
+        }
+        
+        .confirmation-demo {
+            background: #10b981;
+            color: white;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            line-height: 1.3;
+        }
+        
+        .analytics-mini {
+            background: #7c2d12;
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+        }
+        
+        .metric-box {
+            background: #9a3412;
+            padding: 6px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .metric-val {
+            font-weight: 600;
+            color: #fb923c;
+            font-size: 0.8rem;
+        }
+        
+        .tech-highlight {
+            background: linear-gradient(135deg, #9a3412, #f97316);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 500;
+            margin-top: 4px;
+            display: inline-block;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes roadmapStep {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+        
+        @media (max-width: 768px) {
+            .cost-grid { grid-template-columns: 1fr; gap: 16px; }
+            .roadmap-title { font-size: 2.2rem; }
+            .quote-block { font-size: 0.95rem; padding: 20px; }
+            .email-flow { flex-direction: column; gap: 8px; }
+            .flow-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- SLIDE 1: PROBLEM & OPPORTUNITY COST -->
+    <div class="slide slide-1">
+        <div class="client-section">
+            <div class="client-logo">AI Automation Project</div>
+            <div class="client-tagline">Australia | 5.0★ Rating | $290K+ Spent | 405 Hires</div>
+        </div>
+        
+        <div class="quote-block">
+            > "Build a smart agent that can receive an email, interpret its contents, and automatically create and assign a task in Zoho Projects"
+        </div>
+        
+        <div class="quote-block">
+            > "Function like a virtual assistant that reads emails, extracts task details, and creates actionable tasks with proper assignments in Zoho Projects"
+        </div>
+        
+        <div class="problem-reframe">
+            <div class="problem-title">What Your Business Really Needs</div>
+            <div class="problem-text">
+                Transform email chaos into organized project workflows with an AI agent that understands natural language requests and automatically creates perfectly structured tasks in Zoho Projects.
+            </div>
+            
+            <div class="cost-grid">
+                <div class="cost-card">
+                    <div class="cost-value">15hrs</div>
+                    <div class="cost-label">Weekly Loss</div>
+                    <div class="cost-desc">Manual task creation</div>
+                </div>
+                
+                <div class="cost-card">
+                    <div class="cost-value">47%</div>
+                    <div class="cost-label">Missed Tasks</div>
+                    <div class="cost-desc">Lost in email threads</div>
+                </div>
+                
+                <div class="cost-card">
+                    <div class="cost-value">300%</div>
+                    <div class="cost-label">Efficiency Gain</div>
+                    <div class="cost-desc">With AI automation</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: SOLUTION ROADMAP -->
+    <div class="slide slide-2">
+        <div class="roadmap-title">AI Email-to-Task System</div>
+        
+        <div class="roadmap-container">
+            <div class="roadmap-line"></div>
+            
+            <div class="step">
+                <div class="step-marker">1</div>
+                <div class="step-content">
+                    <div class="step-title">Smart Email Intake Setup</div>
+                    <div class="step-desc">Dedicated inbox with webhook integration for instant processing</div>
+                    <div class="artifact">
+                        <div class="email-flow">
+                            <div class="flow-box">Email</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box">Webhook</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box">AI Agent</div>
+                        </div>
+                        <div class="email-example">
+                            <div class="email-header">📧 Incoming Task Request:</div>
+                            <div>From: manager@company.com</div>
+                            <div>Subject: New Landing Page Needed</div>
+                            <div style="margin-top: 6px;">"Create a new landing page for Product X with CTA Y. Need it by Friday for the marketing campaign launch."</div>
+                        </div>
+                        <div class="tech-highlight">Dedicated Inbox + Real-time Processing</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">2</div>
+                <div class="step-content">
+                    <div class="step-title">AI Content Analysis & Parsing</div>
+                    <div class="step-desc">LangChain + OpenAI to extract task details from natural language</div>
+                    <div class="artifact">
+                        <div class="ai-parsing">
+                            <div style="font-weight: 600; color: #9a3412; margin-bottom: 6px;">🤖 AI Parsing Results:</div>
+                            <div class="parsed-field">
+                                <span class="field-label">Task Type:</span> Design/Development
+                            </div>
+                            <div class="parsed-field">
+                                <span class="field-label">Title:</span> Create Product X Landing Page
+                            </div>
+                            <div class="parsed-field">
+                                <span class="field-label">Priority:</span> High (campaign launch)
+                            </div>
+                            <div class="parsed-field">
+                                <span class="field-label">Due Date:</span> Friday (extracted from context)
+                            </div>
+                            <div class="parsed-field">
+                                <span class="field-label">Assignee:</span> Design Team (auto-matched)
+                            </div>
+                        </div>
+                        <div class="tech-highlight">LangChain + GPT-4 Analysis</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">3</div>
+                <div class="step-content">
+                    <div class="step-title">Zoho Projects Integration</div>
+                    <div class="step-desc">API integration with intelligent task creation and assignment</div>
+                    <div class="artifact">
+                        <div class="zoho-task">
+                            <div style="font-weight: 600; margin-bottom: 8px;">📋 Zoho Task Created:</div>
+                            <div class="task-field">
+                                <span class="task-label">Project:</span> Marketing Campaign Q3
+                            </div>
+                            <div class="task-field">
+                                <span class="task-label">Task:</span> Create Product X Landing Page
+                            </div>
+                            <div class="task-field">
+                                <span class="task-label">Description:</span> Landing page with CTA Y for campaign launch
+                            </div>
+                            <div class="task-field">
+                                <span class="task-label">Assigned to:</span> Sarah (Design Team Lead)
+                            </div>
+                            <div class="task-field">
+                                <span class="task-label">Due Date:</span> Friday, Aug 2nd
+                            </div>
+                            <div class="task-field">
+                                <span class="task-label">Tags:</span> #landing-page #product-x #urgent
+                            </div>
+                        </div>
+                        <div class="tech-highlight">Zoho Projects API + Smart Assignment</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">4</div>
+                <div class="step-content">
+                    <div class="step-title">Automated Confirmation & Feedback</div>
+                    <div class="step-desc">Email/Slack confirmation with task details and improvement loop</div>
+                    <div class="artifact">
+                        <div class="confirmation-demo">
+                            ✅ Task Created Successfully<br>
+                            <strong>Task ID:</strong> ZP-1247<br>
+                            <strong>Assigned to:</strong> Sarah (Design Team)<br>
+                            <strong>Due:</strong> Friday, Aug 2nd<br>
+                            <strong>Project:</strong> Marketing Campaign Q3<br><br>
+                            Reply "EDIT" to modify or "APPROVE" to confirm
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #64748b;">
+                            Instant confirmation with option for human oversight and corrections
+                        </div>
+                        <div class="tech-highlight">Smart Confirmation Loop</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">5</div>
+                <div class="step-content">
+                    <div class="step-title">Context Learning & Thread Analysis</div>
+                    <div class="step-desc">Email thread context for better task briefs and continuous improvement</div>
+                    <div class="artifact">
+                        <div class="ai-parsing">
+                            <div style="font-weight: 600; color: #9a3412; margin-bottom: 6px;">🧠 Context Analysis:</div>
+                            <div class="parsed-field">
+                                <span class="field-label">Thread Context:</span> Follow-up to Q2 campaign
+                            </div>
+                            <div class="parsed-field">
+                                <span class="field-label">Previous Tasks:</span> 3 related landing pages
+                            </div>
+                            <div class="parsed-field">
+                                <span class="field-label">Team History:</span> Sarah completed similar in 2 days
+                            </div>
+                            <div class="parsed-field">
+                                <span class="field-label">Improvement:</span> Auto-suggested realistic timeline
+                            </div>
+                        </div>
+                        <div class="tech-highlight">Learning & Context Awareness</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">6</div>
+                <div class="step-content">
+                    <div class="step-title">Analytics & Performance Tracking</div>
+                    <div class="step-desc">Task creation analytics and system optimization insights</div>
+                    <div class="artifact">
+                        <div class="analytics-mini">
+                            <div class="metric-box">
+                                <div class="metric-val">94%</div>
+                                <div>Accuracy</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-val">2.3min</div>
+                                <div>Avg Time</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-val">247</div>
+                                <div>Tasks/Month</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #64748b;">
+                            Complete audit trail with performance metrics and improvement suggestions
+                        </div>
+                        <div class="tech-highlight">Full Analytics Dashboard</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ROI Summary -->
+        <div style="background: #ffffff; padding: 32px; border-radius: 16px; box-shadow: 0 4px 24px rgba(156, 52, 18, 0.08); border: 1px solid #fed7aa; text-align: center; max-width: 800px; margin: 60px auto 0; animation: slideUp 1.4s ease;">
+            <div style="font-size: 1.4rem; font-weight: 600; margin-bottom: 24px; color: #7c2d12;">🎯 Complete AI Automation Solution</div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+                <div style="background: #fef7ed; padding: 20px; border-radius: 12px; border: 1px solid #fed7aa;">
+                    <div style="font-size: 2rem; font-weight: 700; color: #9a3412; margin-bottom: 8px;">95%</div>
+                    <div style="font-size: 0.9rem; color: #64748b; font-weight: 500;">Task Accuracy</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8;">AI-powered parsing</div>
+                </div>
+                <div style="background: #fef7ed; padding: 20px; border-radius: 12px; border: 1px solid #fed7aa;">
+                    <div style="font-size: 2rem; font-weight: 700; color: #9a3412; margin-bottom: 8px;">15x</div>
+                    <div style="font-size: 0.9rem; color: #64748b; font-weight: 500;">Speed Boost</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8;">Instant task creation</div>
+                </div>
+                <div style="background: #fef7ed; padding: 20px; border-radius: 12px; border: 1px solid #fed7aa;">
+                    <div style="font-size: 2rem; font-weight: 700; color: #9a3412; margin-bottom: 8px;">$18K</div>
+                    <div style="font-size: 0.9rem; color: #64748b; font-weight: 500;">Annual Savings</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8;">Time & efficiency</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === ' ') {
+                currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            } else if (e.key === 'ArrowUp') {
+                currentSlide = Math.max(currentSlide - 1, 0);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        
+        document.addEventListener('click', () => {
+            currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+            slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

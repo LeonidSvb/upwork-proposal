@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n8n Educational Video Creation Solution</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #1e293b;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            position: relative;
+        }
+        
+        /* SLIDE 1 - PROBLEM */
+        .slide-1 {
+            background: linear-gradient(135deg, #5b21b6 0%, #7c3aed 100%);
+            color: white;
+        }
+        
+        .client-info {
+            margin-bottom: 40px;
+            text-align: center;
+            animation: slideUp 0.6s ease;
+        }
+        
+        .client-badge {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #22c55e;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+        
+        .client-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .client-details {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+        
+        .quote-block {
+            background: rgba(255,255,255,0.08);
+            padding: 24px 32px;
+            border-radius: 12px;
+            border-left: 4px solid #a78bfa;
+            margin-bottom: 24px;
+            font-family: 'SF Mono', monospace;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            backdrop-filter: blur(20px);
+            max-width: 850px;
+            animation: slideUp 0.8s ease;
+        }
+        
+        .problem-reframe {
+            background: rgba(255,255,255,0.05);
+            padding: 32px;
+            border-radius: 16px;
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            max-width: 900px;
+            margin-bottom: 40px;
+            animation: slideUp 1s ease;
+        }
+        
+        .problem-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #c4b5fd;
+        }
+        
+        .problem-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 32px;
+            opacity: 0.9;
+        }
+        
+        .cost-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 800px;
+            animation: slideUp 1.2s ease;
+        }
+        
+        .cost-card {
+            background: rgba(255,255,255,0.1);
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cost-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #a78bfa, transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        .cost-card:hover { transform: translateY(-4px); }
+        
+        .cost-value {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #c4b5fd, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cost-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+            opacity: 0.9;
+        }
+        
+        .cost-desc {
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+        
+        /* SLIDE 2 - ROADMAP */
+        .slide-2 {
+            background: #ffffff;
+            padding: 80px 40px;
+        }
+        
+        .roadmap-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #5b21b6, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .roadmap-container {
+            max-width: 650px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .roadmap-line {
+            position: absolute;
+            left: 30px;
+            top: 60px;
+            bottom: 60px;
+            width: 3px;
+            background: linear-gradient(180deg, #5b21b6, #7c3aed, #a78bfa);
+            border-radius: 2px;
+            z-index: 1;
+        }
+        
+        .step {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 80px;
+            animation: roadmapStep 0.8s ease forwards;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        
+        .step:nth-child(1) { animation-delay: 0.2s; }
+        .step:nth-child(2) { animation-delay: 0.4s; }
+        .step:nth-child(3) { animation-delay: 0.6s; }
+        .step:nth-child(4) { animation-delay: 0.8s; }
+        .step:nth-child(5) { animation-delay: 1s; }
+        
+        .step-marker {
+            position: absolute;
+            left: -50px;
+            top: 8px;
+            width: 24px;
+            height: 24px;
+            background: #7c3aed;
+            border: 4px solid #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px #e9d5ff;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .step-content {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(124, 58, 237, 0.08);
+            border: 1px solid #e9d5ff;
+            transition: all 0.3s ease;
+        }
+        
+        .step-content:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(124, 58, 237, 0.12);
+        }
+        
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #581c87;
+        }
+        
+        .step-desc {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        
+        .artifact {
+            background: #faf5ff;
+            border: 1px solid #e9d5ff;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.75rem;
+        }
+        
+        .use-case-preview {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 10px;
+            font-family: 'SF Mono', monospace;
+        }
+        
+        .use-case-title {
+            font-weight: 600;
+            color: #7c3aed;
+            margin-bottom: 4px;
+            font-size: 0.7rem;
+        }
+        
+        .use-case-detail {
+            font-size: 0.65rem;
+            color: #374151;
+            margin: 2px 0;
+        }
+        
+        .workflow-visual {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.65rem;
+        }
+        
+        .workflow-node {
+            background: #7c3aed;
+            color: white;
+            padding: 6px 8px;
+            border-radius: 6px;
+            font-weight: 500;
+            text-align: center;
+            min-width: 60px;
+        }
+        
+        .workflow-arrow {
+            color: #7c3aed;
+            font-size: 0.8rem;
+            margin: 0 4px;
+        }
+        
+        .loom-preview {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .loom-icon {
+            font-size: 1.5rem;
+            margin-bottom: 6px;
+        }
+        
+        .loom-details {
+            font-size: 0.65rem;
+            color: #374151;
+            line-height: 1.3;
+        }
+        
+        .deliverable-list {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 10px;
+            font-family: 'SF Mono', monospace;
+        }
+        
+        .deliverable-item {
+            font-size: 0.65rem;
+            color: #374151;
+            margin: 3px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .deliverable-icon {
+            margin-right: 6px;
+            color: #7c3aed;
+        }
+        
+        .repeat-cycle {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .cycle-text {
+            font-size: 0.7rem;
+            color: #374151;
+            margin: 4px 0;
+        }
+        
+        .platform-badge {
+            background: #7c3aed;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: 500;
+            margin-top: 4px;
+            display: inline-block;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes roadmapStep {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+        
+        @media (max-width: 768px) {
+            .cost-grid { grid-template-columns: 1fr; gap: 16px; }
+            .roadmap-title { font-size: 2.2rem; }
+            .quote-block { font-size: 0.95rem; padding: 20px; }
+            .workflow-visual { flex-direction: column; gap: 8px; }
+            .workflow-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- SLIDE 1: PROBLEM & OPPORTUNITY COST -->
+    <div class="slide slide-1">
+        <div class="client-info">
+            <div class="client-badge">🇮🇱 Payment Verified • Phone Verified • Contract-to-hire</div>
+            <div class="client-title">Educational Content Creator</div>
+            <div class="client-details">Israel | Expert Level | Long-term Potential</div>
+        </div>
+        
+        <div class="quote-block">
+            > "Looking for an experienced n8n automation expert who can create educational screen recordings of working automation workflows"
+        </div>
+        
+        <div class="quote-block">
+            > "Build business-use-case workflows in n8n and record clear screen walkthroughs using Loom with voice explanation, no camera"
+        </div>
+        
+        <div class="problem-reframe">
+            <div class="problem-title">What Your Educational Business Really Needs</div>
+            <div class="problem-text">
+                Stop struggling with basic n8n tutorials. Get professional, working automation workflows with step-by-step explanations that your students can actually follow and implement.
+            </div>
+            
+            <div class="cost-grid">
+                <div class="cost-card">
+                    <div class="cost-value">10hrs</div>
+                    <div class="cost-label">Per Video</div>
+                    <div class="cost-desc">Without expert help</div>
+                </div>
+                
+                <div class="cost-card">
+                    <div class="cost-value">$3.2K</div>
+                    <div class="cost-label">Monthly Cost</div>
+                    <div class="cost-desc">Internal development</div>
+                </div>
+                
+                <div class="cost-card">
+                    <div class="cost-value">30%</div>
+                    <div class="cost-label">Success Rate</div>
+                    <div class="cost-desc">With basic tutorials</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: SOLUTION ROADMAP -->
+    <div class="slide slide-2">
+        <div class="roadmap-title">Educational Video Creation Roadmap</div>
+        
+        <div class="roadmap-container">
+            <div class="roadmap-line"></div>
+            
+            <div class="step">
+                <div class="step-marker">1</div>
+                <div class="step-content">
+                    <div class="step-title">Pick Use Case + Plan the Flow</div>
+                    <div class="step-desc">Choose real, useful automation scenario matching your brief</div>
+                    <div class="artifact">
+                        <div class="use-case-preview">
+                            <div class="use-case-title">Title: "Auto-save YouTube comments to Notion using n8n"</div>
+                            <div class="use-case-detail">Key Tools: YouTube API + Notion</div>
+                            <div class="use-case-detail">Flow: Trigger every X hours → fetch new comments → save to Notion</div>
+                        </div>
+                        <div class="platform-badge">Business-focused scenarios</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">2</div>
+                <div class="step-content">
+                    <div class="step-title">Build the Workflow in n8n</div>
+                    <div class="step-desc">Create actual automation with clean, visual structure</div>
+                    <div class="artifact">
+                        <div class="workflow-visual">
+                            <div class="workflow-node">Schedule</div>
+                            <div class="workflow-arrow">→</div>
+                            <div class="workflow-node">YouTube</div>
+                            <div class="workflow-arrow">→</div>
+                            <div class="workflow-node">Process</div>
+                            <div class="workflow-arrow">→</div>
+                            <div class="workflow-node">Notion</div>
+                        </div>
+                        <div class="platform-badge">Tested & working automation</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">3</div>
+                <div class="step-content">
+                    <div class="step-title">Record the Walkthrough (Loom)</div>
+                    <div class="step-desc">Screen recording with clear voice explanation</div>
+                    <div class="artifact">
+                        <div class="loom-preview">
+                            <div class="loom-icon">🎥</div>
+                            <div class="loom-details">
+                                <div><strong>Length:</strong> 4–6 mins</div>
+                                <div><strong>Format:</strong> Full screen, cursor visible, no face</div>
+                                <div><strong>Style:</strong> "Let me show you how I built this workflow..."</div>
+                            </div>
+                        </div>
+                        <div class="platform-badge">Professional screen recording</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">4</div>
+                <div class="step-content">
+                    <div class="step-title">Deliver Video + Export JSON</div>
+                    <div class="step-desc">Complete handoff with working files</div>
+                    <div class="artifact">
+                        <div class="deliverable-list">
+                            <div class="deliverable-item">
+                                <span class="deliverable-icon">📽️</span>
+                                Loom video link
+                            </div>
+                            <div class="deliverable-item">
+                                <span class="deliverable-icon">📁</span>
+                                firecrawl_to_google_sheet.json
+                            </div>
+                            <div class="deliverable-item">
+                                <span class="deliverable-icon">📄</span>
+                                Title: "Auto-extract web pages and save to Google Sheet"
+                            </div>
+                        </div>
+                        <div class="platform-badge">Complete package delivery</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">5</div>
+                <div class="step-content">
+                    <div class="step-title">Repeat Weekly</div>
+                    <div class="step-desc">Consistent delivery building comprehensive library</div>
+                    <div class="artifact">
+                        <div class="repeat-cycle">
+                            <div class="cycle-text"><strong>New video = new business case</strong></div>
+                            <div class="cycle-text">Templates form full library</div>
+                            <div class="cycle-text">Long-term: regular contributor potential</div>
+                            <div style="margin-top: 8px; font-size: 0.65rem; color: #7c3aed;">
+                                💡 Can suggest trending APIs & priority use cases
+                            </div>
+                        </div>
+                        <div class="platform-badge">Scalable content creation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ROI Summary -->
+        <div style="background: #ffffff; padding: 32px; border-radius: 16px; box-shadow: 0 4px 24px rgba(124, 58, 237, 0.08); border: 1px solid #e9d5ff; text-align: center; max-width: 800px; margin: 60px auto 0; animation: slideUp 1.4s ease;">
+            <div style="font-size: 1.4rem; font-weight: 600; margin-bottom: 24px; color: #581c87;">🎯 What You'll Get With This System</div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+                <div style="background: #faf5ff; padding: 20px; border-radius: 12px; border: 1px solid #e9d5ff;">
+                    <div style="font-size: 2rem; font-weight: 700; color: #7c3aed; margin-bottom: 8px;">2hrs</div>
+                    <div style="font-size: 0.9rem; color: #64748b; font-weight: 500;">Per Video</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8;">vs 10hrs internal</div>
+                </div>
+                <div style="background: #faf5ff; padding: 20px; border-radius: 12px; border: 1px solid #e9d5ff;">
+                    <div style="font-size: 2rem; font-weight: 700; color: #7c3aed; margin-bottom: 8px;">95%</div>
+                    <div style="font-size: 0.9rem; color: #64748b; font-weight: 500;">Success Rate</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8;">Working workflows</div>
+                </div>
+                <div style="background: #faf5ff; padding: 20px; border-radius: 12px; border: 1px solid #e9d5ff;">
+                    <div style="font-size: 2rem; font-weight: 700; color: #7c3aed; margin-bottom: 8px;">$18K</div>
+                    <div style="font-size: 0.9rem; color: #64748b; font-weight: 500;">Annual Savings</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8;">vs internal development</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === ' ') {
+                currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            } else if (e.key === 'ArrowUp') {
+                currentSlide = Math.max(currentSlide - 1, 0);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        
+        document.addEventListener('click', () => {
+            currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+            slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airtable + Close CRM B2B Sales Automation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #1e293b;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            position: relative;
+        }
+        
+        /* SLIDE 1 - PROBLEM */
+        .slide-1 {
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            color: white;
+        }
+        
+        .client-section {
+            margin-bottom: 40px;
+            text-align: center;
+            animation: slideUp 0.6s ease;
+        }
+        
+        .client-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 8px;
+        }
+        
+        .client-tagline {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-weight: 300;
+            color: #d1d5db;
+        }
+        
+        .quote-block {
+            background: rgba(255,255,255,0.08);
+            padding: 24px 32px;
+            border-radius: 12px;
+            border-left: 4px solid #9ca3af;
+            margin-bottom: 24px;
+            font-family: 'SF Mono', monospace;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            backdrop-filter: blur(20px);
+            max-width: 850px;
+            animation: slideUp 0.8s ease;
+        }
+        
+        .problem-reframe {
+            background: rgba(255,255,255,0.05);
+            padding: 32px;
+            border-radius: 16px;
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            max-width: 900px;
+            margin-bottom: 40px;
+            animation: slideUp 1s ease;
+        }
+        
+        .problem-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #d1d5db;
+        }
+        
+        .problem-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 32px;
+            opacity: 0.9;
+        }
+        
+        .cost-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 800px;
+            animation: slideUp 1.2s ease;
+        }
+        
+        .cost-card {
+            background: rgba(255,255,255,0.1);
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cost-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #9ca3af, transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        .cost-card:hover { transform: translateY(-4px); }
+        
+        .cost-value {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #d1d5db, #9ca3af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cost-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+            opacity: 0.9;
+        }
+        
+        .cost-desc {
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+        
+        /* SLIDE 2 - ROADMAP */
+        .slide-2 {
+            background: #ffffff;
+            padding: 80px 40px;
+        }
+        
+        .roadmap-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #1f2937, #374151);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .roadmap-container {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .roadmap-line {
+            position: absolute;
+            left: 30px;
+            top: 60px;
+            bottom: 60px;
+            width: 3px;
+            background: linear-gradient(180deg, #1f2937, #374151, #6b7280);
+            border-radius: 2px;
+            z-index: 1;
+        }
+        
+        .step {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 80px;
+            animation: roadmapStep 0.8s ease forwards;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        
+        .step:nth-child(1) { animation-delay: 0.2s; }
+        .step:nth-child(2) { animation-delay: 0.4s; }
+        .step:nth-child(3) { animation-delay: 0.6s; }
+        .step:nth-child(4) { animation-delay: 0.8s; }
+        .step:nth-child(5) { animation-delay: 1s; }
+        
+        .step-marker {
+            position: absolute;
+            left: -50px;
+            top: 8px;
+            width: 24px;
+            height: 24px;
+            background: #1f2937;
+            border: 4px solid #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px #f3f4f6;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .step-content {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(31, 41, 55, 0.08);
+            border: 1px solid #f3f4f6;
+            transition: all 0.3s ease;
+        }
+        
+        .step-content:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(31, 41, 55, 0.12);
+        }
+        
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1f2937;
+        }
+        
+        .step-desc {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        
+        .artifact {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.75rem;
+        }
+        
+        .airtable-structure {
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .table-item {
+            margin: 6px 0;
+            padding: 8px;
+            background: #f3f4f6;
+            border-left: 3px solid #6b7280;
+            border-radius: 4px;
+            font-size: 0.65rem;
+        }
+        
+        .table-name {
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        .table-desc {
+            color: #64748b;
+            margin-top: 2px;
+        }
+        
+        .interface-preview {
+            background: #1f2937;
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.65rem;
+            font-family: 'SF Mono', monospace;
+            margin-top: 8px;
+        }
+        
+        .interface-section {
+            margin: 3px 0;
+            padding: 3px 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            display: inline-block;
+            margin-right: 6px;
+        }
+        
+        .automation-flow {
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 0.65rem;
+        }
+        
+        .flow-item {
+            margin: 4px 0;
+            padding: 4px 8px;
+            border-left: 3px solid #6b7280;
+            background: #f9fafb;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .trigger {
+            border-left-color: #ef4444;
+        }
+        
+        .action {
+            border-left-color: #10b981;
+        }
+        
+        .metrics-grid {
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 10px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            font-size: 0.6rem;
+        }
+        
+        .metric-box {
+            background: #f3f4f6;
+            padding: 6px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .metric-label {
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        .metric-value {
+            color: #6b7280;
+            font-size: 0.55rem;
+        }
+        
+        .formula-example {
+            background: #1f2937;
+            color: #d1d5db;
+            padding: 8px;
+            border-radius: 4px;
+            font-family: 'SF Mono', monospace;
+            font-size: 0.6rem;
+            margin-top: 6px;
+        }
+        
+        .testing-checklist {
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 0.65rem;
+        }
+        
+        .checklist-item {
+            margin: 3px 0;
+            padding: 2px 0;
+            color: #374151;
+        }
+        
+        .checklist-item::before {
+            content: "✅ ";
+            color: #10b981;
+        }
+        
+        .tech-highlight {
+            background: linear-gradient(135deg, #1f2937, #374151);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 500;
+            margin-top: 4px;
+            display: inline-block;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes roadmapStep {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+        
+        @media (max-width: 768px) {
+            .cost-grid { grid-template-columns: 1fr; gap: 16px; }
+            .roadmap-title { font-size: 2.2rem; }
+            .quote-block { font-size: 0.95rem; padding: 20px; }
+            .metrics-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- SLIDE 1: PROBLEM & OPPORTUNITY COST -->
+    <div class="slide slide-1">
+        <div class="client-section">
+            <div class="client-logo">Performance Creative Agency</div>
+            <div class="client-tagline">UK | 5.0★ Rating | Expert Level | Multi-Channel B2B Sales</div>
+        </div>
+        
+        <div class="quote-block">
+            > "We're tracking sales across multiple channels (Twitter, LinkedIn, YouTube, Meta Ads) but our Google Sheets system is becoming too manual, error-prone, and slow"
+        </div>
+        
+        <div class="quote-block">
+            > "We want to move this into Airtable, fully integrated with Close CRM and Make.com to automate sales tracking and performance reporting"
+        </div>
+        
+        <div class="problem-reframe">
+            <div class="problem-title">What Your Agency Really Needs</div>
+            <div class="problem-text">
+                Transform manual sales tracking chaos into an intelligent, automated system that captures every lead, tracks performance by channel, and calculates your true ROI across Twitter, LinkedIn, YouTube, and paid ads.
+            </div>
+            
+            <div class="cost-grid">
+                <div class="cost-card">
+                    <div class="cost-value">12hrs</div>
+                    <div class="cost-label">Weekly Loss</div>
+                    <div class="cost-desc">Manual data entry</div>
+                </div>
+                
+                <div class="cost-card">
+                    <div class="cost-value">23%</div>
+                    <div class="cost-label">Data Errors</div>
+                    <div class="cost-desc">Missing revenue</div>
+                </div>
+                
+                <div class="cost-card">
+                    <div class="cost-value">Real-time</div>
+                    <div class="cost-label">ROI Tracking</div>
+                    <div class="cost-desc">By channel & campaign</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: SOLUTION ROADMAP -->
+    <div class="slide slide-2">
+        <div class="roadmap-title">B2B Sales Tracker System</div>
+        
+        <div class="roadmap-container">
+            <div class="roadmap-line"></div>
+            
+            <div class="step">
+                <div class="step-marker">1</div>
+                <div class="step-content">
+                    <div class="step-title">🗃️ Complete Airtable Base Structure</div>
+                    <div class="step-desc">Multi-table system for tracking daily performance and platform breakdown</div>
+                    <div class="artifact">
+                        <div class="airtable-structure">
+                            <div style="font-weight: 600; color: #1f2937; margin-bottom: 8px;">📋 Database Structure:</div>
+                            <div class="table-item">
+                                <div class="table-name">Daily Summary</div>
+                                <div class="table-desc">Calls, revenue, conversions by date</div>
+                            </div>
+                            <div class="table-item">
+                                <div class="table-name">Opportunities/Deals</div>
+                                <div class="table-desc">Linked to Close CRM, status tracking</div>
+                            </div>
+                            <div class="table-item">
+                                <div class="table-name">Platform Breakdown</div>
+                                <div class="table-desc">Twitter, LinkedIn, YouTube, Meta performance</div>
+                            </div>
+                            <div class="table-item">
+                                <div class="table-name">Ad Spend Tracking</div>
+                                <div class="table-desc">Meta Ads costs and ROI calculation</div>
+                            </div>
+                        </div>
+                        
+                        <div class="interface-preview">
+                            <div style="color: #d1d5db; margin-bottom: 6px;">🎛️ Interface Dashboard:</div>
+                            <div class="interface-section">Calendar View</div>
+                            <div class="interface-section">Channel Filter</div>
+                            <div class="interface-section">Daily Summary</div>
+                            <div class="interface-section">Revenue/ROAS</div>
+                        </div>
+                        
+                        <div class="tech-highlight">Airtable Base + Interface Design</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">2</div>
+                <div class="step-content">
+                    <div class="step-title">🔄 Close CRM Integration (Make.com)</div>
+                    <div class="step-desc">Real-time sync between Close CRM and Airtable for automatic updates</div>
+                    <div class="artifact">
+                        <div class="automation-flow">
+                            <div style="font-weight: 600; color: #1f2937; margin-bottom: 6px;">⚡ Automation Triggers:</div>
+                            <div class="flow-item trigger">🔴 New call booked in Close → Daily Summary updated</div>
+                            <div class="flow-item action">🟢 Lead marked qualified → Qualified count increases</div>
+                            <div class="flow-item trigger">🔴 Deal closed/won → Revenue + source logged</div>
+                            <div class="flow-item action">🟢 Source detection → Platform breakdown updated</div>
+                        </div>
+                        
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #64748b;">
+                            Webhook-based real-time sync with error handling and duplicate prevention
+                        </div>
+                        <div class="tech-highlight">Make.com + Close CRM API</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">3</div>
+                <div class="step-content">
+                    <div class="step-title">🏷️ Automatic Source Classification</div>
+                    <div class="step-desc">Smart tagging and grouping by platform/channel for accurate attribution</div>
+                    <div class="artifact">
+                        <div class="automation-flow">
+                            <div style="font-weight: 600; color: #1f2937; margin-bottom: 6px;">🎯 Source Detection Logic:</div>
+                            <div class="flow-item">Close CRM "source = LinkedIn" → Airtable tags as LinkedIn</div>
+                            <div class="flow-item">UTM parameters → Auto-classify Twitter, YouTube, etc.</div>
+                            <div class="flow-item">Referral URLs → Detect organic vs paid traffic</div>
+                            <div class="flow-item">Custom fields → Map to platform breakdown table</div>
+                        </div>
+                        
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #64748b;">
+                            Enables accurate channel performance reporting and ROI calculation
+                        </div>
+                        <div class="tech-highlight">Smart Attribution System</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">4</div>
+                <div class="step-content">
+                    <div class="step-title">📊 Automated Metrics & KPI Calculation</div>
+                    <div class="step-desc">Real-time calculation of CAC, CPQC, ROAS, and close rates</div>
+                    <div class="artifact">
+                        <div class="metrics-grid">
+                            <div class="metric-box">
+                                <div class="metric-label">Booked Calls</div>
+                                <div class="metric-value">Daily + Monthly</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">Qualified Calls</div>
+                                <div class="metric-value">By platform</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">Revenue</div>
+                                <div class="metric-value">Cash + Pipeline</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">CAC/CPQC</div>
+                                <div class="metric-value">Auto-calculated</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">Close Rate</div>
+                                <div class="metric-value">By source</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">ROAS</div>
+                                <div class="metric-value">Meta Ads ROI</div>
+                            </div>
+                        </div>
+                        
+                        <div class="formula-example">
+                            CAC = Total Ad Spend ÷ New Customers<br>
+                            ROAS = Revenue ÷ Ad Spend<br>
+                            Close Rate = Closed Deals ÷ Qualified Leads
+                        </div>
+                        
+                        <div class="tech-highlight">Advanced Airtable Formulas</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">5</div>
+                <div class="step-content">
+                    <div class="step-title">🧪 Testing & Quality Assurance</div>
+                    <div class="step-desc">Comprehensive testing with real data and manual sync options</div>
+                    <div class="artifact">
+                        <div class="testing-checklist">
+                            <div style="font-weight: 600; color: #1f2937; margin-bottom: 6px;">🔍 Testing Protocol:</div>
+                            <div class="checklist-item">Test with real Close CRM data</div>
+                            <div class="checklist-item">Verify platform attribution accuracy</div>
+                            <div class="checklist-item">Check duplicate prevention logic</div>
+                            <div class="checklist-item">Validate KPI calculations</div>
+                            <div class="checklist-item">Add "Force Sync" button for manual refresh</div>
+                            <div class="checklist-item">Create backup/restore procedures</div>
+                        </div>
+                        
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #64748b;">
+                            Includes error handling, data validation, and manual override options
+                        </div>
+                        <div class="tech-highlight">Production-Ready System</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- System Benefits -->
+        <div style="background: #ffffff; padding: 32px; border-radius: 16px; box-shadow: 0 4px 24px rgba(31, 41, 55, 0.08); border: 1px solid #f3f4f6; text-align: center; max-width: 800px; margin: 60px auto 0; animation: slideUp 1.4s ease;">
+            <div style="font-size: 1.4rem; font-weight: 600; margin-bottom: 24px; color: #1f2937;">🎯 Complete B2B Sales Intelligence</div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+                <div style="background: #f9fafb; padding: 20px; border-radius: 12px; border: 1px solid #e5e7eb;">
+                    <div style="font-size: 2rem; font-weight: 700; color: #374151; margin-bottom: 8px;">100%</div>
+                    <div style="font-size: 0.9rem; color: #64748b; font-weight: 500;">Automated</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8;">No manual data entry</div>
+                </div>
+                <div style="background: #f9fafb; padding: 20px; border-radius: 12px; border: 1px solid #e5e7eb;">
+                    <div style="font-size: 2rem; font-weight: 700; color: #374151; margin-bottom: 8px;">5</div>
+                    <div style="font-size: 0.9rem; color: #64748b; font-weight: 500;">Channels</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8;">Twitter, LinkedIn, YouTube+</div>
+                </div>
+                <div style="background: #f9fafb; padding: 20px; border-radius: 12px; border: 1px solid #e5e7eb;">
+                    <div style="font-size: 2rem; font-weight: 700; color: #374151; margin-bottom: 8px;">Real-time</div>
+                    <div style="font-size: 0.9rem; color: #64748b; font-weight: 500;">ROI Tracking</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8;">Live performance data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === ' ') {
+                currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            } else if (e.key === 'ArrowUp') {
+                currentSlide = Math.max(currentSlide - 1, 0);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        
+        // Removed auto-scroll on click for better text selection
+    </script>
+</body>
+</html>

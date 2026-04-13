@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airtable Photo Business Automation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            position: relative;
+        }
+        
+        /* SLIDE 1 - PROJECT OVERVIEW */
+        .slide-1 {
+            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+            color: #f3f4f6;
+        }
+        
+        .client-info {
+            margin-bottom: 40px;
+            text-align: center;
+            animation: slideUp 0.6s ease;
+        }
+        
+        .client-badge {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #c4b5fd;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+        
+        .client-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #f9fafb;
+        }
+        
+        .client-details {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-weight: 300;
+            color: #ddd6fe;
+        }
+        
+        .quote-block {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 24px 32px;
+            border-radius: 12px;
+            border-left: 4px solid #8b5cf6;
+            margin-bottom: 24px;
+            font-size: 1rem;
+            line-height: 1.6;
+            backdrop-filter: blur(20px);
+            max-width: 900px;
+            animation: slideUp 0.8s ease;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+        
+        .project-overview {
+            background: rgba(15, 23, 42, 0.4);
+            padding: 32px;
+            border-radius: 16px;
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            text-align: center;
+            max-width: 900px;
+            margin-bottom: 40px;
+            animation: slideUp 1s ease;
+        }
+        
+        .overview-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #c4b5fd;
+        }
+        
+        .overview-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 32px;
+            opacity: 0.9;
+            color: #f3f4f6;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 800px;
+            animation: slideUp 1.2s ease;
+        }
+        
+        .feature-card {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #8b5cf6, transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        .feature-card:hover { 
+            transform: translateY(-4px);
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            color: #8b5cf6;
+        }
+        
+        .feature-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #f9fafb;
+        }
+        
+        .feature-desc {
+            font-size: 0.75rem;
+            opacity: 0.8;
+            color: #ddd6fe;
+        }
+        
+        /* SLIDE 2 - WORKFLOW */
+        .slide-2 {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 80px 40px;
+        }
+        
+        .workflow-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .workflow-container {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .workflow-line {
+            position: absolute;
+            left: 30px;
+            top: 60px;
+            bottom: 60px;
+            width: 3px;
+            background: linear-gradient(180deg, #7c3aed, #8b5cf6, #c4b5fd);
+            border-radius: 2px;
+            z-index: 1;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
+        }
+        
+        .step {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 80px;
+            animation: roadmapStep 0.8s ease forwards;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        
+        .step:nth-child(1) { animation-delay: 0.2s; }
+        .step:nth-child(2) { animation-delay: 0.4s; }
+        .step:nth-child(3) { animation-delay: 0.6s; }
+        .step:nth-child(4) { animation-delay: 0.8s; }
+        .step:nth-child(5) { animation-delay: 1s; }
+        .step:nth-child(6) { animation-delay: 1.2s; }
+        
+        .step-marker {
+            position: absolute;
+            left: -50px;
+            top: 8px;
+            width: 24px;
+            height: 24px;
+            background: #7c3aed;
+            border: 4px solid #0f172a;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2);
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .step-content {
+            background: rgba(30, 41, 59, 0.8);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .step-content:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(139, 92, 246, 0.15);
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+        
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #c4b5fd;
+        }
+        
+        .step-desc {
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        
+        .artifact {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.75rem;
+        }
+        
+        .lucidchart-preview {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 0.65rem;
+        }
+        
+        .workflow-item {
+            margin: 4px 0;
+            padding: 4px 8px;
+            background: rgba(15, 23, 42, 0.8);
+            border-left: 3px solid #8b5cf6;
+            color: #e2e8f0;
+        }
+        
+        .airtable-structure {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 0.65rem;
+        }
+        
+        .table-item {
+            margin: 6px 0;
+            padding: 6px;
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 4px;
+            color: #e2e8f0;
+        }
+        
+        .form-preview {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 0.65rem;
+        }
+        
+        .form-field {
+            margin: 4px 0;
+            padding: 4px 8px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 4px;
+            color: #e2e8f0;
+        }
+        
+        .kpi-dashboard {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 0.6rem;
+        }
+        
+        .kpi-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .kpi-table th, .kpi-table td {
+            border: 1px solid rgba(71, 85, 105, 0.3);
+            padding: 6px 8px;
+            text-align: left;
+        }
+        
+        .kpi-table th {
+            background: rgba(15, 23, 42, 0.8);
+            color: #8b5cf6;
+            font-weight: 600;
+        }
+        
+        .status-ready { color: #22c55e; }
+        .status-pending { color: #eab308; }
+        .status-problem { color: #ef4444; }
+        
+        .integration-list {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 0.65rem;
+        }
+        
+        .integration-item {
+            margin: 4px 0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: #e2e8f0;
+        }
+        
+        .integration-gmail { background: rgba(239, 68, 68, 0.2); border-left: 3px solid #ef4444; }
+        .integration-gdrive { background: rgba(34, 197, 94, 0.2); border-left: 3px solid #22c55e; }
+        .integration-slack { background: rgba(139, 92, 246, 0.2); border-left: 3px solid #8b5cf6; }
+        .integration-freshdesk { background: rgba(59, 130, 246, 0.2); border-left: 3px solid #3b82f6; }
+        
+        .testing-checklist {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 0.65rem;
+        }
+        
+        .checklist-item {
+            margin: 3px 0;
+            padding: 3px 6px;
+            color: #e2e8f0;
+        }
+        
+        .platform-badge {
+            background: #7c3aed;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: 500;
+            margin-top: 4px;
+            display: inline-block;
+            box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes roadmapStep {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+        
+        @media (max-width: 768px) {
+            .features-grid { grid-template-columns: 1fr; gap: 16px; }
+            .workflow-title { font-size: 2.2rem; }
+            .quote-block { font-size: 0.95rem; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- SLIDE 1: PROJECT OVERVIEW -->
+    <div class="slide slide-1">
+        <div class="client-info">
+            <div class="client-badge">🇺🇸 USA • New Client • $30-60/hr • Expert Level</div>
+            <div class="client-title">Airtable Photo Business Automation</div>
+            <div class="client-details">Ongoing Project | 1-3 months | Lucidchart Workflows Available</div>
+        </div>
+        
+        <div class="quote-block">
+            "Create Airtable automations for established workflows documented in Lucid Charts"
+        </div>
+        
+        <div class="quote-block">
+            "Build KPI board with red, yellow, green indicators. Need Airtable Core + Interfaces, Fillout forms, and Zapier/Make integrations"
+        </div>
+        
+        <div class="project-overview">
+            <div class="overview-title">📸 Complete Photo Business Automation System</div>
+            <div class="overview-text">
+                End-to-end workflow automation for school photography business with Airtable, custom interfaces, KPI dashboards, and multi-platform integrations.
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <div class="feature-name">Airtable Base</div>
+                    <div class="feature-desc">Custom tables, interfaces & automations</div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-name">KPI Dashboard</div>
+                    <div class="feature-desc">Real-time status indicators</div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <div class="feature-name">Multi-Platform</div>
+                    <div class="feature-desc">Fillout, Zapier, Gmail, Slack</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: WORKFLOW -->
+    <div class="slide slide-2">
+        <div class="workflow-title">6-Step Implementation</div>
+        
+        <div class="workflow-container">
+            <div class="workflow-line"></div>
+            
+            <div class="step">
+                <div class="step-marker">1</div>
+                <div class="step-content">
+                    <div class="step-title">Analyze Lucidchart & Airtable Structure</div>
+                    <div class="step-desc">Study existing workflows, roles, and process requirements</div>
+                    <div class="artifact">
+                        <div class="lucidchart-preview">
+                            <div style="color: #8b5cf6; font-weight: 600; margin-bottom: 6px;">📋 Workflow Analysis:</div>
+                            <div class="workflow-item">👤 Roles: Admin, Photographer, School Admin</div>
+                            <div class="workflow-item">📅 Process: Session booking → Assignment → Photo delivery</div>
+                            <div class="workflow-item">🎯 Statuses: Scheduled, In Progress, Completed, Delivered</div>
+                            <div class="workflow-item">⏰ Deadlines: Booking, Shoot date, Delivery date</div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #94a3b8;">
+                            Convert workflow to automation checklist with triggers and interfaces
+                        </div>
+                        <div class="platform-badge">Lucidchart → Automation Map</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">2</div>
+                <div class="step-content">
+                    <div class="step-title">Build Airtable Base & Interfaces</div>
+                    <div class="step-desc">Create tables, relationships, and role-specific dashboards</div>
+                    <div class="artifact">
+                        <div class="airtable-structure">
+                            <div style="color: #8b5cf6; font-weight: 600; margin-bottom: 6px;">🗃️ Database Structure:</div>
+                            <div class="table-item">📚 Schools: Name, Contact, Address, Session History</div>
+                            <div class="table-item">📸 Sessions: Date, School, Status, Photographer, Photos</div>
+                            <div class="table-item">👨‍💼 Photographers: Name, Skills, Availability, Assignments</div>
+                            <div class="table-item">📊 KPI Tracking: Deadlines, Status, Health Indicators</div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #94a3b8;">
+                            + Linked records, rollups, and custom interfaces for each role
+                        </div>
+                        <div class="platform-badge">Airtable Core + Interfaces</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">3</div>
+                <div class="step-content">
+                    <div class="step-title">Connect Fillout Forms</div>
+                    <div class="step-desc">Build smart forms with hidden fields and record updates</div>
+                    <div class="artifact">
+                        <div class="form-preview">
+                            <div style="color: #8b5cf6; font-weight: 600; margin-bottom: 6px;">📝 Smart Forms:</div>
+                            <div class="form-field">🎨 Backdrop Selection Form (Schools)</div>
+                            <div class="form-field">📅 Rescheduling Request Form</div>
+                            <div class="form-field">💬 Photographer Feedback Form</div>
+                            <div class="form-field">🔄 Status Update Forms</div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #94a3b8;">
+                            Hidden record IDs ensure form updates modify correct Airtable records
+                        </div>
+                        <div class="platform-badge">Fillout.com Integration</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">4</div>
+                <div class="step-content">
+                    <div class="step-title">Create KPI Dashboard</div>
+                    <div class="step-desc">Real-time status indicators with red/yellow/green logic</div>
+                    <div class="artifact">
+                        <div class="kpi-dashboard">
+                            <div style="color: #8b5cf6; font-weight: 600; margin-bottom: 6px;">📊 KPI Status Board:</div>
+                            <table class="kpi-table">
+                                <thead>
+                                    <tr>
+                                        <th>School</th>
+                                        <th>Photographer</th>
+                                        <th>Picture Day</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Eastview</td>
+                                        <td>John Smith</td>
+                                        <td>Aug 1</td>
+                                        <td class="status-ready">🟢 Ready</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lincoln HS</td>
+                                        <td>—</td>
+                                        <td>Aug 3</td>
+                                        <td class="status-problem">🔴 No Photographer</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Oak Elementary</td>
+                                        <td>Sarah Wilson</td>
+                                        <td>Aug 5</td>
+                                        <td class="status-pending">🟡 Backdrop Pending</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #94a3b8;">
+                            IF/SWITCH formulas with date logic + automatic color coding
+                        </div>
+                        <div class="platform-badge">Dynamic KPI Indicators</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">5</div>
+                <div class="step-content">
+                    <div class="step-title">Setup Multi-Platform Integrations</div>
+                    <div class="step-desc">Zapier/Make connections for notifications and file management</div>
+                    <div class="artifact">
+                        <div class="integration-list">
+                            <div style="color: #8b5cf6; font-weight: 600; margin-bottom: 6px;">🔗 Integration Flows:</div>
+                            <div class="integration-item integration-gmail">📧 Gmail: Parent notifications + photographer assignments</div>
+                            <div class="integration-item integration-gdrive">📂 Google Drive: Photo uploads + PDF delivery</div>
+                            <div class="integration-item integration-slack">📢 Slack: Urgent alerts (3 days before, no photographer)</div>
+                            <div class="integration-item integration-freshdesk">🎟️ Freshdesk: Auto-ticket creation from complaints</div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #94a3b8;">
+                            Conditional triggers based on Airtable field changes and dates
+                        </div>
+                        <div class="platform-badge">Make.com + Zapier</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">6</div>
+                <div class="step-content">
+                    <div class="step-title">Testing & Final Documentation</div>
+                    <div class="step-desc">Complete system testing with Loom walkthrough and documentation</div>
+                    <div class="artifact">
+                        <div class="testing-checklist">
+                            <div style="color: #8b5cf6; font-weight: 600; margin-bottom: 6px;">✅ Final Deliverables:</div>
+                            <div class="checklist-item">🧪 Test all automation scenarios end-to-end</div>
+                            <div class="checklist-item">📹 Loom demo for admin, photographer, and school interfaces</div>
+                            <div class="checklist-item">📑 Complete documentation with user guides</div>
+                            <div class="checklist-item">🎯 KPI dashboard training session</div>
+                            <div class="checklist-item">🔧 Handoff with troubleshooting guide</div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #94a3b8;">
+                            Full system validation with client training and support documentation
+                        </div>
+                        <div class="platform-badge">Complete Training Package</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Technical Summary -->
+        <div style="background: rgba(30, 41, 59, 0.8); padding: 32px; border-radius: 16px; box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3); border: 1px solid rgba(139, 92, 246, 0.2); text-align: center; max-width: 800px; margin: 60px auto 0; animation: slideUp 1.4s ease; backdrop-filter: blur(10px);">
+            <div style="font-size: 1.4rem; font-weight: 600; margin-bottom: 24px; color: #c4b5fd;">🎯 Complete Automation Solution</div>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 24px;">
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 12px; border: 1px solid rgba(139, 92, 246, 0.3);">
+                    <div style="font-size: 0.9rem; color: #c4b5fd; font-weight: 600; margin-bottom: 12px;">🛠️ Tech Stack</div>
+                    <div style="font-size: 0.75rem; color: #cbd5e1; line-height: 1.4;">
+                        • Airtable Core + Interfaces<br>
+                        • Fillout forms with hidden fields<br>
+                        • Make.com/Zapier automation<br>
+                        • Custom KPI formulas (IF/SWITCH)<br>
+                        • Multi-platform integrations
+                    </div>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 12px; border: 1px solid rgba(139, 92, 246, 0.3);">
+                    <div style="font-size: 0.9rem; color: #c4b5fd; font-weight: 600; margin-bottom: 12px;">📈 Business Impact</div>
+                    <div style="font-size: 0.75rem; color: #cbd5e1; line-height: 1.4;">
+                        • Real-time process visibility<br>
+                        • Automated notifications & alerts<br>
+                        • Streamlined photographer workflow<br>
+                        • Proactive deadline management<br>
+                        • Improved client communication
+                    </div>
+                </div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 8px; border: 1px solid rgba(139, 92, 246, 0.3);">
+                    <div style="font-size: 1.8rem; font-weight: 700; color: #8b5cf6; margin-bottom: 4px;">3</div>
+                    <div style="font-size: 0.8rem; color: #cbd5e1;">User Interfaces</div>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 8px; border: 1px solid rgba(139, 92, 246, 0.3);">
+                    <div style="font-size: 1.8rem; font-weight: 700; color: #8b5cf6; margin-bottom: 4px;">5+</div>
+                    <div style="font-size: 0.8rem;

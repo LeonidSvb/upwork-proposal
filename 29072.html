@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Business Automation Platform</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            position: relative;
+        }
+        
+        /* SLIDE 1 - PROJECT OVERVIEW */
+        .slide-1 {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            color: #f0fdf4;
+        }
+        
+        .client-info {
+            margin-bottom: 40px;
+            text-align: center;
+            animation: slideUp 0.6s ease;
+        }
+        
+        .client-badge {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #86efac;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+        
+        .client-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #f7fee7;
+        }
+        
+        .client-details {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-weight: 300;
+            color: #dcfce7;
+        }
+        
+        .quote-block {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 24px 32px;
+            border-radius: 12px;
+            border-left: 4px solid #34d399;
+            margin-bottom: 24px;
+            font-size: 1rem;
+            line-height: 1.6;
+            backdrop-filter: blur(20px);
+            max-width: 900px;
+            animation: slideUp 0.8s ease;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+        
+        .project-overview {
+            background: rgba(15, 23, 42, 0.4);
+            padding: 32px;
+            border-radius: 16px;
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            text-align: center;
+            max-width: 900px;
+            margin-bottom: 40px;
+            animation: slideUp 1s ease;
+        }
+        
+        .overview-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #86efac;
+        }
+        
+        .overview-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 32px;
+            opacity: 0.9;
+            color: #f0fdf4;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 800px;
+            animation: slideUp 1.2s ease;
+        }
+        
+        .tool-card {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(34, 197, 94, 0.25);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #34d399, transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        .tool-card:hover { 
+            transform: translateY(-4px);
+            border-color: rgba(34, 197, 94, 0.4);
+        }
+        
+        .tool-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            color: #34d399;
+        }
+        
+        .tool-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #f7fee7;
+        }
+        
+        .tool-desc {
+            font-size: 0.75rem;
+            opacity: 0.8;
+            color: #dcfce7;
+        }
+        
+        /* SLIDE 2 - REVIEWRANGER */
+        .slide-2 {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 80px 40px;
+        }
+        
+        .tool-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .workflow-container {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .workflow-line {
+            position: absolute;
+            left: 30px;
+            top: 60px;
+            bottom: 60px;
+            width: 3px;
+            background: linear-gradient(180deg, #3b82f6, #60a5fa, #93c5fd);
+            border-radius: 2px;
+            z-index: 1;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+        }
+        
+        .step {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 80px;
+            animation: roadmapStep 0.8s ease forwards;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        
+        .step:nth-child(1) { animation-delay: 0.2s; }
+        .step:nth-child(2) { animation-delay: 0.4s; }
+        .step:nth-child(3) { animation-delay: 0.6s; }
+        .step:nth-child(4) { animation-delay: 0.8s; }
+        .step:nth-child(5) { animation-delay: 1s; }
+        
+        .step-marker {
+            position: absolute;
+            left: -50px;
+            top: 8px;
+            width: 24px;
+            height: 24px;
+            background: #3b82f6;
+            border: 4px solid #0f172a;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .step-content {
+            background: rgba(30, 41, 59, 0.8);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .step-content:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15);
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+        
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #93c5fd;
+        }
+        
+        .step-desc {
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        
+        .artifact {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.75rem;
+        }
+        
+        .crm-integration {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 0.65rem;
+        }
+        
+        .platform-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .platform-item {
+            background: #3b82f6;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.6rem;
+            font-weight: 500;
+        }
+        
+        .message-preview {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 0.65rem;
+            font-style: italic;
+        }
+        
+        .routing-logic {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 0.65rem;
+        }
+        
+        .route-item {
+            margin: 4px 0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: #e2e8f0;
+        }
+        
+        .route-happy { background: rgba(34, 197, 94, 0.2); border-left: 3px solid #22c55e; }
+        .route-unhappy { background: rgba(239, 68, 68, 0.2); border-left: 3px solid #ef4444; }
+        
+        .sheets-log {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 0.6rem;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th, .table td {
+            border: 1px solid rgba(71, 85, 105, 0.3);
+            padding: 4px 6px;
+            text-align: left;
+        }
+        
+        .table th {
+            background: rgba(15, 23, 42, 0.8);
+            color: #60a5fa;
+            font-weight: 600;
+        }
+        
+        .table td {
+            color: #e2e8f0;
+        }
+        
+        .platform-badge {
+            background: #3b82f6;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: 500;
+            margin-top: 4px;
+            display: inline-block;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+        
+        /* SLIDE 3 - GBP GUARDIAN */
+        .slide-3 {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 80px 40px;
+        }
+        
+        .gbp-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #059669, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .gbp-marker {
+            background: #059669;
+        }
+        
+        .gbp-line {
+            background: linear-gradient(180deg, #059669, #10b981, #34d399);
+        }
+        
+        .gbp-step-title {
+            color: #86efac;
+        }
+        
+        .gbp-border {
+            border-color: rgba(34, 197, 94, 0.2);
+        }
+        
+        .gbp-border:hover {
+            border-color: rgba(34, 197, 94, 0.4);
+        }
+        
+        .gbp-artifact {
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+        
+        .gbp-badge {
+            background: #059669;
+        }
+        
+        /* SLIDE 4 - LEADRADAR */
+        .slide-4 {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 80px 40px;
+        }
+        
+        .leadradar-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #dc2626, #f87171);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .leadradar-marker {
+            background: #dc2626;
+        }
+        
+        .leadradar-line {
+            background: linear-gradient(180deg, #dc2626, #f87171, #fca5a5);
+        }
+        
+        .leadradar-step-title {
+            color: #fca5a5;
+        }
+        
+        .leadradar-border {
+            border-color: rgba(248, 113, 113, 0.2);
+        }
+        
+        .leadradar-border:hover {
+            border-color: rgba(248, 113, 113, 0.4);
+        }
+        
+        .leadradar-artifact {
+            border-color: rgba(248, 113, 113, 0.3);
+        }
+        
+        .leadradar-badge {
+            background: #dc2626;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes roadmapStep {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+        
+        @media (max-width: 768px) {
+            .tools-grid { grid-template-columns: 1fr; gap: 16px; }
+            .tool-title, .gbp-title, .leadradar-title { font-size: 2.2rem; }
+            .quote-block { font-size: 0.95rem; padding: 20px; }
+            .platform-list { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- SLIDE 1: PROJECT OVERVIEW -->
+    <div class="slide slide-1">
+        <div class="client-info">
+            <div class="client-badge">🇺🇸 USA • 5.0★ Rating • Fixed $600 • ASAP</div>
+            <div class="client-title">3-Tool Service Business Automation</div>
+            <div class="client-details">Mandeville | Intermediate Level | Make.com Platform</div>
+        </div>
+        
+        <div class="quote-block">
+            "Build 3 automation tools inside Make.com for Rooted Automation platform supporting local service-based SMBs"
+        </div>
+        
+        <div class="quote-block">
+            "Already have full strategy, workflows, and documentation. CompSpy tool almost complete - need ReviewRanger, GBP Guardian, and LeadRadar built"
+        </div>
+        
+        <div class="project-overview">
+            <div class="overview-title">🛠️ Complete Service Business Automation Suite</div>
+            <div class="overview-text">
+                Three specialized automation tools designed for local service businesses: review management, Google Business Profile automation, and lead detection across social platforms.
+            </div>
+            
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">⭐</div>
+                    <div class="tool-name">ReviewRanger</div>
+                    <div class="tool-desc">Automated review requests after job completion</div>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-icon">📍</div>
+                    <div class="tool-name">GBP Guardian</div>
+                    <div class="tool-desc">Auto-posting & rank tracking for Google Business</div>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-icon">🎯</div>
+                    <div class="tool-name">LeadRadar</div>
+                    <div class="tool-desc">Social media lead detection & alerts</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: REVIEWRANGER WORKFLOW -->
+    <div class="slide slide-2">
+        <div class="tool-title">⭐ ReviewRanger Workflow</div>
+        
+        <div class="workflow-container">
+            <div class="workflow-line"></div>
+            
+            <div class="step">
+                <div class="step-marker">1</div>
+                <div class="step-content">
+                    <div class="step-title">CRM Integration & Trigger Setup</div>
+                    <div class="step-desc">Connect major CRM platforms to watch for job completion events</div>
+                    <div class="artifact">
+                        <div class="crm-integration">
+                            <div style="color: #60a5fa; font-weight: 600; margin-bottom: 6px;">🔗 Supported CRM Platforms:</div>
+                            <div class="platform-list">
+                                <div class="platform-item">Jobber</div>
+                                <div class="platform-item">Housecall Pro</div>
+                                <div class="platform-item">ServiceTitan</div>
+                                <div class="platform-item">FieldEdge</div>
+                                <div class="platform-item">ServiceM8</div>
+                                <div class="platform-item">Webhook</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #94a3b8;">
+                            Trigger: "Job Completed" or "Invoice Paid" status change
+                        </div>
+                        <div class="platform-badge">Universal CRM compatibility</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">2</div>
+                <div class="step-content">
+                    <div class="step-title">Smart Filter & Validation</div>
+                    <div class="step-desc">Only trigger for completed jobs with valid customer contact info</div>
+                    <div class="artifact">
+                        <div class="routing-logic">
+                            <div style="color: #60a5fa; font-weight: 600; margin-bottom: 6px;">🔍 Filter Conditions:</div>
+                            <div class="route-item">✅ Job Status = "Complete"</div>
+                            <div class="route-item">✅ Customer has phone/email</div>
+                            <div class="route-item">✅ Service not flagged as "problem"</div>
+                            <div class="route-item">❌ Skip if review already sent</div>
+                        </div>
+                        <div class="platform-badge">Smart filtering logic</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">3</div>
+                <div class="step-content">
+                    <div class="step-title">Automated Review Request</div>
+                    <div class="step-desc">Send personalized SMS or email with review links</div>
+                    <div class="artifact">
+                        <div class="message-preview">
+                            <div style="color: #60a5fa; font-weight: 600; margin-bottom: 6px;">📱 SMS Example:</div>
+                            <div style="color: #e2e8f0; line-height: 1.4;">
+                                "Hi John! Thanks for choosing EcoWash for your home cleaning. 
+                                We'd love your feedback! Leave a review: [link]
+                                
+                                Had an issue? Reply here and we'll make it right."
+                            </div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #94a3b8;">
+                            Personalized with customer name, service type, and business branding
+                        </div>
+                        <div class="platform-badge">Twilio SMS + Gmail Email</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">4</div>
+                <div class="step-content">
+                    <div class="step-title">Smart Routing System</div>
+                    <div class="step-desc">Route happy customers to public reviews, others to private feedback</div>
+                    <div class="artifact">
+                        <div class="routing-logic">
+                            <div style="color: #60a5fa; font-weight: 600; margin-bottom: 6px;">🚦 Review Routing:</div>
+                            <div class="route-item route-happy">😊 Happy customers → Google Business Profile</div>
+                            <div class="route-item route-happy">⭐ 4-5 star intent → Public review sites</div>
+                            <div class="route-item route-unhappy">😐 Neutral/negative → Private feedback form</div>
+                            <div class="route-item route-unhappy">🔧 Issues → Internal resolution process</div>
+                        </div>
+                        <div class="platform-badge">Intelligent review routing</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">5</div>
+                <div class="step-content">
+                    <div class="step-title">Data Logging & Analytics</div>
+                    <div class="step-desc">Track all review requests and responses in Google Sheets</div>
+                    <div class="artifact">
+                        <div class="sheets-log">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Customer</th>
+                                        <th>Phone</th>
+                                        <th>Date Sent</th>
+                                        <th>Method</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>John Smith</td>
+                                        <td>555-0123</td>
+                                        <td>07/29/25</td>
+                                        <td>SMS</td>
+                                        <td style="color: #86efac;">Clicked</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sarah Johnson</td>
+                                        <td>555-0456</td>
+                                        <td>07/29/25</td>
+                                        <td>Email</td>
+                                        <td style="color: #fbbf24;">Sent</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="platform-badge">Complete tracking & analytics</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: GBP GUARDIAN WORKFLOW -->
+    <div class="slide slide-3">
+        <div class="gbp-title">📍 GBP Guardian Workflow</div>
+        
+        <div class="workflow-container">
+            <div class="workflow-line gbp-line"></div>
+            
+            <div class="step">
+                <div class="step-marker gbp-marker">1</div>
+                <div class="step-content gbp-border">
+                    <div class="step-title gbp-step-title">Weekly Schedule Trigger</div>
+                    <div class="step-desc">Automated execution every Monday at 9:00 AM</div>
+                    <div class="artifact gbp-artifact">
+                        <div style="color: #10b981; font-weight: 600; margin-bottom: 6px;">📅 Schedule: Mondays 9:00 AM</div>
+                        <div style="color: #e2e8f0; font-size: 0.65rem;">
+                            Consistent weekly posting maintains Google Business Profile activity and local SEO rankings
+                        </div>
+                        <div class="platform-badge gbp-badge">Make.com Scheduler</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker gbp-marker">2</div>
+                <div class="step-content gbp-border">
+                    <div class="step-title gbp-step-title">AI Content Generation</div>
+                    <div class="step-desc">ChatGPT creates local SEO-optimized business posts</div>
+                    <div class="artifact gbp-artifact">
+                        <div class="message-preview">
+                            <div style="color: #10b981; font-weight: 600; margin-bottom: 6px;">🤖 Generated Post Example:</div>
+                            <div style="color: #e2e8f0; line-height: 1.4; font-size: 0.65rem;">
+                                "Summer gutter cleaning season is here! 🌞 Keep your Tampa home protected from heavy rains. 
+                                Our certified team provides thorough gutter cleaning and inspection services. 
+                                Book your appointment today! #TampaGutters #HomeMaintenanceTampa #LocalService"
+                            </div>
+                        </div>
+                        <div class="platform-badge gbp-badge">OpenAI GPT-4 Integration</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker gbp-marker">3</div>
+                <div class="step-content gbp-border">
+                    <div class="step-title gbp-step-title">Auto-Publish to Google Business</div>
+                    <div class="step-desc">Direct posting to Google Business Profile via API</div>
+                    <div class="artifact gbp-artifact">
+                        <div style="color: #10b981; font-weight: 600; margin-bottom: 6px;">📤 Publishing Options:</div>
+                        <div style="color: #e2e8f0; font-size: 0.65rem; line-height: 1.4;">
+                            • DBA Platform integration for bulk posting<br>
+                            • Google Business Profile API for direct access<br>
+                            • Image attachments for visual content<br>
+                            • Local keywords and hashtag optimization
+                        </div>
+                        <div class="platform-badge gbp-badge">GBP API + DBA Platform</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker gbp-marker">4</div>
+                <div class="step-content gbp-border">
+                    <div class="step-title gbp-step-title">Rank Tracking & Monitoring</div>
+                    <div class="step-desc">Weekly local search ranking updates via LocalFalcon</div>
+                    <div class="artifact gbp-artifact">
+                        <div style="color: #10b981; font-weight: 600; margin-bottom: 6px;">📈 Tracking Metrics:</div>
+                        <div style="color: #e2e8f0; font-size: 0.65rem; line-height: 1.4;">
+                            • Local 3-pack rankings for target keywords<br>
+                            • Google Maps visibility scores<br>
+                            • Competitor comparison data<br>
+                            • Search volume and click-through rates
+                        </div>
+                        <div class="platform-badge gbp-badge">LocalFalcon + GMB Everywhere</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker gbp-marker">5</div>
+                <div class="step-content gbp-border">
+                    <div class="step-title gbp-step-title">Weekly Performance Report</div>
+                    <div class="step-desc">Automated email reports with posting and ranking data</div>
+                    <div class="artifact gbp-artifact">
+                        <div style="color: #10b981; font-weight: 600; margin-bottom: 6px;">📊 Weekly Report:</div>
+                        <div style="color: #e2e8f0; font-size: 0.65rem;">
+                            • Posts published this week<br>
+                            • Ranking changes for key terms<br>
+                            • Competitor analysis updates
+                        </div>
+                        <div class="platform-badge gbp-badge">Automated reporting</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: LEADRADAR WORKFLOW -->
+    <div class="slide slide-4">
+        <div class="leadradar-title">🎯 LeadRadar Workflow</div>
+        
+        <div class="workflow-container">
+            <div class="workflow-line leadradar-line"></div>
+            
+            <div class="step">
+                <div class="step-marker leadradar-marker">1</div>
+                <div class="step-content leadradar-border">
+                    <div class="step-title leadradar-step-title">Social Platform Access Setup</div>
+                    <div class="step-desc">Secure authorized client login credentials for social monitoring</div>
+                    <div class="artifact leadradar-artifact">
+                        <div style="color: #f87171; font-weight: 600; margin-bottom: 6px;">🔐 Platform Access:</div>
+                        <div style="color: #e2e8f0; font-size: 0.65rem;">
+                            • Facebook Groups (authorized login)<br>
+                            • Nextdoor neighborhood access<br>
+                            • Reddit local subreddits<br>
+                            • Permission-based monitoring only
+                        </div>
+                        <div class="platform-badge leadradar-badge">Authorized access only</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker leadradar-marker">2</div>
+                <div class="step-content leadradar-border">
+                    <div class="step-title leadradar-step-title">Keyword-Based Scraper Setup</div>
+                    <div class="step-desc">Configure Apify/Bardeen to search for service-related keywords</div>
+                    <div class="artifact leadradar-artifact">
+                        <div style="color: #f87171; font-weight: 600; margin-bottom: 6px;">🔍 Search Keywords:</div>
+                        <div style="color: #e2e8f0; font-size: 0.65rem;">
+                            "need a plumber", "looking for cleaner", "roof repair", 
+                            "HVAC service", "yard work help", "handyman needed"
+                        </div>
+                        <div class="platform-badge leadradar-badge">Bardeen + Apify scrapers</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker leadradar-marker">3</div>
+                <div class="step-content leadradar-border">
+                    <div class="step-title leadradar-step-title">Automated Daily Scanning</div>
+                    <div class="step-desc">Run scraper 1-2x daily to capture fresh leads</div>
+                    <div class="artifact leadradar-artifact">
+                        <div style="color: #f87171; font-weight: 600; margin-bottom: 6px;">⏰ Scan Schedule:</div>
+                        <div style="color: #e2e8f0; font-size: 0.65rem;">
+                            • Morning scan: 9:00 AM<br>
+                            • Evening scan: 6:00 PM<br>
+                            • Extract: post content, author, timestamp, platform
+                        </div>
+                        <div class="platform-badge leadradar-badge">Twice-daily automation</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker leadradar-marker">4</div>
+                <div class="step-content leadradar-border">
+                    <div class="step-title leadradar-step-title">Lead Qualification & Alerts</div>
+                    <div class="step-desc">Filter relevant leads and send instant notifications</div>
+                    <div class="artifact leadradar-artifact">
+                        <div class="message-preview">
+                            <div style="color: #f87171; font-weight: 600; margin-bottom: 6px;">🚨 Lead Alert Example:</div>
+                            <div style="color: #e2e8f0; line-height: 1.4; font-size: 0.65rem;">
+                                "🎯 New Lead Found<br>
+                                Platform: Nextdoor Tampa<br>
+                                Post: 'Anyone know a good gutter cleaner near Westchase?'<br>
+                                Posted: 15 minutes ago<br>
+                                [View Post] [Draft Reply]"
+                            </div>
+                        </div>
+                        <div class="platform-badge leadradar-badge">Slack + Email alerts</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker leadradar-marker">5</div>
+                <div class="step-content leadradar-border">
+                    <div class="step-title leadradar-step-title">CRM Lead Tracking</div>
+                    <div class="step-desc">Log all leads in Google Sheets/Airtable with status updates</div>
+                    <div class="artifact leadradar-artifact">
+                        <div class="sheets-log">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Platform</th>
+                                        <th>Lead Type</th>
+                                        <th>Location</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Nextdoor</td>
+                                        <td>Gutter Clean</td>
+                                        <td>Westchase</td>
+                                        <td style="color: #fbbf24;">New</td>
+                                    </tr>
+                                    <tr>
+                                        <td>FB Group</td>
+                                        <td>HVAC Repair</td>
+                                        <td>Downtown</td>
+                                        <td style="color: #86efac;">Contacted</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="platform-badge leadradar-badge">Complete lead tracking</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker leadradar-marker">6</div>
+                <div class="step-content leadradar-border">
+                    <div class="step-title leadradar-step-title">AI Reply Assistance (Optional)</div>
+                    <div class="step-desc">Generate helpful reply drafts using OpenAI for quick responses</div>
+                    <div class="artifact leadradar-artifact">
+                        <div class="message-preview">
+                            <div style="color: #f87171; font-weight: 600; margin-bottom: 6px;">🤖 Draft Reply:</div>
+                            <div style="color: #e2e8f0; line-height: 1.4; font-size: 0.65rem;">
+                                "Hi! I'm with EcoWash and we specialize in gutter cleaning in the Westchase area. 
+                                We're licensed, insured, and have great reviews from your neighbors. 
+                                Would you like a free estimate?"
+                            </div>
+                        </div>
+                        <div class="platform-badge leadradar-badge">OpenAI reply generation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Final Summary -->
+        <div style="background: rgba(30, 41, 59, 0.8); padding: 32px; border-radius: 16px; box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3); border: 1px solid rgba(34, 197, 94, 0.2); text-align: center; max-width: 800px; margin: 60px auto 0; animation: slideUp 1.4s ease; backdrop-filter: blur(10px);">
+            <div style="font-size: 1.4rem; font-weight: 600; margin-bottom: 24px; color: #86efac;">🎯 Complete Automation Platform</div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 12px; border: 1px solid rgba(34, 197, 94, 0.3);">
+                    <div style="font-size: 2rem; font-weight: 700; color: #10b981; margin-bottom: 8px;">3</div>
+                    <div style="font-size: 0.9rem; color: #cbd5e1; font-weight: 500;">Complete Tools</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8;">Ready to deploy</div>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 12px; border: 1px solid rgba(34, 197, 94, 0.3);">
+                    <div style="font-size: 2rem; font-weight: 700; color: #10b981; margin-bottom: 8px;">24/7</div>
+                    <div style="font-size: 0.9rem; color: #cbd5e1; font-weight: 500;">Automation</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8;">Zero manual work</div>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 12px; border: 1px solid rgba(34, 197, 94, 0.3);">
+                    <div style="font-size: 2rem; font-weight: 700; color: #10b981; margin-bottom: 8px;">$600</div>
+                    <div style="font-size: 0.9rem; color: #cbd5e1; font-weight: 500;">Fixed Price</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8;">Complete solution</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === ' ') {
+                currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            } else if (e.key === 'ArrowUp') {
+                currentSlide = Math.max(currentSlide - 1, 0);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        
+        document.addEventListener('click', () => {
+            currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+            slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

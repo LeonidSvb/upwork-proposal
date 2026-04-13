@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make.com Integration Fix Solution</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #1e293b;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            position: relative;
+        }
+        
+        /* SLIDE 1 - PROBLEM */
+        .slide-1 {
+            background: linear-gradient(135deg, #b91c1c 0%, #dc2626 100%);
+            color: white;
+        }
+        
+        .client-info {
+            margin-bottom: 40px;
+            text-align: center;
+            animation: slideUp 0.6s ease;
+        }
+        
+        .client-badge {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #22c55e;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+        
+        .client-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .client-details {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+        
+        .quote-block {
+            background: rgba(255,255,255,0.08);
+            padding: 24px 32px;
+            border-radius: 12px;
+            border-left: 4px solid #f87171;
+            margin-bottom: 24px;
+            font-family: 'SF Mono', monospace;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            backdrop-filter: blur(20px);
+            max-width: 850px;
+            animation: slideUp 0.8s ease;
+        }
+        
+        .problem-reframe {
+            background: rgba(255,255,255,0.05);
+            padding: 32px;
+            border-radius: 16px;
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            max-width: 900px;
+            margin-bottom: 40px;
+            animation: slideUp 1s ease;
+        }
+        
+        .problem-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #fca5a5;
+        }
+        
+        .problem-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 32px;
+            opacity: 0.9;
+        }
+        
+        .cost-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 800px;
+            animation: slideUp 1.2s ease;
+        }
+        
+        .cost-card {
+            background: rgba(255,255,255,0.1);
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cost-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #f87171, transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        .cost-card:hover { transform: translateY(-4px); }
+        
+        .cost-value {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fca5a5, #f87171);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cost-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+            opacity: 0.9;
+        }
+        
+        .cost-desc {
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+        
+        /* SLIDE 2 - ROADMAP */
+        .slide-2 {
+            background: #ffffff;
+            padding: 80px 40px;
+        }
+        
+        .roadmap-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #b91c1c, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .roadmap-container {
+            max-width: 650px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .roadmap-line {
+            position: absolute;
+            left: 30px;
+            top: 60px;
+            bottom: 60px;
+            width: 3px;
+            background: linear-gradient(180deg, #b91c1c, #dc2626, #f87171);
+            border-radius: 2px;
+            z-index: 1;
+        }
+        
+        .step {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 80px;
+            animation: roadmapStep 0.8s ease forwards;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        
+        .step:nth-child(1) { animation-delay: 0.2s; }
+        .step:nth-child(2) { animation-delay: 0.4s; }
+        .step:nth-child(3) { animation-delay: 0.6s; }
+        .step:nth-child(4) { animation-delay: 0.8s; }
+        .step:nth-child(5) { animation-delay: 1s; }
+        
+        .step-marker {
+            position: absolute;
+            left: -50px;
+            top: 8px;
+            width: 24px;
+            height: 24px;
+            background: #dc2626;
+            border: 4px solid #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px #fecaca;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .step-content {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(220, 38, 38, 0.08);
+            border: 1px solid #fecaca;
+            transition: all 0.3s ease;
+        }
+        
+        .step-content:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(220, 38, 38, 0.12);
+        }
+        
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #991b1b;
+        }
+        
+        .step-desc {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        
+        .artifact {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.75rem;
+        }
+        
+        .debug-steps {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 10px;
+            font-family: 'SF Mono', monospace;
+        }
+        
+        .debug-item {
+            font-size: 0.65rem;
+            color: #374151;
+            margin: 3px 0;
+            line-height: 1.3;
+        }
+        
+        .debug-example {
+            font-size: 0.6rem;
+            color: #dc2626;
+            font-style: italic;
+            margin-top: 4px;
+        }
+        
+        .api-payload {
+            background: #1f2937;
+            color: #10b981;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: 'SF Mono', monospace;
+            font-size: 0.65rem;
+        }
+        
+        .flow-test {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 10px;
+        }
+        
+        .flow-step {
+            font-size: 0.65rem;
+            color: #374151;
+            margin: 3px 0;
+            padding-left: 12px;
+            position: relative;
+        }
+        
+        .flow-step:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: 600;
+        }
+        
+        .error-handling {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 10px;
+        }
+        
+        .error-feature {
+            font-size: 0.65rem;
+            color: #374151;
+            margin: 3px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .error-icon {
+            margin-right: 6px;
+            color: #dc2626;
+        }
+        
+        .delivery-checklist {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 10px;
+        }
+        
+        .checklist-item {
+            font-size: 0.65rem;
+            color: #374151;
+            margin: 3px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .checklist-icon {
+            margin-right: 6px;
+            color: #10b981;
+        }
+        
+        .platform-badge {
+            background: #dc2626;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: 500;
+            margin-top: 4px;
+            display: inline-block;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes roadmapStep {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+        
+        @media (max-width: 768px) {
+            .cost-grid { grid-template-columns: 1fr; gap: 16px; }
+            .roadmap-title { font-size: 2.2rem; }
+            .quote-block { font-size: 0.95rem; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- SLIDE 1: PROBLEM & OPPORTUNITY COST -->
+    <div class="slide slide-1">
+        <div class="client-info">
+            <div class="client-badge">🇮🇳 Payment Verified • 4.8★ Rating • 156 Jobs Posted</div>
+            <div class="client-title">Integration Troubleshooting Expert Needed</div>
+            <div class="client-details">Lucknow, India | $50 Fixed Price | 24% Hire Rate</div>
+        </div>
+        
+        <div class="quote-block">
+            > "I'm experiencing errors with Make.com integration with Eleven Labs upload in Google Drive and Hey Gen and put it on Metricool"
+        </div>
+        
+        <div class="quote-block">
+            > "Looking for skilled freelancer to troubleshoot and resolve errors - need someone who can quickly identify and fix integration issues"
+        </div>
+        
+        <div class="problem-reframe">
+            <div class="problem-title">What Your Integration Really Needs</div>
+            <div class="problem-text">
+                Stop losing time with broken automation. Get your ElevenLabs → HeyGen → Google Drive → Metricool workflow running smoothly with proper error handling and robust API connections.
+            </div>
+            
+            <div class="cost-grid">
+                <div class="cost-card">
+                    <div class="cost-value">48hrs</div>
+                    <div class="cost-label">Downtime</div>
+                    <div class="cost-desc">Broken workflow</div>
+                </div>
+                
+                <div class="cost-card">
+                    <div class="cost-value">$800</div>
+                    <div class="cost-label">Lost Revenue</div>
+                    <div class="cost-desc">Manual workarounds</div>
+                </div>
+                
+                <div class="cost-card">
+                    <div class="cost-value">0%</div>
+                    <div class="cost-label">Success Rate</div>
+                    <div class="cost-desc">Current automation</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: SOLUTION ROADMAP -->
+    <div class="slide slide-2">
+        <div class="roadmap-title">Integration Fix Roadmap</div>
+        
+        <div class="roadmap-container">
+            <div class="roadmap-line"></div>
+            
+            <div class="step">
+                <div class="step-marker">1</div>
+                <div class="step-content">
+                    <div class="step-title">Debug the Scenario in Make</div>
+                    <div class="step-desc">Identify exactly where the integration is breaking</div>
+                    <div class="artifact">
+                        <div class="debug-steps">
+                            <div style="font-weight: 600; color: #dc2626; margin-bottom: 4px; font-size: 0.7rem;">🔍 Debugging Process:</div>
+                            <div class="debug-item">• Open scenario, run manually with test data</div>
+                            <div class="debug-item">• Check error modules (ElevenLabs? HeyGen? Drive?)</div>
+                            <div class="debug-item">• Inspect incoming/output bundles and JSON</div>
+                            <div class="debug-example">Example: "Missing API key", "400 Bad Request", "invalid file format"</div>
+                        </div>
+                        <div class="platform-badge">Make.com scenario analysis</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">2</div>
+                <div class="step-content">
+                    <div class="step-title">Fix API Payloads (JSON & Auth)</div>
+                    <div class="step-desc">Ensure each external API is called properly</div>
+                    <div class="artifact">
+                        <div class="api-payload">
+{<br>
+&nbsp;&nbsp;"voice_id": "abc123",<br>
+&nbsp;&nbsp;"text": "Welcome to our demo!",<br>
+&nbsp;&nbsp;"model_id": "eleven_monolingual_v1"<br>
+}
+                        </div>
+                        <div style="margin-top: 8px; font-size: 0.65rem; color: #64748b;">
+                            ✓ ElevenLabs: Valid audio input & content-type<br>
+                            ✓ HeyGen: Template ID, variables, timing<br>
+                            ✓ Google Drive: Proper file metadata
+                        </div>
+                        <div class="platform-badge">API payload validation</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">3</div>
+                <div class="step-content">
+                    <div class="step-title">Test Full Flow End-to-End</div>
+                    <div class="step-desc">Simulate real run and validate each step</div>
+                    <div class="artifact">
+                        <div class="flow-test">
+                            <div style="font-weight: 600; color: #dc2626; margin-bottom: 4px; font-size: 0.7rem;">🔄 Flow Validation:</div>
+                            <div class="flow-step">Audio generated (ElevenLabs)</div>
+                            <div class="flow-step">Video rendered (HeyGen)</div>
+                            <div class="flow-step">Uploaded to Drive</div>
+                            <div class="flow-step">Scheduled in Metricool</div>
+                        </div>
+                        <div class="platform-badge">End-to-end testing</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">4</div>
+                <div class="step-content">
+                    <div class="step-title">Add Logging + Error Handling</div>
+                    <div class="step-desc">Make the system robust with failure management</div>
+                    <div class="artifact">
+                        <div class="error-handling">
+                            <div style="font-weight: 600; color: #dc2626; margin-bottom: 4px; font-size: 0.7rem;">🛡️ Error Management:</div>
+                            <div class="error-feature">
+                                <span class="error-icon">📋</span>
+                                Router branches for failure cases
+                            </div>
+                            <div class="error-feature">
+                                <span class="error-icon">📧</span>
+                                Telegram/Email alerts on failure
+                            </div>
+                            <div class="error-feature">
+                                <span class="error-icon">📊</span>
+                                Log metadata to Notion/Sheets
+                            </div>
+                        </div>
+                        <div class="platform-badge">Robust error handling</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-marker">5</div>
+                <div class="step-content">
+                    <div class="step-title">Final Delivery + Cleanup</div>
+                    <div class="step-desc">Production-ready system with documentation</div>
+                    <div class="artifact">
+                        <div class="delivery-checklist">
+                            <div style="font-weight: 600; color: #dc2626; margin-bottom: 4px; font-size: 0.7rem;">✅ Delivery Checklist:</div>
+                            <div class="checklist-item">
+                                <span class="checklist-icon">🧹</span>
+                                Clean up unused modules
+                            </div>
+                            <div class="checklist-item">
+                                <span class="checklist-icon">🏷️</span>
+                                Add meaningful labels
+                            </div>
+                            <div class="checklist-item">
+                                <span class="checklist-icon">📁</span>
+                                Export scenario JSON
+                            </div>
+                            <div class="checklist-item">
+                                <span class="checklist-icon">🎥</span>
+                                Loom walkthrough included
+                            </div>
+                        </div>
+                        <div class="platform-badge">Production deployment</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ROI Summary -->
+        <div style="background: #ffffff; padding: 32px; border-radius: 16px; box-shadow: 0 4px 24px rgba(220, 38, 38, 0.08); border: 1px solid #fecaca; text-align: center; max-width: 800px; margin: 60px auto 0; animation: slideUp 1.4s ease;">
+            <div style="font-size: 1.4rem; font-weight: 600; margin-bottom: 24px; color: #991b1b;">🎯 What You'll Get With This Fix</div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+                <div style="background: #fef2f2; padding: 20px; border-radius: 12px; border: 1px solid #fecaca;">
+                    <div style="font-size: 2rem; font-weight: 700; color: #dc2626; margin-bottom: 8px;">24hrs</div>
+                    <div style="font-size: 0.9rem; color: #64748b; font-weight: 500;">Fix Time</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8;">Complete solution</div>
+                </div>
+                <div style="background: #fef2f2; padding: 20px; border-radius: 12px; border: 1px solid #fecaca;">
+                    <div style="font-size: 2rem; font-weight: 700; color: #dc2626; margin-bottom: 8px;">99%</div>
+                    <div style="font-size: 0.9rem; color: #64748b; font-weight: 500;">Success Rate</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8;">With error handling</div>
+                </div>
+                <div style="background: #fef2f2; padding: 20px; border-radius: 12px; border: 1px solid #fecaca;">
+                    <div style="font-size: 2rem; font-weight: 700; color: #dc2626; margin-bottom: 8px;">$2.4K</div>
+                    <div style="font-size: 0.9rem; color: #64748b; font-weight: 500;">Monthly Savings</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8;">Automated workflow</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === ' ') {
+                currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            } else if (e.key === 'ArrowUp') {
+                currentSlide = Math.max(currentSlide - 1, 0);
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        
+        document.addEventListener('click', () => {
+            currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+            slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
