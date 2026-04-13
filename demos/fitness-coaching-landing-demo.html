@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Demo landing page concept for an online fitness coaching brand focused on lead generation and free consultation bookings.">
+  <title>Online Fitness Coaching | Demo Landing Page</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --panel: #171a20;
+      --panel-soft: #1f242c;
+      --text: #f5f2ea;
+      --muted: #b2b6bd;
+      --line: rgba(255, 255, 255, 0.09);
+      --accent: #f26b3a;
+      --accent-2: #ffd166;
+      --success: #b6ff7f;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --max: 1160px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background:
+        radial-gradient(circle at top left, rgba(242, 107, 58, 0.22), transparent 30%),
+        radial-gradient(circle at 85% 15%, rgba(255, 209, 102, 0.12), transparent 18%),
+        linear-gradient(180deg, #0d1014 0%, #10141a 35%, #0c0f13 100%);
+      color: var(--text);
+      font-family: "Segoe UI", Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page-shell {
+      overflow: hidden;
+    }
+
+    .container {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent-2);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.6;
+    }
+
+    .section-title {
+      margin: 14px 0 0;
+      font-size: clamp(2rem, 4vw, 3.8rem);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+    }
+
+    .section-copy {
+      margin: 18px 0 0;
+      max-width: 680px;
+      color: var(--muted);
+      font-size: 1.03rem;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(16px);
+      background: rgba(10, 12, 16, 0.7);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+    }
+
+    .logo {
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      padding: 0 22px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent) 0%, #ff8e58 100%);
+      color: #120c08;
+      box-shadow: 0 16px 40px rgba(242, 107, 58, 0.28);
+    }
+
+    .btn-secondary {
+      border-color: rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+    }
+
+    .hero {
+      padding: 70px 0 34px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 34px;
+      align-items: stretch;
+    }
+
+    .hero-copy h1 {
+      margin: 16px 0 18px;
+      font-size: clamp(2.8rem, 7vw, 6.4rem);
+      line-height: 0.92;
+      letter-spacing: -0.06em;
+      text-transform: uppercase;
+    }
+
+    .hero-copy p {
+      margin: 0;
+      max-width: 620px;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .metric-card,
+    .card,
+    .testimonial,
+    .price-card,
+    .coach-panel,
+    .lead-panel {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.035) 0%, rgba(255, 255, 255, 0.02) 100%);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+    }
+
+    .metric-card {
+      padding: 18px;
+    }
+
+    .metric-card strong {
+      display: block;
+      font-size: 1.85rem;
+      line-height: 1;
+    }
+
+    .metric-card span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 660px;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.6)),
+        url("https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1200&q=80") center/cover;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-badge,
+    .hero-note {
+      position: absolute;
+      backdrop-filter: blur(14px);
+      background: rgba(8, 10, 14, 0.66);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-badge {
+      top: 24px;
+      right: 24px;
+      padding: 16px 18px;
+      max-width: 220px;
+    }
+
+    .hero-badge strong,
+    .hero-note strong {
+      display: block;
+      font-size: 1rem;
+    }
+
+    .hero-badge span,
+    .hero-note span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .hero-note {
+      left: 24px;
+      bottom: 24px;
+      padding: 18px 20px;
+      max-width: 260px;
+    }
+
+    .brands {
+      padding: 22px 0 54px;
+    }
+
+    .brand-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .brand-item {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      text-align: center;
+      color: #d5d9df;
+      background: rgba(255, 255, 255, 0.02);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+    }
+
+    section {
+      padding: 42px 0;
+    }
+
+    .about-grid,
+    .pricing-grid,
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+      align-items: start;
+    }
+
+    .coach-panel {
+      padding: 26px;
+    }
+
+    .coach-panel h3,
+    .lead-panel h3,
+    .price-card h3,
+    .testimonial h3,
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.35rem;
+    }
+
+    .coach-list,
+    .service-list,
+    .price-list {
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+      color: var(--muted);
+    }
+
+    .coach-list li,
+    .service-list li,
+    .price-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .coach-list li:last-child,
+    .service-list li:last-child,
+    .price-list li:last-child {
+      border-bottom: 0;
+    }
+
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .card {
+      padding: 24px;
+    }
+
+    .card p,
+    .coach-panel p,
+    .lead-panel p,
+    .price-card p,
+    .testimonial p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .card-index {
+      display: inline-flex;
+      width: 42px;
+      height: 42px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+      border-radius: 50%;
+      background: rgba(242, 107, 58, 0.15);
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .transform-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .transform-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 420px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background-size: cover;
+      background-position: center;
+      box-shadow: var(--shadow);
+    }
+
+    .transform-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.78) 100%);
+    }
+
+    .transform-content {
+      position: absolute;
+      inset: auto 0 0 0;
+      z-index: 1;
+      padding: 24px;
+    }
+
+    .transform-label {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #f4f1eb;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .transform-content h3 {
+      margin: 0 0 8px;
+      font-size: 1.45rem;
+    }
+
+    .transform-content p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .testimonial {
+      padding: 24px;
+    }
+
+    .testimonial strong {
+      display: block;
+      margin-top: 20px;
+      font-size: 0.96rem;
+    }
+
+    .testimonial span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .pricing-grid {
+      margin-top: 28px;
+    }
+
+    .price-card {
+      padding: 28px;
+    }
+
+    .price-kicker {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--accent-2);
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .price {
+      margin: 0 0 14px;
+      font-size: 3rem;
+      line-height: 1;
+      letter-spacing: -0.06em;
+    }
+
+    .lead-panel {
+      padding: 28px;
+      background:
+        radial-gradient(circle at top right, rgba(242, 107, 58, 0.16), transparent 34%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+    }
+
+    .form {
+      display: grid;
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .form input,
+    .form select,
+    .form textarea {
+      width: 100%;
+      min-height: 56px;
+      padding: 16px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+      font: inherit;
+    }
+
+    .form textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form input::placeholder,
+    .form textarea::placeholder {
+      color: #8f96a2;
+    }
+
+    .form button {
+      width: 100%;
+      margin-top: 6px;
+    }
+
+    .small-note {
+      margin-top: 14px;
+      color: #97a0ad;
+      font-size: 0.88rem;
+    }
+
+    footer {
+      padding: 24px 0 54px;
+      color: #8f96a2;
+      font-size: 0.92rem;
+    }
+
+    .footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .about-grid,
+      .pricing-grid,
+      .contact-grid,
+      .cards-3,
+      .transform-grid,
+      .testimonials-grid,
+      .brand-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 520px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .hero {
+        padding-top: 42px;
+      }
+
+      .hero-metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-badge,
+      .hero-note {
+        max-width: calc(100% - 32px);
+      }
+
+      .section-title {
+        line-height: 1.02;
+      }
+
+      .footer-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header>
+      <div class="container nav">
+        <div class="logo">Forge<span>Fit</span> Coaching</div>
+        <nav class="nav-links" aria-label="Primary">
+          <a href="#about">About</a>
+          <a href="#services">Programs</a>
+          <a href="#results">Results</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#contact" class="btn btn-secondary">Book A Call</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <div class="eyebrow">Online Fitness Coaching Demo</div>
+            <h1>Build a body that looks strong and performs stronger.</h1>
+            <p>
+              A bold, mobile-first landing page concept built to convert cold traffic into consultation calls.
+              This direction is designed for online coaching offers focused on fat loss, strength, and habit-based transformation.
+            </p>
+            <div class="hero-actions">
+              <a href="#contact" class="btn btn-primary">Claim Your Free Consultation</a>
+              <a href="#results" class="btn btn-secondary">See Transformations</a>
+            </div>
+            <div class="hero-metrics">
+              <div class="metric-card">
+                <strong>12 Weeks</strong>
+                <span>Structured coaching plan with measurable milestones.</span>
+              </div>
+              <div class="metric-card">
+                <strong>1:1 Support</strong>
+                <span>Training, nutrition, accountability, and direct feedback.</span>
+              </div>
+              <div class="metric-card">
+                <strong>Mobile First</strong>
+                <span>Designed to convert where fitness traffic usually lands first.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-label="Fitness coaching hero image">
+            <div class="hero-badge">
+              <strong>High-converting structure</strong>
+              <span>Clear offer, immediate trust signals, and repeated CTA placement.</span>
+            </div>
+            <div class="hero-note">
+              <strong>Lead-gen focused</strong>
+              <span>Optimized around one goal: getting users to book a free consultation.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="brands">
+        <div class="container brand-strip">
+          <div class="brand-item">Transformation</div>
+          <div class="brand-item">Strength</div>
+          <div class="brand-item">Coaching</div>
+          <div class="brand-item">Results</div>
+        </div>
+      </section>
+
+      <section id="about">
+        <div class="container about-grid">
+          <div>
+            <div class="eyebrow">About The Coach</div>
+            <h2 class="section-title">Confidence-led coaching with a sharper commercial layout.</h2>
+            <p class="section-copy">
+              This section balances authority and relatability. The coach story is framed to build trust quickly,
+              show expertise, and move visitors toward the next action without turning the page into a long bio.
+            </p>
+          </div>
+          <div class="coach-panel">
+            <h3>Why this section works</h3>
+            <p>
+              Instead of generic “about me” copy, the structure pushes credibility, results, and coaching method in a concise format.
+            </p>
+            <ul class="coach-list">
+              <li>Positions the coach as experienced without sounding inflated.</li>
+              <li>Works for both men and women in the 20-40 audience range.</li>
+              <li>Keeps visual momentum while still establishing trust.</li>
+              <li>Easy to swap for real credentials, story, and social proof.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="services">
+        <div class="container">
+          <div class="eyebrow">Programs Offered</div>
+          <h2 class="section-title">Services designed around outcomes, not vague motivation.</h2>
+          <p class="section-copy">
+            The layout below lets the offer feel structured and premium. Each card can map to a real package, delivery method,
+            or lead magnet depending on the final business model.
+          </p>
+
+          <div class="cards-3">
+            <article class="card">
+              <div class="card-index">01</div>
+              <h3>Fat Loss Coaching</h3>
+              <p>Built for clients who want a leaner body, better habits, and a sustainable plan without crash dieting.</p>
+            </article>
+            <article class="card">
+              <div class="card-index">02</div>
+              <h3>Strength Performance</h3>
+              <p>Progressive programming, technique feedback, and habit accountability for clients ready to build serious strength.</p>
+            </article>
+            <article class="card">
+              <div class="card-index">03</div>
+              <h3>Hybrid Coaching</h3>
+              <p>A higher-touch option combining training, nutrition, weekly review, and direct support for faster momentum.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="results">
+        <div class="container">
+          <div class="eyebrow">Transformation Examples</div>
+          <h2 class="section-title">Results shown early enough to keep visitors engaged.</h2>
+          <p class="section-copy">
+            For fitness pages, this is usually one of the most important conversion blocks. These cards are placeholders for
+            real before-and-after stories, stats, and testimonials.
+          </p>
+
+          <div class="transform-grid">
+            <article class="transform-card" style="background-image: url('https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=900&q=80');">
+              <div class="transform-content">
+                <div class="transform-label">12 week cut</div>
+                <h3>Lost 18 lbs and rebuilt consistency.</h3>
+                <p>Example space for a concise result story with one measurable outcome and one emotional payoff.</p>
+              </div>
+            </article>
+            <article class="transform-card" style="background-image: url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80');">
+              <div class="transform-content">
+                <div class="transform-label">Strength phase</div>
+                <h3>Added confidence, size, and gym structure.</h3>
+                <p>Use this block to show who the program is for and why the coaching approach works in practice.</p>
+              </div>
+            </article>
+            <article class="transform-card" style="background-image: url('https://images.unsplash.com/photo-1517963879433-6ad2b056d712?auto=format&fit=crop&w=900&q=80');">
+              <div class="transform-content">
+                <div class="transform-label">Busy schedule</div>
+                <h3>Trained around work without losing momentum.</h3>
+                <p>Ideal for a testimonial-backed case showing flexibility, accountability, and realistic transformation.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div class="eyebrow">Testimonials</div>
+          <h2 class="section-title">Social proof with enough contrast to break up the page.</h2>
+          <p class="section-copy">
+            These can be replaced with real screenshots, names, or video references. The idea is to make the page feel trusted before pricing.
+          </p>
+
+          <div class="testimonials-grid">
+            <article class="testimonial">
+              <p>
+                “The structure was the biggest difference. I stopped guessing, started progressing, and finally felt in control of my training.”
+              </p>
+              <strong>Sarah M.</strong>
+              <span>Fat loss coaching client</span>
+            </article>
+            <article class="testimonial">
+              <p>
+                “What I liked most was how direct and practical everything felt. No fluff, no random plans, just clear progress week by week.”
+              </p>
+              <strong>Daniel R.</strong>
+              <span>Strength coaching client</span>
+            </article>
+            <article class="testimonial">
+              <p>
+                “The check-ins kept me accountable without making it overwhelming. I was working full-time and still saw real changes.”
+              </p>
+              <strong>Jess P.</strong>
+              <span>Hybrid coaching client</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing">
+        <div class="container">
+          <div class="eyebrow">Pricing Overview</div>
+          <h2 class="section-title">Enough pricing detail to qualify leads without creating friction.</h2>
+          <p class="section-copy">
+            This block can stay simple or expand into package comparison. For lead-gen, I’d usually keep it concise and point people toward the consultation.
+          </p>
+
+          <div class="pricing-grid">
+            <article class="price-card">
+              <span class="price-kicker">Most Popular</span>
+              <h3>Coaching Intensive</h3>
+              <p class="price">$149<span style="font-size: 1rem; letter-spacing: 0; color: var(--muted);"> / month</span></p>
+              <ul class="price-list">
+                <li>Custom training plan</li>
+                <li>Nutrition targets and adjustments</li>
+                <li>Weekly accountability check-ins</li>
+                <li>Direct messaging support</li>
+              </ul>
+            </article>
+
+            <article class="lead-panel">
+              <h3>Book the free consultation</h3>
+              <p>
+                This CTA block is intentionally repeated near pricing so ready-to-convert visitors do not need to scroll back up.
+              </p>
+              <div class="hero-actions" style="margin-top: 20px;">
+                <a href="#contact" class="btn btn-primary">Book My Call</a>
+                <a href="#services" class="btn btn-secondary">View Programs</a>
+              </div>
+              <p class="small-note">Demo note: this can also be replaced with urgency, FAQ, or guarantee copy depending on the offer.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="container contact-grid">
+          <div>
+            <div class="eyebrow">Consultation Form</div>
+            <h2 class="section-title">Built to capture the lead without turning the page into homework.</h2>
+            <p class="section-copy">
+              This form is intentionally short. For paid traffic, shorter often wins. Qualification can happen on the call, or through one extra question if needed.
+            </p>
+          </div>
+
+          <div class="lead-panel">
+            <h3>Start your transformation</h3>
+            <p>Swap this with a real connected form in Webflow, WordPress, or a custom stack.</p>
+            <form class="form">
+              <input type="text" name="name" placeholder="Full name">
+              <input type="email" name="email" placeholder="Email address">
+              <select name="goal" aria-label="Primary goal">
+                <option selected disabled>Primary goal</option>
+                <option>Weight loss</option>
+                <option>Strength training</option>
+                <option>Body recomposition</option>
+                <option>General fitness</option>
+              </select>
+              <textarea name="message" placeholder="What result are you trying to achieve over the next 3 months?"></textarea>
+              <button type="submit" class="btn btn-primary">Get My Free Consultation</button>
+            </form>
+            <p class="small-note">Demo build only. Form action and integrations are intentionally not wired up.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-row">
+        <div>Demo landing page concept for a fitness coaching brand.</div>
+        <div>Suitable starting point for HTML, Webflow, or WordPress implementation.</div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
