@@ -1,0 +1,2082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Prime Weight Loss & Wellness — GLP-1 telehealth clinic landing page funnel demo. Book a free consultation and start your medical weight loss journey.">
+  <title>Prime Weight Loss & Wellness | Medical Weight Loss Demo</title>
+  <style>
+    :root {
+      --bg: #f8f7f4;
+      --white: #ffffff;
+      --navy: #1a2744;
+      --navy-mid: #2c3d6b;
+      --teal: #2bb5a0;
+      --teal-light: #e6f7f5;
+      --teal-dark: #1f9284;
+      --warm: #f9f5ee;
+      --text: #1c2233;
+      --muted: #6b7280;
+      --line: rgba(26, 39, 68, 0.1);
+      --success: #2bb5a0;
+      --shadow-sm: 0 2px 16px rgba(26, 39, 68, 0.08);
+      --shadow-md: 0 8px 40px rgba(26, 39, 68, 0.12);
+      --shadow-lg: 0 24px 80px rgba(26, 39, 68, 0.16);
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 10px;
+      --max: 1120px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+      line-height: 1.6;
+      min-width: 320px;
+    }
+
+    /* DEMO BANNER */
+    .demo-banner {
+      background: var(--navy);
+      color: rgba(255,255,255,0.85);
+      text-align: center;
+      padding: 10px 20px;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+    }
+    .demo-banner strong { color: #fff; }
+
+    /* NAV */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--line);
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, var(--teal), var(--navy-mid));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: white;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .logo-text strong {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .logo-text span {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--navy); }
+
+    .nav-cta {
+      background: var(--teal);
+      color: white !important;
+      padding: 10px 22px;
+      border-radius: 100px;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      transition: background 0.2s, transform 0.15s !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--teal-dark) !important;
+      transform: translateY(-1px);
+      color: white !important;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(160deg, var(--navy) 0%, var(--navy-mid) 60%, #3a5298 100%);
+      padding: 100px 40px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(43,181,160,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      left: -60px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(43,181,160,0.2);
+      border: 1px solid rgba(43,181,160,0.4);
+      color: #7de8d8;
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: #2bb5a0;
+      border-radius: 50%;
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 4vw, 54px);
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: #7de8d8;
+    }
+
+    .hero p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.72);
+      margin-bottom: 36px;
+      max-width: 480px;
+      line-height: 1.65;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--teal);
+      color: white;
+      padding: 16px 32px;
+      border-radius: 100px;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 8px 24px rgba(43,181,160,0.35);
+    }
+
+    .btn-primary:hover {
+      background: var(--teal-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(43,181,160,0.45);
+    }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.85);
+      padding: 16px 28px;
+      border-radius: 100px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      cursor: pointer;
+      transition: background 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-ghost:hover { background: rgba(255,255,255,0.16); }
+
+    .hero-stats {
+      display: flex;
+      gap: 28px;
+      margin-top: 40px;
+    }
+
+    .hero-stat {
+      text-align: left;
+    }
+
+    .hero-stat strong {
+      display: block;
+      font-size: 26px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .hero-stat span {
+      font-size: 12px;
+      color: rgba(255,255,255,0.55);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* HERO CARD */
+    .hero-card {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 36px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .hero-card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .hero-card-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .card-field {
+      margin-bottom: 16px;
+    }
+
+    .card-field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+
+    .card-field select,
+    .card-field input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      color: var(--text);
+      background: var(--bg);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .card-field select:focus,
+    .card-field input:focus {
+      border-color: var(--teal);
+    }
+
+    .card-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .card-submit {
+      width: 100%;
+      background: var(--teal);
+      color: white;
+      padding: 14px;
+      border-radius: 100px;
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 6px 20px rgba(43,181,160,0.3);
+    }
+
+    .card-submit:hover {
+      background: var(--teal-dark);
+      transform: translateY(-1px);
+    }
+
+    .card-privacy {
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+
+    /* TRUST BAR */
+    .trust-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--line);
+      padding: 20px 40px;
+    }
+
+    .trust-bar-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .trust-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--teal-light);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--teal);
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 80px 40px;
+    }
+
+    .section-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.65;
+    }
+
+    /* QUIZ */
+    .quiz-section {
+      background: var(--navy);
+      padding: 80px 40px;
+    }
+
+    .quiz-wrap {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .quiz-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .quiz-header .section-label { color: #7de8d8; }
+
+    .quiz-header .section-title { color: #fff; }
+
+    .quiz-header .section-sub {
+      color: rgba(255,255,255,0.6);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .quiz-card {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 40px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .quiz-progress {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+
+    .quiz-progress-bar {
+      height: 4px;
+      flex: 1;
+      background: var(--line);
+      border-radius: 4px;
+      transition: background 0.4s;
+    }
+
+    .quiz-progress-bar.active { background: var(--teal); }
+
+    .quiz-step { display: none; }
+    .quiz-step.visible { display: block; }
+
+    .quiz-step-num {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .quiz-step-q {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 24px;
+      line-height: 1.3;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .quiz-option {
+      border: 2px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: border-color 0.2s, background 0.2s;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .quiz-option:hover {
+      border-color: var(--teal);
+      background: var(--teal-light);
+    }
+
+    .quiz-option.selected {
+      border-color: var(--teal);
+      background: var(--teal-light);
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    .quiz-option-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--line);
+      flex-shrink: 0;
+      transition: border-color 0.2s, background 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .quiz-option.selected .quiz-option-dot {
+      border-color: var(--teal);
+      background: var(--teal);
+    }
+
+    .quiz-option.selected .quiz-option-dot::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+    }
+
+    .quiz-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 28px;
+    }
+
+    .quiz-back {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 8px 0;
+      transition: color 0.2s;
+    }
+
+    .quiz-back:hover { color: var(--navy); }
+
+    .quiz-next {
+      background: var(--teal);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 100px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 4px 16px rgba(43,181,160,0.3);
+    }
+
+    .quiz-next:hover {
+      background: var(--teal-dark);
+      transform: translateY(-1px);
+    }
+
+    .quiz-next:disabled {
+      background: #c9d2e0;
+      box-shadow: none;
+      transform: none;
+      cursor: not-allowed;
+    }
+
+    /* QUIZ RESULT */
+    .quiz-result { display: none; text-align: center; }
+    .quiz-result.visible { display: block; }
+
+    .quiz-result-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--teal-light);
+      color: var(--teal-dark);
+      padding: 8px 18px;
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .quiz-result h3 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+
+    .quiz-result p {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 28px;
+      line-height: 1.65;
+    }
+
+    .result-form { text-align: left; }
+
+    .result-field {
+      margin-bottom: 14px;
+    }
+
+    .result-field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .result-field input {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      color: var(--text);
+      background: var(--bg);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .result-field input:focus { border-color: var(--teal); }
+
+    .result-submit {
+      width: 100%;
+      background: var(--teal);
+      color: white;
+      padding: 16px;
+      border-radius: 100px;
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 6px 20px rgba(43,181,160,0.3);
+    }
+
+    .result-submit:hover {
+      background: var(--teal-dark);
+      transform: translateY(-1px);
+    }
+
+    /* BOOKED CONFIRMATION */
+    .quiz-booked { display: none; text-align: center; padding: 20px 0; }
+    .quiz-booked.visible { display: block; }
+
+    .booked-icon {
+      width: 72px;
+      height: 72px;
+      background: var(--teal-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      margin: 0 auto 20px;
+    }
+
+    .quiz-booked h3 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    .quiz-booked p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* HOW IT WORKS */
+    .hiw {
+      background: var(--white);
+    }
+
+    .hiw-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 56px;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .hiw-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .hiw-step {
+      background: var(--bg);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      position: relative;
+      border: 1.5px solid var(--line);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .hiw-step:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+
+    .hiw-num {
+      font-size: 56px;
+      font-weight: 900;
+      color: var(--teal-light);
+      line-height: 1;
+      margin-bottom: 20px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hiw-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--teal-light);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+
+    .hiw-step h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    .hiw-step p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* GLP-1 SECTION */
+    .glp1 {
+      background: var(--warm);
+    }
+
+    .glp1-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .glp1-pills {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .glp1-pill {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      border: 1.5px solid var(--line);
+      transition: box-shadow 0.2s;
+    }
+
+    .glp1-pill:hover { box-shadow: var(--shadow-sm); }
+
+    .pill-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .pill-icon.teal { background: var(--teal-light); }
+    .pill-icon.navy { background: rgba(26,39,68,0.08); }
+
+    .glp1-pill h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .glp1-pill p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .glp1-pill .pill-tag {
+      display: inline-block;
+      background: var(--teal-light);
+      color: var(--teal-dark);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-top: 6px;
+    }
+
+    /* RESULTS */
+    .results-section {
+      background: var(--bg);
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .result-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      border: 1.5px solid var(--line);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .result-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+    }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .result-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .result-avatar.a { background: linear-gradient(135deg, #2bb5a0, #1f9284); }
+    .result-avatar.b { background: linear-gradient(135deg, #3a5298, #1a2744); }
+    .result-avatar.c { background: linear-gradient(135deg, #7c3aed, #5b21b6); }
+
+    .result-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .result-meta {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .result-stars {
+      color: #f59e0b;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .result-quote {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+      font-style: italic;
+    }
+
+    .result-stat {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    .result-stat span {
+      color: var(--teal);
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    /* BMI CALCULATOR */
+    .bmi-section {
+      background: var(--white);
+    }
+
+    .bmi-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .bmi-card {
+      background: var(--bg);
+      border-radius: var(--radius-xl);
+      padding: 36px;
+      border: 1.5px solid var(--line);
+    }
+
+    .bmi-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .bmi-card p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .bmi-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .bmi-field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+
+    .bmi-field input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      color: var(--text);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .bmi-field input:focus { border-color: var(--teal); }
+
+    .bmi-result-box {
+      background: var(--teal-light);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin-top: 20px;
+      display: none;
+    }
+
+    .bmi-result-box.show { display: block; }
+
+    .bmi-result-label {
+      font-size: 12px;
+      color: var(--teal-dark);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+
+    .bmi-result-value {
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .bmi-result-cat {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .bmi-result-projection {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .bmi-result-projection strong { color: var(--navy); }
+
+    .bmi-calc-btn {
+      width: 100%;
+      background: var(--navy);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 100px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 6px;
+    }
+
+    .bmi-calc-btn:hover { background: var(--navy-mid); }
+
+    /* FAQ */
+    .faq-section { background: var(--warm); }
+
+    .faq-list {
+      margin-top: 48px;
+      max-width: 720px;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 20px 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--navy);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      transition: color 0.2s;
+    }
+
+    .faq-q:hover { color: var(--teal); }
+
+    .faq-chevron {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--teal-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 12px;
+      color: var(--teal);
+      transition: transform 0.3s, background 0.2s;
+    }
+
+    .faq-item.open .faq-chevron {
+      transform: rotate(180deg);
+      background: var(--teal);
+      color: white;
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.2s;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .faq-item.open .faq-a {
+      max-height: 300px;
+      padding-bottom: 20px;
+    }
+
+    /* CTA BANNER */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      padding: 80px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(43,181,160,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-banner h2 {
+      font-size: clamp(28px, 3.5vw, 46px);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+      position: relative;
+    }
+
+    .cta-banner p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.65);
+      max-width: 500px;
+      margin: 0 auto 36px;
+      line-height: 1.65;
+      position: relative;
+    }
+
+    .cta-banner .btn-primary {
+      font-size: 17px;
+      padding: 18px 40px;
+      position: relative;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--navy);
+      padding: 40px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-size: 16px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 12px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.4);
+      font-size: 13px;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: rgba(255,255,255,0.7); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* BOOKING MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,15,30,0.7);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 40px;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(20px);
+      transition: transform 0.3s;
+      position: relative;
+    }
+
+    .modal-overlay.open .modal { transform: translateY(0); }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: var(--bg);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      transition: background 0.2s;
+    }
+
+    .modal-close:hover { background: var(--line); }
+
+    .modal h3 {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .modal p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .time-slots {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 16px 0 20px;
+    }
+
+    .time-slot {
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 10px 8px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--navy);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .time-slot:hover {
+      border-color: var(--teal);
+      background: var(--teal-light);
+    }
+
+    .time-slot.selected {
+      border-color: var(--teal);
+      background: var(--teal);
+      color: white;
+    }
+
+    .modal-field {
+      margin-bottom: 12px;
+    }
+
+    .modal-field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 5px;
+    }
+
+    .modal-field input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      color: var(--text);
+      background: var(--bg);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .modal-field input:focus { border-color: var(--teal); }
+
+    .modal-submit {
+      width: 100%;
+      background: var(--teal);
+      color: white;
+      padding: 14px;
+      border-radius: 100px;
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      margin-top: 4px;
+      transition: background 0.2s;
+      box-shadow: 0 6px 20px rgba(43,181,160,0.3);
+    }
+
+    .modal-submit:hover { background: var(--teal-dark); }
+
+    .modal-confirm {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .modal-confirm.show { display: block; }
+
+    .confirm-icon {
+      width: 64px;
+      height: 64px;
+      background: var(--teal-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin: 0 auto 16px;
+    }
+
+    .modal-confirm h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .modal-confirm p {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    /* SCROLL REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 60px 20px 48px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 36px; }
+      .hero-stat strong { font-size: 20px; }
+      .trust-bar { padding: 16px 20px; }
+      .trust-bar-inner { gap: 20px; }
+      section { padding: 56px 20px; }
+      .quiz-section { padding: 56px 20px; }
+      .hiw-steps { grid-template-columns: 1fr; }
+      .glp1-inner { grid-template-columns: 1fr; gap: 40px; }
+      .bmi-inner { grid-template-columns: 1fr; gap: 36px; }
+      .results-grid { grid-template-columns: 1fr; }
+      .cta-banner { padding: 56px 20px; }
+      footer { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DEMO BANNER -->
+  <div class="demo-banner">
+    <strong>Demo Concept</strong> — Prime Weight Loss & Wellness Funnel by Leo / SystemHustle
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">
+      <div class="logo-icon">+</div>
+      <div class="logo-text">
+        <strong>Prime Weight Loss</strong>
+        <span>& Wellness</span>
+      </div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#how-it-works">How It Works</a></li>
+      <li><a href="#glp1">GLP-1 Treatment</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#" class="nav-cta" onclick="openModal(event)">Book Free Consult</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">Telehealth — Available in Arizona</div>
+        <h1>Medical Weight Loss<br><em>That Actually Works</em></h1>
+        <p>FDA-approved GLP-1 medications prescribed by licensed providers. Delivered to your door. No waiting rooms, no judgment — just real results.</p>
+        <div class="hero-actions">
+          <a href="#quiz" class="btn-primary">Check If You Qualify &rarr;</a>
+          <a href="#how-it-works" class="btn-ghost">See How It Works</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <strong>15%+</strong>
+            <span>Avg. Body Weight Lost</span>
+          </div>
+          <div class="hero-stat">
+            <strong>500+</strong>
+            <span>Patients Treated</span>
+          </div>
+          <div class="hero-stat">
+            <strong>48h</strong>
+            <span>Rx to Your Door</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUICK BOOKING CARD -->
+      <div class="hero-card">
+        <div class="hero-card-title">Book Your Free Consultation</div>
+        <div class="hero-card-sub">15 minutes with a licensed provider. No commitment.</div>
+
+        <div class="card-row">
+          <div class="card-field">
+            <label>First Name</label>
+            <input type="text" placeholder="Sarah">
+          </div>
+          <div class="card-field">
+            <label>Last Name</label>
+            <input type="text" placeholder="Johnson">
+          </div>
+        </div>
+        <div class="card-field">
+          <label>Email</label>
+          <input type="email" placeholder="sarah@email.com">
+        </div>
+        <div class="card-field">
+          <label>Phone</label>
+          <input type="tel" placeholder="(602) 555-0198">
+        </div>
+        <div class="card-field">
+          <label>Primary Goal</label>
+          <select>
+            <option>Weight Loss (GLP-1 / Semaglutide)</option>
+            <option>Weight Loss (Tirzepatide)</option>
+            <option>Metabolic Health</option>
+            <option>Not sure — need guidance</option>
+          </select>
+        </div>
+        <button class="card-submit" onclick="handleHeroForm(event)">Reserve My Spot &rarr;</button>
+        <div class="card-privacy">Your information is protected by HIPAA. We never share your data.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-bar-inner">
+      <div class="trust-item">
+        <div class="trust-icon">+</div>
+        Licensed Medical Providers
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">&#10003;</div>
+        FDA-Approved Medications
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">&#128274;</div>
+        HIPAA Compliant
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">&#128666;</div>
+        Free Delivery to Your Door
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">&#9733;</div>
+        4.9/5 Patient Rating
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section class="hiw" id="how-it-works">
+    <div class="section-inner">
+      <div class="hiw-header reveal">
+        <div>
+          <div class="section-label">Simple Process</div>
+          <div class="section-title">Start Losing Weight in 3 Steps</div>
+        </div>
+        <div class="section-sub">From your first consultation to medication at your door — we handle everything remotely.</div>
+      </div>
+      <div class="hiw-steps">
+        <div class="hiw-step reveal">
+          <div class="hiw-num">01</div>
+          <div class="hiw-icon">&#128203;</div>
+          <h3>Free Consultation</h3>
+          <p>Meet with a licensed provider via video or phone. We review your health history and goals to find the right treatment plan.</p>
+        </div>
+        <div class="hiw-step reveal">
+          <div class="hiw-num">02</div>
+          <div class="hiw-icon">&#128138;</div>
+          <h3>Get Your Prescription</h3>
+          <p>If you qualify, your provider writes a prescription for FDA-approved GLP-1 medication — Semaglutide or Tirzepatide.</p>
+        </div>
+        <div class="hiw-step reveal">
+          <div class="hiw-num">03</div>
+          <div class="hiw-icon">&#128666;</div>
+          <h3>Delivered to Your Door</h3>
+          <p>Your medication ships directly to you within 48 hours. Monthly check-ins keep your plan on track and dosage optimized.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GLP-1 SECTION -->
+  <section class="glp1" id="glp1">
+    <div class="section-inner">
+      <div class="glp1-inner">
+        <div class="reveal">
+          <div class="section-label">GLP-1 Treatment</div>
+          <div class="section-title">The Science Behind Real Weight Loss</div>
+          <p class="section-sub" style="margin-bottom:36px;">GLP-1 receptor agonists are a class of FDA-approved medications that mimic a natural hormone to reduce appetite and regulate blood sugar — making it easier to lose weight and keep it off.</p>
+          <a href="#quiz" class="btn-primary" style="background:var(--navy);box-shadow:0 6px 20px rgba(26,39,68,0.25)">See If You Qualify &rarr;</a>
+        </div>
+        <div class="glp1-pills reveal">
+          <div class="glp1-pill">
+            <div class="pill-icon teal">&#128138;</div>
+            <div>
+              <h4>Semaglutide (Wegovy / Ozempic)</h4>
+              <p>Once-weekly injection. Clinically proven to reduce body weight by up to 15% over 68 weeks in trials.</p>
+              <span class="pill-tag">FDA Approved</span>
+            </div>
+          </div>
+          <div class="glp1-pill">
+            <div class="pill-icon navy">&#9889;</div>
+            <div>
+              <h4>Tirzepatide (Zepbound / Mounjaro)</h4>
+              <p>Dual GIP/GLP-1 agonist. Patients in trials lost up to 22.5% of body weight. Our most powerful option.</p>
+              <span class="pill-tag">FDA Approved</span>
+            </div>
+          </div>
+          <div class="glp1-pill">
+            <div class="pill-icon teal">&#128200;</div>
+            <div>
+              <h4>Ongoing Monitoring & Dose Optimization</h4>
+              <p>Monthly provider check-ins ensure your dosage is adjusted to maximize results while minimizing side effects.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="quiz-section" id="quiz">
+    <div class="quiz-wrap">
+      <div class="quiz-header reveal">
+        <div class="section-label">Eligibility Check</div>
+        <div class="section-title">Am I a Candidate for GLP-1?</div>
+        <p class="section-sub">Answer 3 quick questions to find out if medical weight loss is right for you.</p>
+      </div>
+
+      <div class="quiz-card reveal">
+        <div class="quiz-progress">
+          <div class="quiz-progress-bar active" id="pb1"></div>
+          <div class="quiz-progress-bar" id="pb2"></div>
+          <div class="quiz-progress-bar" id="pb3"></div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="quiz-step visible" id="step1">
+          <div class="quiz-step-num">Step 1 of 3</div>
+          <div class="quiz-step-q">What is your current BMI range?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="selectOption(this, 'q1')">
+              <div class="quiz-option-dot"></div>
+              Under 27 — I'm at a healthy weight
+            </div>
+            <div class="quiz-option" onclick="selectOption(this, 'q1')">
+              <div class="quiz-option-dot"></div>
+              27–29.9 — Slightly overweight
+            </div>
+            <div class="quiz-option" onclick="selectOption(this, 'q1')">
+              <div class="quiz-option-dot"></div>
+              30–34.9 — Obese Class I
+            </div>
+            <div class="quiz-option" onclick="selectOption(this, 'q1')">
+              <div class="quiz-option-dot"></div>
+              35+ — Obese Class II or higher
+            </div>
+            <div class="quiz-option" onclick="selectOption(this, 'q1')">
+              <div class="quiz-option-dot"></div>
+              I don't know my BMI
+            </div>
+          </div>
+          <div class="quiz-nav">
+            <span></span>
+            <button class="quiz-next" id="next1" disabled onclick="goStep(2)">Next &rarr;</button>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="quiz-step" id="step2">
+          <div class="quiz-step-num">Step 2 of 3</div>
+          <div class="quiz-step-q">Have you tried losing weight before without long-term success?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="selectOption(this, 'q2')">
+              <div class="quiz-option-dot"></div>
+              Yes — diet and exercise haven't worked long-term
+            </div>
+            <div class="quiz-option" onclick="selectOption(this, 'q2')">
+              <div class="quiz-option-dot"></div>
+              Yes — I've tried multiple programs / medications
+            </div>
+            <div class="quiz-option" onclick="selectOption(this, 'q2')">
+              <div class="quiz-option-dot"></div>
+              I haven't tried much yet
+            </div>
+            <div class="quiz-option" onclick="selectOption(this, 'q2')">
+              <div class="quiz-option-dot"></div>
+              I've had success before but regained the weight
+            </div>
+          </div>
+          <div class="quiz-nav">
+            <button class="quiz-back" onclick="goStep(1)">&larr; Back</button>
+            <button class="quiz-next" id="next2" disabled onclick="goStep(3)">Next &rarr;</button>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="quiz-step" id="step3">
+          <div class="quiz-step-num">Step 3 of 3</div>
+          <div class="quiz-step-q">What is your primary weight loss goal?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="selectOption(this, 'q3')">
+              <div class="quiz-option-dot"></div>
+              Lose 20–40 lbs
+            </div>
+            <div class="quiz-option" onclick="selectOption(this, 'q3')">
+              <div class="quiz-option-dot"></div>
+              Lose 40–80 lbs
+            </div>
+            <div class="quiz-option" onclick="selectOption(this, 'q3')">
+              <div class="quiz-option-dot"></div>
+              Lose 80+ lbs
+            </div>
+            <div class="quiz-option" onclick="selectOption(this, 'q3')">
+              <div class="quiz-option-dot"></div>
+              Improve metabolic health / blood sugar
+            </div>
+          </div>
+          <div class="quiz-nav">
+            <button class="quiz-back" onclick="goStep(2)">&larr; Back</button>
+            <button class="quiz-next" id="next3" disabled onclick="showResult()">See My Results &rarr;</button>
+          </div>
+        </div>
+
+        <!-- Result -->
+        <div class="quiz-result" id="quizResult">
+          <div class="quiz-result-badge">&#10003; You Likely Qualify</div>
+          <h3>Great news — you're a strong candidate for GLP-1 treatment.</h3>
+          <p>Based on your answers, medical weight loss with Semaglutide or Tirzepatide may be appropriate for you. Book a free 15-minute consultation to confirm eligibility with a licensed provider.</p>
+          <div class="result-form">
+            <div class="result-field">
+              <label>Your Name</label>
+              <input type="text" placeholder="Full name">
+            </div>
+            <div class="result-field">
+              <label>Phone or Email</label>
+              <input type="text" placeholder="Best way to reach you">
+            </div>
+            <button class="result-submit" onclick="handleQuizSubmit(event)">Book My Free Consultation &rarr;</button>
+          </div>
+        </div>
+
+        <!-- Booked -->
+        <div class="quiz-booked" id="quizBooked">
+          <div class="booked-icon">&#10003;</div>
+          <h3>You're on the list!</h3>
+          <p>A member of our team will reach out within 2 business hours to schedule your free consultation. Check your inbox for a confirmation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS / TESTIMONIALS -->
+  <section class="results-section" id="results">
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="section-label">Patient Results</div>
+        <div class="section-title">Real People, Real Weight Loss</div>
+      </div>
+      <div class="results-grid">
+        <div class="result-card reveal">
+          <div class="result-header">
+            <div class="result-avatar a">M</div>
+            <div>
+              <div class="result-name">Maria T.</div>
+              <div class="result-meta">Phoenix, AZ · 4 months on Semaglutide</div>
+            </div>
+          </div>
+          <div class="result-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="result-quote">"I've been trying to lose weight for 10 years. Within 3 months on the program I finally saw real change. The telehealth format made it so easy — no driving to clinics."</div>
+          <div class="result-stat">Lost <span>34 lbs</span> in 4 months</div>
+        </div>
+        <div class="result-card reveal">
+          <div class="result-header">
+            <div class="result-avatar b">D</div>
+            <div>
+              <div class="result-name">David R.</div>
+              <div class="result-meta">Scottsdale, AZ · 6 months on Tirzepatide</div>
+            </div>
+          </div>
+          <div class="result-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="result-quote">"The provider was thorough and responsive. Medication came in two days. I'm down 48 pounds and my A1C is finally in the normal range for the first time in years."</div>
+          <div class="result-stat">Lost <span>48 lbs</span> in 6 months</div>
+        </div>
+        <div class="result-card reveal">
+          <div class="result-header">
+            <div class="result-avatar c">J</div>
+            <div>
+              <div class="result-name">Jennifer K.</div>
+              <div class="result-meta">Tempe, AZ · 3 months on Semaglutide</div>
+            </div>
+          </div>
+          <div class="result-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="result-quote">"I was skeptical about telehealth but this team is incredibly professional. The intake process was simple, my questions were answered, and the results speak for themselves."</div>
+          <div class="result-stat">Lost <span>22 lbs</span> in 3 months</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BMI CALCULATOR -->
+  <section class="bmi-section">
+    <div class="section-inner">
+      <div class="bmi-inner">
+        <div class="reveal">
+          <div class="section-label">Free Tool</div>
+          <div class="section-title">Calculate Your BMI & Weight Loss Potential</div>
+          <p class="section-sub" style="margin-top:12px;">GLP-1 therapy is typically prescribed for patients with a BMI of 27+ (with a weight-related condition) or 30+. Find out where you stand and what results you could expect.</p>
+        </div>
+        <div class="bmi-card reveal">
+          <h3>BMI Calculator</h3>
+          <p>Enter your details to see your BMI and projected results with GLP-1 treatment.</p>
+          <div class="bmi-row">
+            <div class="bmi-field">
+              <label>Height (ft)</label>
+              <input type="number" id="heightFt" placeholder="5" min="3" max="8">
+            </div>
+            <div class="bmi-field">
+              <label>Height (in)</label>
+              <input type="number" id="heightIn" placeholder="6" min="0" max="11">
+            </div>
+          </div>
+          <div class="bmi-field">
+            <label>Current Weight (lbs)</label>
+            <input type="number" id="weight" placeholder="220" min="80" max="600">
+          </div>
+          <button class="bmi-calc-btn" onclick="calcBMI()">Calculate My BMI</button>
+          <div class="bmi-result-box" id="bmiResult">
+            <div class="bmi-result-label">Your BMI</div>
+            <div class="bmi-result-value" id="bmiValue">—</div>
+            <div class="bmi-result-cat" id="bmiCat"></div>
+            <div class="bmi-result-projection" id="bmiProjection"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section" id="faq">
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="section-label">Common Questions</div>
+        <div class="section-title">Frequently Asked Questions</div>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Is a GLP-1 prescription right for me?
+            <span class="faq-chevron">&#8964;</span>
+          </button>
+          <div class="faq-a">GLP-1 medications are generally appropriate for adults with a BMI of 30+, or 27+ with a weight-related condition such as type 2 diabetes, high blood pressure, or high cholesterol. A licensed provider will evaluate your full health history during your free consultation to determine eligibility.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            How quickly will I receive my medication?
+            <span class="faq-chevron">&#8964;</span>
+          </button>
+          <div class="faq-a">Once your prescription is approved, medication is shipped directly to your door. Most patients receive their first dose within 24–48 hours of approval. We use licensed compounding pharmacies to ensure quality and availability.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            What does a month of treatment cost?
+            <span class="faq-chevron">&#8964;</span>
+          </button>
+          <div class="faq-a">Pricing varies by medication and dosage. Semaglutide programs start at $249/month and Tirzepatide programs at $349/month. Your free consultation includes a full breakdown with no surprise fees. We also offer payment plans.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Are the medications FDA-approved?
+            <span class="faq-chevron">&#8964;</span>
+          </button>
+          <div class="faq-a">Yes. Both Semaglutide (Wegovy) and Tirzepatide (Zepbound) are FDA-approved for chronic weight management. We also work with licensed compounding pharmacies for personalized dosing, which is a legal and regulated practice under physician supervision.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            What states do you serve?
+            <span class="faq-chevron">&#8964;</span>
+          </button>
+          <div class="faq-a">Prime Weight Loss & Wellness currently serves patients in Arizona. Our licensed telehealth providers are credentialed in the state and can see patients remotely without any in-person visit required.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <h2>Ready to Start Your Journey?</h2>
+    <p>Book a free 15-minute consultation with a licensed provider. No commitment, no waiting room.</p>
+    <a href="#" class="btn-primary" onclick="openModal(event)">Book Free Consultation &rarr;</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Prime Weight Loss & Wellness</div>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">HIPAA Notice</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 Prime Weight Loss & Wellness. All rights reserved. For informational purposes only. Consult a licensed provider before starting any medical treatment.</div>
+  </footer>
+
+  <!-- BOOKING MODAL -->
+  <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()">&#10005;</button>
+
+      <div id="modalForm">
+        <h3>Book Your Free Consultation</h3>
+        <p>Pick a time and we'll confirm within 2 hours.</p>
+
+        <div style="font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">Available This Week</div>
+        <div class="time-slots">
+          <div class="time-slot" onclick="selectSlot(this)">Mon 9am</div>
+          <div class="time-slot" onclick="selectSlot(this)">Mon 2pm</div>
+          <div class="time-slot" onclick="selectSlot(this)">Tue 10am</div>
+          <div class="time-slot" onclick="selectSlot(this)">Tue 4pm</div>
+          <div class="time-slot" onclick="selectSlot(this)">Wed 11am</div>
+          <div class="time-slot" onclick="selectSlot(this)">Thu 9am</div>
+        </div>
+
+        <div class="modal-field">
+          <label>Full Name</label>
+          <input type="text" placeholder="Your full name">
+        </div>
+        <div class="modal-field">
+          <label>Email</label>
+          <input type="email" placeholder="your@email.com">
+        </div>
+        <div class="modal-field">
+          <label>Phone</label>
+          <input type="tel" placeholder="(602) 555-0000">
+        </div>
+        <button class="modal-submit" onclick="handleModalSubmit(event)">Confirm Booking &rarr;</button>
+      </div>
+
+      <div class="modal-confirm" id="modalConfirm">
+        <div class="confirm-icon">&#10003;</div>
+        <h3>You're booked!</h3>
+        <p>Check your email for a confirmation. A provider will call you at your scheduled time. We look forward to meeting you.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // QUIZ LOGIC
+    const answers = {};
+
+    function selectOption(el, q) {
+      const group = el.parentElement;
+      group.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      answers[q] = el.textContent.trim();
+      const btnMap = { q1: 'next1', q2: 'next2', q3: 'next3' };
+      document.getElementById(btnMap[q]).disabled = false;
+    }
+
+    function goStep(n) {
+      document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('visible'));
+      document.getElementById('step' + n).classList.add('visible');
+      for (let i = 1; i <= 3; i++) {
+        document.getElementById('pb' + i).classList.toggle('active', i <= n);
+      }
+    }
+
+    function showResult() {
+      document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('visible'));
+      document.getElementById('pb1').classList.add('active');
+      document.getElementById('pb2').classList.add('active');
+      document.getElementById('pb3').classList.add('active');
+      document.getElementById('quizResult').classList.add('visible');
+    }
+
+    function handleQuizSubmit(e) {
+      e.preventDefault();
+      document.getElementById('quizResult').classList.remove('visible');
+      document.getElementById('quizBooked').classList.add('visible');
+    }
+
+    // MODAL
+    function openModal(e) {
+      e && e.preventDefault();
+      document.getElementById('modalOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function handleOverlayClick(e) {
+      if (e.target === document.getElementById('modalOverlay')) closeModal();
+    }
+
+    function selectSlot(el) {
+      document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+
+    function handleModalSubmit(e) {
+      e.preventDefault();
+      document.getElementById('modalForm').style.display = 'none';
+      document.getElementById('modalConfirm').classList.add('show');
+    }
+
+    function handleHeroForm(e) {
+      e.preventDefault();
+      const btn = e.target;
+      btn.textContent = 'Request Sent!';
+      btn.style.background = 'var(--teal-dark)';
+      btn.disabled = true;
+    }
+
+    // BMI CALCULATOR
+    function calcBMI() {
+      const ft = parseFloat(document.getElementById('heightFt').value) || 0;
+      const inches = parseFloat(document.getElementById('heightIn').value) || 0;
+      const lbs = parseFloat(document.getElementById('weight').value) || 0;
+      if (!ft && !inches || !lbs) return;
+      const totalInches = (ft * 12) + inches;
+      const bmi = (lbs / (totalInches * totalInches)) * 703;
+      const rounded = Math.round(bmi * 10) / 10;
+      document.getElementById('bmiValue').textContent = rounded;
+
+      let cat = '', catColor = '', proj = '';
+      if (bmi < 18.5) {
+        cat = 'Underweight'; catColor = '#6b7280';
+        proj = 'GLP-1 therapy is typically not recommended for underweight individuals. Speak with a provider for personalized guidance.';
+      } else if (bmi < 25) {
+        cat = 'Healthy Weight'; catColor = '#16a34a';
+        proj = 'You\'re at a healthy weight. GLP-1 may still be appropriate with a weight-related condition — ask your provider.';
+      } else if (bmi < 27) {
+        cat = 'Slightly Overweight'; catColor = '#ca8a04';
+        proj = 'You may qualify with a weight-related condition. With Semaglutide, patients in this range have lost an average of 12–18 lbs.';
+      } else if (bmi < 30) {
+        cat = 'Overweight — Likely Eligible'; catColor = '#ea580c';
+        const loss = Math.round(lbs * 0.12);
+        proj = `With a BMI of ${rounded}, you likely qualify for GLP-1 treatment. Patients typically lose <strong>${loss}–${Math.round(lbs * 0.17)} lbs</strong> over 6 months.`;
+      } else {
+        cat = 'Obese — Strong Candidate'; catColor = 'var(--teal-dark)';
+        const loss = Math.round(lbs * 0.15);
+        proj = `With a BMI of ${rounded}, you're a strong GLP-1 candidate. Patients at this range typically lose <strong>${loss}–${Math.round(lbs * 0.22)} lbs</strong> in 6 months with Tirzepatide.`;
+      }
+      document.getElementById('bmiCat').textContent = cat;
+      document.getElementById('bmiCat').style.color = catColor;
+      document.getElementById('bmiProjection').innerHTML = proj;
+      const box = document.getElementById('bmiResult');
+      box.classList.add('show');
+    }
+
+    // FAQ
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+
+    // SCROLL REVEAL
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(r => observer.observe(r));
+
+    // KEYBOARD ESC closes modal
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+
+</body>
+</html>
