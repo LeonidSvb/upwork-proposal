@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commission Calculator Demo</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #121923;
+      --panel-2: #192230;
+      --text: #eef4ff;
+      --muted: #9fb0c7;
+      --line: rgba(255,255,255,0.08);
+      --blue: #53a7ff;
+      --cyan: #66e2d3;
+      --lime: #4cffb0;
+      --orange: #ffb35c;
+      --pink: #ff7cb8;
+      --red: #ff5c7a;
+      --shadow: 0 24px 70px rgba(0,0,0,0.4);
+      --radius-xl: 24px;
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --max: 860px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      color: var(--text);
+      font-family: "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(83,167,255,0.12), transparent 28%),
+        radial-gradient(circle at 88% 20%, rgba(76,255,176,0.08), transparent 22%),
+        linear-gradient(180deg, #090e14 0%, #0d1420 60%, #090d13 100%);
+      min-height: 100vh;
+      padding: 36px 16px 64px;
+    }
+    .wrap { max-width: var(--max); margin: 0 auto; }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      color: var(--cyan); text-transform: uppercase;
+      letter-spacing: 0.16em; font-size: 0.76rem; font-weight: 800;
+    }
+    .eyebrow::before { content:""; width:22px; height:1px; background:currentColor; opacity:.7; }
+
+    h1 {
+      margin: 12px 0 10px;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 0.96; letter-spacing: -0.04em;
+    }
+    .hero-sub { color: var(--muted); font-size: 1rem; line-height: 1.65; max-width: 620px; margin-bottom: 32px; }
+
+    /* FORM CARD */
+    .form-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .form-section {
+      padding: 28px 32px;
+      border-bottom: 1px solid var(--line);
+    }
+    .form-section:last-child { border-bottom: none; }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--cyan);
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .section-label::after { content:""; flex:1; height:1px; background: rgba(102,226,211,0.15); }
+
+    .field { margin-bottom: 18px; }
+    .field:last-child { margin-bottom: 0; }
+    label {
+      display: block;
+      font-size: 0.83rem;
+      color: var(--muted);
+      margin-bottom: 7px;
+      font-weight: 600;
+    }
+    .required { color: var(--orange); margin-left: 3px; }
+
+    select, input[type="number"], input[type="text"] {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-md);
+      color: var(--text);
+      padding: 11px 14px;
+      font-size: 0.92rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239fb0c7' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+    select:focus, input:focus {
+      border-color: rgba(83,167,255,0.5);
+      background: rgba(83,167,255,0.05);
+    }
+    select:disabled { opacity: 0.4; cursor: not-allowed; }
+    option { background: #1a2535; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width:560px){ .two-col { grid-template-columns: 1fr; } }
+
+    /* Radio group */
+    .radio-group { display: flex; gap: 12px; flex-wrap: wrap; }
+    .radio-btn {
+      flex: 1; min-width: 120px;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.9rem; font-weight: 600;
+      user-select: none;
+    }
+    .radio-btn:hover { border-color: rgba(83,167,255,0.3); background: rgba(83,167,255,0.05); }
+    .radio-btn.active { border-color: rgba(83,167,255,0.5); background: rgba(83,167,255,0.1); color: var(--blue); }
+    .radio-dot {
+      width: 16px; height: 16px; border-radius: 50%;
+      border: 2px solid var(--muted); flex-shrink: 0; transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .radio-btn.active .radio-dot { border-color: var(--blue); background: var(--blue); }
+    .radio-dot-inner { width: 6px; height: 6px; border-radius: 50%; background: white; display: none; }
+    .radio-btn.active .radio-dot-inner { display: block; }
+
+    /* Hidden fields */
+    .hidden-field { display: none; }
+    .hidden-field.visible { display: block; }
+
+    /* Percentage row */
+    .pct-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+      margin-bottom: 10px;
+    }
+    .pct-row:last-child { margin-bottom: 0; }
+    .pct-name { flex: 1; font-size: 0.88rem; font-weight: 600; }
+    .pct-name.locked { color: var(--muted); }
+    .lock-badge {
+      font-size: 0.7rem; color: var(--orange);
+      background: rgba(255,179,92,0.1); border: 1px solid rgba(255,179,92,0.2);
+      padding: 2px 8px; border-radius: 4px; font-weight: 700;
+    }
+    .pct-input { width: 80px; text-align: right; }
+    .pct-symbol { color: var(--muted); font-weight: 700; }
+    .pct-total-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--line);
+      margin-top: 12px;
+      font-size: 0.85rem;
+    }
+    .pct-total-label { color: var(--muted); font-weight: 600; }
+    .pct-total-value { font-weight: 800; font-size: 1rem; }
+    .pct-total-value.ok { color: var(--lime); }
+    .pct-total-value.err { color: var(--red); }
+
+    /* Hint */
+    .hint { font-size: 0.78rem; color: var(--muted); margin-top: 6px; }
+    .hint.warn { color: var(--orange); }
+    .hint.ok { color: var(--lime); }
+
+    /* Generate button */
+    .generate-btn {
+      width: 100%;
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      border: none;
+      background: linear-gradient(135deg, #53a7ff, #66e2d3);
+      color: #0a0f15;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      letter-spacing: 0.02em;
+    }
+    .generate-btn:hover { opacity: 0.9; }
+    .generate-btn:active { transform: scale(0.99); }
+    .generate-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    /* OUTPUT */
+    .output-card {
+      margin-top: 28px;
+      background: var(--panel);
+      border: 1px solid rgba(76,255,176,0.18);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: none;
+    }
+    .output-card.visible { display: block; }
+    .output-header {
+      padding: 20px 28px;
+      background: rgba(76,255,176,0.06);
+      border-bottom: 1px solid rgba(76,255,176,0.12);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .output-title { font-weight: 800; font-size: 1rem; color: var(--lime); }
+    .output-meta { font-size: 0.8rem; color: var(--muted); }
+
+    .output-body { padding: 24px 28px; }
+    .output-section-title {
+      font-size: 0.72rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.13em;
+      color: var(--muted); margin: 20px 0 10px;
+    }
+    .output-section-title:first-child { margin-top: 0; }
+
+    .output-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.88rem;
+    }
+    .output-row:last-child { border-bottom: none; }
+    .output-row-label { color: var(--muted); }
+    .output-row-value { font-weight: 700; }
+    .output-row-value.green { color: var(--lime); }
+    .output-row-value.blue  { color: var(--blue); }
+    .output-row-value.orange{ color: var(--orange); }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .summary-card {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      padding: 16px;
+    }
+    .summary-card-name { font-size: 0.78rem; color: var(--muted); margin-bottom: 4px; font-weight: 600; }
+    .summary-card-role { font-size: 0.7rem; color: var(--cyan); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.08em; }
+    .summary-card-amount { font-size: 1.3rem; font-weight: 800; color: var(--lime); letter-spacing: -0.02em; }
+    .summary-card-sub { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+
+    /* Info tag */
+    .info-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px; border-radius: 999px;
+      background: rgba(83,167,255,0.08);
+      border: 1px solid rgba(83,167,255,0.18);
+      color: var(--blue); font-size: 0.78rem; font-weight: 700;
+      margin-top: 8px;
+    }
+
+    /* Tier badge */
+    .tier-badge {
+      display: inline-block; padding: 3px 10px; border-radius: 6px;
+      font-size: 0.76rem; font-weight: 800;
+      background: rgba(255,179,92,0.12); color: var(--orange);
+      border: 1px solid rgba(255,179,92,0.2);
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <span class="eyebrow">Live Demo - Jotform / Custom Build</span>
+  <h1>Commission<br>Calculator</h1>
+  <p class="hero-sub">Dynamic form with relational data filtering, conditional logic, and live profit distribution - exactly what your project requires.</p>
+
+  <div class="form-card">
+
+    <!-- SECTION 1: Main User -->
+    <div class="form-section">
+      <div class="section-label">Step 1 - Select Main User</div>
+      <div class="field">
+        <label>Main User <span class="required">*</span></label>
+        <select id="mainUser" onchange="onUserChange()">
+          <option value="">- Select company -</option>
+          <option value="apex">Apex Construction</option>
+          <option value="nova">Nova Electrical</option>
+          <option value="summit">Summit Plumbing</option>
+        </select>
+        <div class="hint" id="userHint"></div>
+      </div>
+
+      <!-- Auto-populated info -->
+      <div id="userInfo" class="hidden-field">
+        <div class="two-col">
+          <div class="field">
+            <label>Tier (auto-filled)</label>
+            <input type="text" id="userTier" readonly style="opacity:.6;">
+          </div>
+          <div class="field">
+            <label>Profit Share % (auto-filled)</label>
+            <input type="text" id="userProfitShare" readonly style="opacity:.6;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: Entity type -->
+    <div class="form-section">
+      <div class="section-label">Step 2 - Business Structure</div>
+      <div class="field">
+        <label>Entity or Division? <span class="required">*</span></label>
+        <div class="radio-group">
+          <div class="radio-btn" id="btn-entity" onclick="selectType('entity')">
+            <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+            Entity
+          </div>
+          <div class="radio-btn" id="btn-division" onclick="selectType('division')">
+            <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+            Division
+          </div>
+        </div>
+        <div class="hint" id="typeHint"></div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: Directors -->
+    <div class="form-section">
+      <div class="section-label">Step 3 - Directors / Nominees</div>
+      <div class="field">
+        <label>First Director <span class="required">*</span></label>
+        <select id="director1" onchange="onDirectorChange(1)" disabled>
+          <option value="">- Select Main User first -</option>
+        </select>
+      </div>
+
+      <!-- Director 1 Trade -->
+      <div class="field hidden-field" id="trade1-wrap">
+        <label>Trade (Director 1)</label>
+        <select id="trade1" disabled>
+          <option value="">- Select director first -</option>
+        </select>
+      </div>
+
+      <!-- Add second director -->
+      <div class="field hidden-field" id="add-director2-wrap">
+        <label>Add another Director?</label>
+        <div class="radio-group">
+          <div class="radio-btn" id="btn-dir2-yes" onclick="toggleDirector2(true)">
+            <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+            Yes
+          </div>
+          <div class="radio-btn" id="btn-dir2-no" onclick="toggleDirector2(false)">
+            <div class="radio-dot"><div class="radio-dot-inner"></div></div>
+            No
+          </div>
+        </div>
+      </div>
+
+      <!-- Second director (hidden until Yes) -->
+      <div class="field hidden-field" id="director2-wrap">
+        <label>Second Director</label>
+        <select id="director2" onchange="onDirectorChange(2)" disabled>
+          <option value="">- Select -</option>
+        </select>
+      </div>
+      <div class="field hidden-field" id="trade2-wrap">
+        <label>Trade (Director 2)</label>
+        <select id="trade2" disabled>
+          <option value="">- Select director first -</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- SECTION 4: Shareholders -->
+    <div class="form-section">
+      <div class="section-label">Step 4 - Shareholders & Equity</div>
+      <div id="shareholders-placeholder" style="color:var(--muted);font-size:.88rem;">Select a Main User to load shareholders.</div>
+      <div id="shareholders-wrap" class="hidden-field">
+        <!-- Parent company row (locked) -->
+        <div class="pct-row">
+          <div class="pct-name locked" id="sh-parent-name">Parent Company</div>
+          <span class="lock-badge">LOCKED 30%</span>
+          <input class="pct-input" type="number" value="30" readonly style="opacity:.5;width:70px;">
+          <span class="pct-symbol">%</span>
+        </div>
+        <!-- Shareholder 2 -->
+        <div class="pct-row">
+          <div class="pct-name">Second Shareholder</div>
+          <input class="pct-input" type="number" id="sh2-pct" min="10" max="60" value="40" oninput="updateTotal()">
+          <span class="pct-symbol">%</span>
+        </div>
+        <!-- Shareholder 3 -->
+        <div class="pct-row">
+          <div class="pct-name">Third Shareholder</div>
+          <input class="pct-input" type="number" id="sh3-pct" min="10" max="60" value="30" oninput="updateTotal()">
+          <span class="pct-symbol">%</span>
+        </div>
+        <div class="pct-total-row">
+          <span class="pct-total-label">Total Equity</span>
+          <span class="pct-total-value ok" id="pct-total">100%</span>
+        </div>
+        <div class="hint" id="pct-hint"></div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: Financials -->
+    <div class="form-section">
+      <div class="section-label">Step 5 - Financial Inputs</div>
+      <div class="two-col">
+        <div class="field">
+          <label>Monthly Revenue ($) <span class="required">*</span></label>
+          <input type="number" id="revenue" placeholder="e.g. 100000" oninput="validateForm()">
+        </div>
+        <div class="field">
+          <label>Overhead Costs ($) <span class="required">*</span></label>
+          <input type="number" id="overhead" placeholder="e.g. 20000" oninput="validateForm()">
+        </div>
+      </div>
+      <div class="field">
+        <label>Risk Reserve ($)</label>
+        <input type="number" id="riskReserve" placeholder="e.g. 5000" oninput="validateForm()">
+      </div>
+    </div>
+
+    <!-- GENERATE -->
+    <div class="form-section">
+      <button class="generate-btn" id="generateBtn" onclick="generate()" disabled>
+        Generate Commission Summary
+      </button>
+    </div>
+
+  </div>
+
+  <!-- OUTPUT -->
+  <div class="output-card" id="outputCard">
+    <div class="output-header">
+      <div>
+        <div class="output-title" id="out-title">Commission Summary</div>
+        <div class="output-meta" id="out-meta"></div>
+      </div>
+      <span class="tier-badge" id="out-tier"></span>
+    </div>
+    <div class="output-body">
+
+      <div class="output-section-title" id="out-structure-label">Entity Expense Budget</div>
+      <div class="output-row"><span class="output-row-label">Monthly Revenue</span><span class="output-row-value" id="out-revenue"></span></div>
+      <div class="output-row"><span class="output-row-label" id="out-overhead-label">Overhead Costs</span><span class="output-row-value" id="out-overhead"></span></div>
+      <div class="output-row" id="out-risk-row"><span class="output-row-label">Risk Reserve</span><span class="output-row-value" id="out-risk"></span></div>
+      <div class="output-row"><span class="output-row-label">Net Profit</span><span class="output-row-value green" id="out-profit"></span></div>
+
+      <div class="output-section-title">Profit Distribution</div>
+      <div class="output-row"><span class="output-row-label" id="out-mainuser-label">Main User Share</span><span class="output-row-value blue" id="out-mainuser-amount"></span></div>
+      <div class="output-row" id="out-partner-row"><span class="output-row-label" id="out-partner-label">Partner Share</span><span class="output-row-value" id="out-partner-amount"></span></div>
+
+      <div class="output-section-title">Director / Nominee Distributions</div>
+      <div class="output-row" id="out-dir1-row"><span class="output-row-label" id="out-dir1-label">Director 1</span><span class="output-row-value orange" id="out-dir1-amount"></span></div>
+      <div class="output-row" id="out-dir2-row"><span class="output-row-label" id="out-dir2-label">Director 2</span><span class="output-row-value orange" id="out-dir2-amount"></span></div>
+      <div class="output-row" id="out-risk-dist-row"><span class="output-row-label">Risk (per director)</span><span class="output-row-value" id="out-risk-dist"></span></div>
+
+      <div class="output-section-title">Monthly Earnings Summary</div>
+      <div class="summary-grid" id="summaryGrid"></div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const DATA = {
+    apex:   { name: "Apex Construction",  tier: "Tier 1", profitShare: 25, parent: "BuildCo Pty Ltd",   overheadMult: 1.0,
+              directors: ["John Smith", "Sarah Lee"],
+              trades: { "John Smith": ["Carpentry","Concreting","Roofing"], "Sarah Lee": ["Painting","Tiling"] } },
+    nova:   { name: "Nova Electrical",    tier: "Tier 2", profitShare: 20, parent: "PowerGroup Inc",    overheadMult: 1.12,
+              directors: ["Mike Brown", "Emma White"],
+              trades: { "Mike Brown": ["Electrical","Solar Installation"], "Emma White": ["Electrical","Data Cabling"] } },
+    summit: { name: "Summit Plumbing",    tier: "Tier 1", profitShare: 25, parent: "FlowTech Ltd",      overheadMult: 1.0,
+              directors: ["Tom Davis"],
+              trades: { "Tom Davis": ["Plumbing","Gas Fitting","Drainage"] } }
+  };
+
+  let state = { user: null, type: null, dir2: false };
+
+  function onUserChange() {
+    const key = document.getElementById('mainUser').value;
+    state.user = key || null;
+    const d = DATA[key];
+
+    // Reset downstream
+    resetDirectors();
+    resetShareholders();
+    hideOutput();
+
+    if (!d) {
+      document.getElementById('userInfo').classList.remove('visible');
+      document.getElementById('userHint').textContent = '';
+      document.getElementById('director1').disabled = true;
+      document.getElementById('director1').innerHTML = '<option value="">- Select Main User first -</option>';
+      document.getElementById('shareholders-placeholder').style.display = 'block';
+      document.getElementById('shareholders-wrap').classList.remove('visible');
+      validateForm();
+      return;
+    }
+
+    // Fill user info
+    document.getElementById('userTier').value = d.tier;
+    document.getElementById('userProfitShare').value = d.profitShare + '%';
+    document.getElementById('userInfo').classList.add('visible');
+    document.getElementById('userHint').textContent = '';
+
+    // Fill director dropdown
+    const sel = document.getElementById('director1');
+    sel.innerHTML = '<option value="">- Select director -</option>';
+    d.directors.forEach(n => sel.innerHTML += `<option value="${n}">${n}</option>`);
+    sel.disabled = false;
+
+    // Fill shareholders
+    document.getElementById('sh-parent-name').textContent = d.parent;
+    document.getElementById('shareholders-placeholder').style.display = 'none';
+    document.getElementById('shareholders-wrap').classList.add('visible');
+    updateTotal();
+    validateForm();
+  }
+
+  function onDirectorChange(n) {
+    const key = state.user;
+    const d = DATA[key];
+    const dirVal = document.getElementById('director' + n).value;
+    const tradeWrap = document.getElementById('trade' + n + '-wrap');
+    const tradeSel  = document.getElementById('trade' + n);
+
+    if (!dirVal) { tradeWrap.classList.remove('visible'); return; }
+
+    // Populate trades
+    const trades = d.trades[dirVal] || [];
+    tradeSel.innerHTML = '<option value="">- Select trade -</option>';
+    trades.forEach(t => tradeSel.innerHTML += `<option value="${t}">${t}</option>`);
+    tradeSel.disabled = false;
+    tradeWrap.classList.add('visible');
+
+    if (n === 1) {
+      document.getElementById('add-director2-wrap').classList.add('visible');
+    }
+
+    // Repopulate director2 excluding director1
+    if (n === 1 && d.directors.length > 1) {
+      const sel2 = document.getElementById('director2');
+      const dir1Val = document.getElementById('director1').value;
+      sel2.innerHTML = '<option value="">- Select -</option>';
+      d.directors.filter(x => x !== dir1Val).forEach(nm => sel2.innerHTML += `<option value="${nm}">${nm}</option>`);
+      sel2.disabled = false;
+    }
+    validateForm();
+  }
+
+  function toggleDirector2(yes) {
+    state.dir2 = yes;
+    setRadio('btn-dir2-yes', 'btn-dir2-no', yes);
+    const wrap = document.getElementById('director2-wrap');
+    const wrap2 = document.getElementById('trade2-wrap');
+    if (yes) {
+      wrap.classList.add('visible');
+    } else {
+      wrap.classList.remove('visible');
+      wrap2.classList.remove('visible');
+      document.getElementById('director2').value = '';
+      document.getElementById('trade2').innerHTML = '<option value="">- Select -</option>';
+    }
+    validateForm();
+  }
+
+  function selectType(type) {
+    state.type = type;
+    setRadio('btn-entity', 'btn-division', type === 'entity');
+    const hints = { entity: 'Overhead will apply standard calculation.', division: 'Overhead multiplied by 1.12 (Division rate).' };
+    document.getElementById('typeHint').textContent = hints[type];
+    validateForm();
+  }
+
+  function setRadio(idYes, idNo, yesActive) {
+    document.getElementById(idYes).classList.toggle('active', yesActive);
+    document.getElementById(idNo).classList.toggle('active', !yesActive);
+  }
+
+  function updateTotal() {
+    const locked = 30;
+    const sh2 = parseFloat(document.getElementById('sh2-pct').value) || 0;
+    const sh3 = parseFloat(document.getElementById('sh3-pct').value) || 0;
+    const total = locked + sh2 + sh3;
+    const el = document.getElementById('pct-total');
+    el.textContent = total + '%';
+    el.className = 'pct-total-value ' + (total === 100 ? 'ok' : 'err');
+    const hint = document.getElementById('pct-hint');
+    hint.textContent = total === 100 ? '' : (total > 100 ? 'Total exceeds 100% - adjust values.' : 'Total is below 100% - add more.');
+    hint.className = 'hint ' + (total === 100 ? '' : 'warn');
+    validateForm();
+  }
+
+  function validateForm() {
+    const btn = document.getElementById('generateBtn');
+    const locked = 30;
+    const sh2 = parseFloat(document.getElementById('sh2-pct').value) || 0;
+    const sh3 = parseFloat(document.getElementById('sh3-pct').value) || 0;
+    const totalPct = locked + sh2 + sh3;
+    const revenue = parseFloat(document.getElementById('revenue').value) || 0;
+    const overhead = parseFloat(document.getElementById('overhead').value) || 0;
+    const dir1 = document.getElementById('director1').value;
+
+    const ok = state.user && state.type && dir1 && totalPct === 100 && revenue > 0 && overhead > 0;
+    btn.disabled = !ok;
+  }
+
+  function resetDirectors() {
+    ['trade1-wrap','add-director2-wrap','director2-wrap','trade2-wrap'].forEach(id => {
+      document.getElementById(id).classList.remove('visible');
+    });
+    document.getElementById('director1').innerHTML = '<option value="">- Select Main User first -</option>';
+    document.getElementById('director1').disabled = true;
+    state.dir2 = false;
+    const b2y = document.getElementById('btn-dir2-yes');
+    const b2n = document.getElementById('btn-dir2-no');
+    if (b2y) { b2y.classList.remove('active'); b2n.classList.remove('active'); }
+  }
+
+  function resetShareholders() {
+    document.getElementById('sh2-pct').value = 40;
+    document.getElementById('sh3-pct').value = 30;
+    updateTotal();
+  }
+
+  function hideOutput() {
+    document.getElementById('outputCard').classList.remove('visible');
+  }
+
+  function fmt(n) { return '$' + n.toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0}); }
+
+  function generate() {
+    const d = DATA[state.user];
+    const revenue = parseFloat(document.getElementById('revenue').value);
+    const rawOverhead = parseFloat(document.getElementById('overhead').value);
+    const risk = parseFloat(document.getElementById('riskReserve').value) || 0;
+    const type = state.type;
+    const overhead = type === 'division' ? rawOverhead * d.overheadMult : rawOverhead;
+    const profit = revenue - overhead - risk;
+    const mainShare = profit * (d.profitShare / 100);
+    const remainder = profit - mainShare;
+    const dir1Name = document.getElementById('director1').value;
+    const dir2Name = state.dir2 ? document.getElementById('director2').value : null;
+    const dirCount = dir2Name ? 2 : 1;
+    const dirShare = remainder / dirCount;
+    const riskPerDir = risk / dirCount;
+
+    // Fill output
+    document.getElementById('out-title').textContent = d.name + ' - Commission Summary';
+    document.getElementById('out-meta').textContent = new Date().toLocaleDateString('en-AU', {day:'numeric',month:'long',year:'numeric'});
+    document.getElementById('out-tier').textContent = d.tier;
+    document.getElementById('out-structure-label').textContent = type === 'entity' ? 'Entity Expense Budget' : 'Division Expense Budget';
+    document.getElementById('out-overhead-label').textContent = type === 'division' ? 'Overhead (Division rate ×1.12)' : 'Overhead Costs';
+    document.getElementById('out-revenue').textContent = fmt(revenue);
+    document.getElementById('out-overhead').textContent = fmt(overhead);
+    document.getElementById('out-risk').textContent = risk > 0 ? fmt(risk) : '—';
+    document.getElementById('out-risk-row').style.display = risk > 0 ? '' : 'none';
+    document.getElementById('out-profit').textContent = fmt(profit);
+    document.getElementById('out-mainuser-label').textContent = d.name + ' (' + d.profitShare + '%)';
+    document.getElementById('out-mainuser-amount').textContent = fmt(mainShare);
+    document.getElementById('out-partner-label').textContent = 'Remaining to Directors';
+    document.getElementById('out-partner-amount').textContent = fmt(remainder);
+    document.getElementById('out-dir1-label').textContent = dir1Name;
+    document.getElementById('out-dir1-amount').textContent = fmt(dirShare);
+    if (dir2Name) {
+      document.getElementById('out-dir2-row').style.display = '';
+      document.getElementById('out-dir2-label').textContent = dir2Name;
+      document.getElementById('out-dir2-amount').textContent = fmt(dirShare);
+    } else {
+      document.getElementById('out-dir2-row').style.display = 'none';
+    }
+    if (risk > 0) {
+      document.getElementById('out-risk-dist-row').style.display = '';
+      document.getElementById('out-risk-dist').textContent = fmt(riskPerDir) + ' each';
+    } else {
+      document.getElementById('out-risk-dist-row').style.display = 'none';
+    }
+
+    // Summary grid
+    const grid = document.getElementById('summaryGrid');
+    grid.innerHTML = '';
+    const people = [
+      { name: d.name, role: 'Main User', amount: mainShare },
+      { name: dir1Name, role: 'Director', amount: dirShare + riskPerDir }
+    ];
+    if (dir2Name) people.push({ name: dir2Name, role: 'Director', amount: dirShare + riskPerDir });
+
+    people.forEach(p => {
+      grid.innerHTML += `
+        <div class="summary-card">
+          <div class="summary-card-name">${p.name}</div>
+          <div class="summary-card-role">${p.role}</div>
+          <div class="summary-card-amount">${fmt(p.amount)}</div>
+          <div class="summary-card-sub">per month</div>
+        </div>`;
+    });
+
+    document.getElementById('outputCard').classList.add('visible');
+    document.getElementById('outputCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+</script>
+</body>
+</html>
