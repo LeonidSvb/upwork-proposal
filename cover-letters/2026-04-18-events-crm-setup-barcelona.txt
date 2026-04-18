@@ -1,0 +1,25 @@
+--- UPWORK COVER LETTER: Events CRM Setup — Barcelona ---
+
+𝗜 𝗮𝗹𝗿𝗲𝗮𝗱𝘆 𝗺𝗮𝗽𝗽𝗲𝗱 𝗼𝘂𝘁 𝘆𝗼𝘂𝗿 𝗖𝗥𝗠 𝘀𝗲𝘁𝘂𝗽 - easier to show than explain: https://leonidsvb.github.io/upwork-proposal/demos/events-crm-setup-demo.html
+
+Three tabs: the full automation flow from landing page to community nurture, a live contact pipeline with GDPR tags, and the GDPR compliance layer built specifically for EU events.
+
+GDPR is where most setups break - double opt-in, consent timestamps, retention policy, right to erasure. All of that is in the demo.
+
+Since the architecture is already mapped, we start building immediately.
+
+Two questions:
+1 - Which CRM are you leaning toward - HubSpot, GoHighLevel, or something else?
+2 - Is the landing page on WordPress / Webflow, or a custom build? That determines how we wire up the form webhook.
+
+Just shoot me a message here, otherwise Upwork won't let us chat :)
+
+Leo
+
+--- NOTES ---
+Job: CRM Setup Specialist for Events Management
+URL: https://www.upwork.com/jobs/~022045414660619526222
+Budget: $1000 fixed
+Client: Barcelona, 5.0 rating, active (viewed 36 min ago)
+Demo: demos/events-crm-setup-demo.html
+Key angle: GDPR-first setup + both open jobs addressed (CRM + landing page integration)

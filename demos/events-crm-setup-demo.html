@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events CRM Setup — Automation Flow Demo</title>
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --white: #ffffff;
+      --navy: #1b2a4a;
+      --navy-mid: #2d4278;
+      --accent: #4f6ef7;
+      --accent-light: #eef1fe;
+      --green: #22c55e;
+      --green-light: #dcfce7;
+      --orange: #f59e0b;
+      --orange-light: #fef3c7;
+      --red: #ef4444;
+      --red-light: #fee2e2;
+      --purple: #8b5cf6;
+      --purple-light: #ede9fe;
+      --teal: #14b8a6;
+      --teal-light: #ccfbf1;
+      --text: #1e293b;
+      --muted: #64748b;
+      --line: rgba(30,41,59,0.1);
+      --shadow-sm: 0 2px 12px rgba(30,41,59,0.07);
+      --shadow-md: 0 8px 32px rgba(30,41,59,0.12);
+      --shadow-lg: 0 20px 60px rgba(30,41,59,0.16);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 9px;
+      --max: 1140px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    /* DEMO BANNER */
+    .demo-banner {
+      background: var(--navy);
+      color: rgba(255,255,255,0.75);
+      text-align: center;
+      padding: 9px 20px;
+      font-size: 12px;
+      letter-spacing: 0.02em;
+    }
+    .demo-banner strong { color: #fff; }
+
+    /* NAV */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--line);
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 66px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .logo-dot {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--accent), var(--navy-mid));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      color: white;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 4px;
+    }
+
+    .nav-tab {
+      padding: 8px 18px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      border: none;
+      background: none;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav-tab:hover { background: var(--bg); color: var(--navy); }
+    .nav-tab.active { background: var(--accent-light); color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(150deg, var(--navy) 0%, var(--navy-mid) 100%);
+      padding: 64px 40px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 400px;
+      background: radial-gradient(ellipse, rgba(79,110,247,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(79,110,247,0.2);
+      border: 1px solid rgba(79,110,247,0.4);
+      color: #a5b4fc;
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-size: clamp(26px, 3.5vw, 44px);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+      position: relative;
+    }
+
+    .hero p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      max-width: 560px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* SECTIONS */
+    .section {
+      padding: 64px 40px;
+      display: none;
+    }
+    .section.active { display: block; }
+
+    .section-inner { max-width: var(--max); margin: 0 auto; }
+
+    .section-header {
+      margin-bottom: 48px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: clamp(22px, 2.5vw, 32px);
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+
+    .section-sub {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 560px;
+    }
+
+    /* ========================
+       FLOW DIAGRAM
+    ======================== */
+    .flow-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      align-items: center;
+    }
+
+    .flow-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      width: 100%;
+    }
+
+    .flow-node {
+      background: var(--white);
+      border: 2px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 18px 22px;
+      min-width: 160px;
+      max-width: 200px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .flow-node:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .flow-node.active-node {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(79,110,247,0.12), var(--shadow-md);
+    }
+
+    .flow-node-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 19px;
+      margin: 0 auto 10px;
+    }
+
+    .flow-node-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+
+    .flow-node-sub {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .flow-node-badge {
+      position: absolute;
+      top: -9px;
+      right: -9px;
+      background: var(--accent);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 100px;
+    }
+
+    /* ARROWS */
+    .flow-arrow {
+      display: flex;
+      align-items: center;
+      padding: 0 6px;
+      color: var(--muted);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .flow-arrow-down {
+      display: flex;
+      justify-content: center;
+      padding: 8px 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .flow-branch {
+      display: flex;
+      gap: 0;
+      align-items: flex-start;
+      justify-content: center;
+      width: 100%;
+      position: relative;
+    }
+
+    .flow-branch::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 1px;
+      background: var(--line);
+    }
+
+    .flow-branch-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+    }
+
+    .flow-branch-line {
+      width: 1px;
+      height: 24px;
+      background: var(--line);
+    }
+
+    /* NODE DETAIL PANEL */
+    .node-detail {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      box-shadow: var(--shadow-md);
+      margin-top: 40px;
+      border: 1.5px solid var(--line);
+      display: none;
+    }
+
+    .node-detail.show { display: block; }
+
+    .node-detail-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .node-detail-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .node-detail h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .node-detail-tag {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .node-detail-body {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .node-detail-items {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .node-detail-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text);
+      padding: 10px 14px;
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+    }
+
+    .item-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* GDPR BADGE */
+    .gdpr-flag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--orange-light);
+      color: #92400e;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-top: 12px;
+    }
+
+    /* ========================
+       CRM PIPELINE (KANBAN)
+    ======================== */
+    .kanban {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      padding-bottom: 16px;
+    }
+
+    .kanban::-webkit-scrollbar { height: 4px; }
+    .kanban::-webkit-scrollbar-track { background: transparent; }
+    .kanban::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+
+    .kanban-col {
+      min-width: 210px;
+      flex-shrink: 0;
+    }
+
+    .kanban-col-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding: 0 4px;
+    }
+
+    .kanban-col-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .kanban-col-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .kanban-count {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      background: var(--bg);
+      padding: 2px 8px;
+      border-radius: 100px;
+    }
+
+    .kanban-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .kanban-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      border: 1.5px solid var(--line);
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.15s;
+    }
+
+    .kanban-card:hover {
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-2px);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .card-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .card-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .card-email {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 5px;
+      letter-spacing: 0.04em;
+    }
+
+    .tag-event { background: var(--accent-light); color: var(--accent); }
+    .tag-gdpr-ok { background: var(--green-light); color: #15803d; }
+    .tag-gdpr-pending { background: var(--orange-light); color: #92400e; }
+    .tag-vip { background: var(--purple-light); color: #6d28d9; }
+    .tag-community { background: var(--teal-light); color: #0f766e; }
+    .tag-virtual { background: #fce7f3; color: #9d174d; }
+
+    .card-meta {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* CONTACT MODAL */
+    .contact-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,15,30,0.65);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+      backdrop-filter: blur(4px);
+    }
+
+    .contact-modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .contact-modal {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 36px;
+      max-width: 460px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(16px);
+      transition: transform 0.25s;
+      position: relative;
+    }
+
+    .contact-modal-overlay.open .contact-modal { transform: translateY(0); }
+
+    .modal-close {
+      position: absolute;
+      top: 14px; right: 14px;
+      background: var(--bg);
+      border: none;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover { background: var(--line); }
+
+    .modal-avatar-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .modal-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .modal-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .modal-sub {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .modal-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .modal-field-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+    }
+
+    .mf-label {
+      font-weight: 700;
+      color: var(--muted);
+      min-width: 90px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .mf-val { color: var(--text); }
+
+    .modal-tags-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .modal-section-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 10px;
+    }
+
+    .modal-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 12px;
+      position: relative;
+    }
+
+    .timeline-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 13px;
+      top: 26px;
+      width: 1px;
+      height: calc(100% + 4px);
+      background: var(--line);
+    }
+
+    .timeline-dot {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .timeline-content {
+      padding-bottom: 16px;
+    }
+
+    .timeline-event {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .timeline-time {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* GDPR PANEL */
+    .gdpr-panel {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      box-shadow: var(--shadow-md);
+      border: 1.5px solid var(--line);
+    }
+
+    .gdpr-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .gdpr-stat {
+      background: var(--bg);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      text-align: center;
+    }
+
+    .gdpr-stat-val {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .gdpr-stat-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .gdpr-rules {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .gdpr-rule {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px 18px;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--line);
+    }
+
+    .gdpr-rule-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .gdpr-rule h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 3px;
+    }
+
+    .gdpr-rule p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .gdpr-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 5px;
+      margin-top: 6px;
+    }
+
+    .status-ok { background: var(--green-light); color: #15803d; }
+    .status-warn { background: var(--orange-light); color: #92400e; }
+
+    /* RESPONSIVE */
+    @media (max-width: 800px) {
+      nav { padding: 0 16px; }
+      .hero { padding: 48px 20px 40px; }
+      .section { padding: 48px 20px; }
+      .gdpr-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="demo-banner">
+    <strong>Demo Concept</strong> — Events CRM Setup by Leo / SystemHustle
+  </div>
+
+  <nav>
+    <div class="nav-logo">
+      <div class="logo-dot">&#9670;</div>
+      Events CRM Setup
+    </div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="switchTab('flow', this)">Automation Flow</button>
+      <button class="nav-tab" onclick="switchTab('crm', this)">CRM Pipeline</button>
+      <button class="nav-tab" onclick="switchTab('gdpr', this)">GDPR Setup</button>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-label">Interactive Demo Concept</div>
+    <h1>Events CRM — Full Automation Setup</h1>
+    <p>From landing page form submission to post-event community nurture. Click any node to see the details.</p>
+  </div>
+
+  <!-- TAB 1: FLOW -->
+  <section class="section active" id="tab-flow">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-label">Automation Architecture</div>
+        <div class="section-title">How the Full Flow Works</div>
+        <div class="section-sub">Click any step to see what happens at that stage — tools, logic, and GDPR handling.</div>
+      </div>
+
+      <div class="flow-wrap">
+
+        <!-- Row 1 -->
+        <div class="flow-row">
+          <div class="flow-node" onclick="showDetail('landing')">
+            <div class="flow-node-icon" style="background:#eef1fe;">&#127758;</div>
+            <div class="flow-node-title">Landing Page</div>
+            <div class="flow-node-sub">Event registration form</div>
+          </div>
+        </div>
+
+        <div class="flow-arrow-down">&#8595;</div>
+
+        <!-- Row 2 -->
+        <div class="flow-row">
+          <div class="flow-node" onclick="showDetail('gdpr_check')">
+            <div class="flow-node-icon" style="background:#fef3c7;">&#128275;</div>
+            <div class="flow-node-title">GDPR Consent Check</div>
+            <div class="flow-node-sub">Validate & tag opt-in</div>
+            <div class="flow-node-badge">GDPR</div>
+          </div>
+        </div>
+
+        <div class="flow-arrow-down">&#8595;</div>
+
+        <!-- Row 3: branch -->
+        <div class="flow-branch">
+          <div class="flow-branch-col">
+            <div class="flow-branch-line"></div>
+            <div class="flow-node" onclick="showDetail('confirmed')" style="margin: 0 12px;">
+              <div class="flow-node-icon" style="background:#dcfce7;">&#10003;</div>
+              <div class="flow-node-title">Consent Confirmed</div>
+              <div class="flow-node-sub">Tag: GDPR OK</div>
+            </div>
+          </div>
+          <div class="flow-branch-col">
+            <div class="flow-branch-line"></div>
+            <div class="flow-node" onclick="showDetail('pending')" style="margin: 0 12px;">
+              <div class="flow-node-icon" style="background:#fef3c7;">&#9888;</div>
+              <div class="flow-node-title">Consent Pending</div>
+              <div class="flow-node-sub">Re-confirmation email</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow-down">&#8595;</div>
+
+        <!-- Row 4 -->
+        <div class="flow-row">
+          <div class="flow-node" onclick="showDetail('crm_contact')">
+            <div class="flow-node-icon" style="background:#eef1fe;">&#128101;</div>
+            <div class="flow-node-title">CRM Contact Created</div>
+            <div class="flow-node-sub">With event data & tags</div>
+          </div>
+        </div>
+
+        <div class="flow-arrow-down">&#8595;</div>
+
+        <!-- Row 5: branch -->
+        <div class="flow-branch">
+          <div class="flow-branch-col">
+            <div class="flow-branch-line"></div>
+            <div class="flow-node" onclick="showDetail('reminder')" style="margin: 0 12px;">
+              <div class="flow-node-icon" style="background:#ede9fe;">&#128203;</div>
+              <div class="flow-node-title">Pre-Event Sequence</div>
+              <div class="flow-node-sub">Reminder + logistics emails</div>
+            </div>
+          </div>
+          <div class="flow-branch-col">
+            <div class="flow-branch-line"></div>
+            <div class="flow-node" onclick="showDetail('virtual')" style="margin: 0 12px;">
+              <div class="flow-node-icon" style="background:#fce7f3;">&#128250;</div>
+              <div class="flow-node-title">Virtual Event Link</div>
+              <div class="flow-node-sub">Auto-send Zoom / stream URL</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-arrow-down">&#8595;</div>
+
+        <!-- Row 6 -->
+        <div class="flow-row">
+          <div class="flow-node" onclick="showDetail('attended')">
+            <div class="flow-node-icon" style="background:#ccfbf1;">&#9733;</div>
+            <div class="flow-node-title">Attended Check</div>
+            <div class="flow-node-sub">Tag: Attended / No-show</div>
+          </div>
+        </div>
+
+        <div class="flow-arrow-down">&#8595;</div>
+
+        <!-- Row 7 -->
+        <div class="flow-row">
+          <div class="flow-node" onclick="showDetail('community')">
+            <div class="flow-node-icon" style="background:#ccfbf1;">&#128101;</div>
+            <div class="flow-node-title">Community Nurture</div>
+            <div class="flow-node-sub">Onboard into ongoing community</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- NODE DETAIL PANEL -->
+      <div class="node-detail" id="nodeDetail">
+        <div class="node-detail-header">
+          <div class="node-detail-icon" id="detailIcon"></div>
+          <div>
+            <h3 id="detailTitle"></h3>
+            <div class="node-detail-tag" id="detailTag"></div>
+          </div>
+        </div>
+        <div class="node-detail-body" id="detailBody"></div>
+        <div class="node-detail-items" id="detailItems"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TAB 2: CRM PIPELINE -->
+  <section class="section" id="tab-crm">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-label">CRM View</div>
+        <div class="section-title">Event Pipeline — Live Contact Board</div>
+        <div class="section-sub">Click any contact card to see their full profile, GDPR status, and event history.</div>
+      </div>
+
+      <div class="kanban">
+
+        <div class="kanban-col">
+          <div class="kanban-col-header">
+            <div class="kanban-col-title">
+              <div class="kanban-col-dot" style="background:#94a3b8;"></div>
+              New Lead
+            </div>
+            <div class="kanban-count">3</div>
+          </div>
+          <div class="kanban-cards">
+            <div class="kanban-card" onclick="openContact('anna')">
+              <div class="card-top">
+                <div class="card-avatar" style="background:linear-gradient(135deg,#4f6ef7,#2d4278);">A</div>
+                <div>
+                  <div class="card-name">Anna Kowalski</div>
+                  <div class="card-email">anna@email.com</div>
+                </div>
+              </div>
+              <div class="card-tags">
+                <span class="tag tag-event">Tech Summit 2026</span>
+                <span class="tag tag-gdpr-pending">GDPR Pending</span>
+              </div>
+              <div class="card-meta"><span>Registered 2h ago</span><span>&#127468;&#127463; ES</span></div>
+            </div>
+            <div class="kanban-card" onclick="openContact('marc')">
+              <div class="card-top">
+                <div class="card-avatar" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9);">M</div>
+                <div>
+                  <div class="card-name">Marc Dubois</div>
+                  <div class="card-email">marc@dubois.fr</div>
+                </div>
+              </div>
+              <div class="card-tags">
+                <span class="tag tag-event">Tech Summit 2026</span>
+                <span class="tag tag-gdpr-pending">GDPR Pending</span>
+              </div>
+              <div class="card-meta"><span>Registered 5h ago</span><span>&#127467;&#127479; FR</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="kanban-col">
+          <div class="kanban-col-header">
+            <div class="kanban-col-title">
+              <div class="kanban-col-dot" style="background:#f59e0b;"></div>
+              GDPR Pending
+            </div>
+            <div class="kanban-count">2</div>
+          </div>
+          <div class="kanban-cards">
+            <div class="kanban-card" onclick="openContact('elena')">
+              <div class="card-top">
+                <div class="card-avatar" style="background:linear-gradient(135deg,#f59e0b,#d97706);">E</div>
+                <div>
+                  <div class="card-name">Elena Moreno</div>
+                  <div class="card-email">elena@company.es</div>
+                </div>
+              </div>
+              <div class="card-tags">
+                <span class="tag tag-event">Virtual Summit</span>
+                <span class="tag tag-gdpr-pending">Awaiting Confirm</span>
+              </div>
+              <div class="card-meta"><span>Reminder sent</span><span>&#127466;&#127480; ES</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="kanban-col">
+          <div class="kanban-col-header">
+            <div class="kanban-col-title">
+              <div class="kanban-col-dot" style="background:#22c55e;"></div>
+              Confirmed
+            </div>
+            <div class="kanban-count">5</div>
+          </div>
+          <div class="kanban-cards">
+            <div class="kanban-card" onclick="openContact('james')">
+              <div class="card-top">
+                <div class="card-avatar" style="background:linear-gradient(135deg,#22c55e,#15803d);">J</div>
+                <div>
+                  <div class="card-name">James Carter</div>
+                  <div class="card-email">james@startup.io</div>
+                </div>
+              </div>
+              <div class="card-tags">
+                <span class="tag tag-event">Tech Summit 2026</span>
+                <span class="tag tag-gdpr-ok">GDPR OK</span>
+                <span class="tag tag-vip">VIP</span>
+              </div>
+              <div class="card-meta"><span>Event: Apr 25</span><span>&#127468;&#127463; GB</span></div>
+            </div>
+            <div class="kanban-card" onclick="openContact('sofia')">
+              <div class="card-top">
+                <div class="card-avatar" style="background:linear-gradient(135deg,#14b8a6,#0f766e);">S</div>
+                <div>
+                  <div class="card-name">Sofia Reyes</div>
+                  <div class="card-email">sofia@brand.com</div>
+                </div>
+              </div>
+              <div class="card-tags">
+                <span class="tag tag-virtual">Virtual</span>
+                <span class="tag tag-gdpr-ok">GDPR OK</span>
+              </div>
+              <div class="card-meta"><span>Zoom link sent</span><span>&#127466;&#127480; ES</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="kanban-col">
+          <div class="kanban-col-header">
+            <div class="kanban-col-title">
+              <div class="kanban-col-dot" style="background:#8b5cf6;"></div>
+              Attended
+            </div>
+            <div class="kanban-count">4</div>
+          </div>
+          <div class="kanban-cards">
+            <div class="kanban-card" onclick="openContact('luca')">
+              <div class="card-top">
+                <div class="card-avatar" style="background:linear-gradient(135deg,#8b5cf6,#5b21b6);">L</div>
+                <div>
+                  <div class="card-name">Luca Bianchi</div>
+                  <div class="card-email">luca@design.it</div>
+                </div>
+              </div>
+              <div class="card-tags">
+                <span class="tag tag-event">Tech Summit 2026</span>
+                <span class="tag tag-gdpr-ok">GDPR OK</span>
+              </div>
+              <div class="card-meta"><span>Attended Apr 10</span><span>&#127470;&#127481; IT</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="kanban-col">
+          <div class="kanban-col-header">
+            <div class="kanban-col-title">
+              <div class="kanban-col-dot" style="background:#14b8a6;"></div>
+              Community Member
+            </div>
+            <div class="kanban-count">8</div>
+          </div>
+          <div class="kanban-cards">
+            <div class="kanban-card" onclick="openContact('peter')">
+              <div class="card-top">
+                <div class="card-avatar" style="background:linear-gradient(135deg,#14b8a6,#0f766e);">P</div>
+                <div>
+                  <div class="card-name">Peter Novak</div>
+                  <div class="card-email">peter@tech.cz</div>
+                </div>
+              </div>
+              <div class="card-tags">
+                <span class="tag tag-community">Community</span>
+                <span class="tag tag-gdpr-ok">GDPR OK</span>
+                <span class="tag tag-vip">VIP</span>
+              </div>
+              <div class="card-meta"><span>3 events attended</span><span>&#127464;&#127487; CZ</span></div>
+            </div>
+            <div class="kanban-card" onclick="openContact('claire')">
+              <div class="card-top">
+                <div class="card-avatar" style="background:linear-gradient(135deg,#ec4899,#9d174d);">C</div>
+                <div>
+                  <div class="card-name">Claire Fontaine</div>
+                  <div class="card-email">claire@agency.fr</div>
+                </div>
+              </div>
+              <div class="card-tags">
+                <span class="tag tag-community">Community</span>
+                <span class="tag tag-gdpr-ok">GDPR OK</span>
+              </div>
+              <div class="card-meta"><span>2 events attended</span><span>&#127467;&#127479; FR</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 3: GDPR -->
+  <section class="section" id="tab-gdpr">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-label">Compliance</div>
+        <div class="section-title">GDPR Setup for Events</div>
+        <div class="section-sub">How the CRM is configured to stay compliant with EU data protection rules for in-person and virtual events.</div>
+      </div>
+
+      <div class="gdpr-panel">
+        <div class="gdpr-grid">
+          <div class="gdpr-stat">
+            <div class="gdpr-stat-val" style="color:var(--green);">87%</div>
+            <div class="gdpr-stat-label">Consent Rate</div>
+          </div>
+          <div class="gdpr-stat">
+            <div class="gdpr-stat-val" style="color:var(--orange);">11%</div>
+            <div class="gdpr-stat-label">Pending</div>
+          </div>
+          <div class="gdpr-stat">
+            <div class="gdpr-stat-val" style="color:var(--red);">2%</div>
+            <div class="gdpr-stat-label">Opted Out</div>
+          </div>
+        </div>
+
+        <div class="gdpr-rules">
+          <div class="gdpr-rule">
+            <div class="gdpr-rule-icon" style="background:var(--green-light);">&#128275;</div>
+            <div>
+              <h4>Double Opt-In on Registration</h4>
+              <p>Every contact registers via the landing page and receives an automated confirmation email. Only after clicking confirm are they tagged GDPR OK and entered into event sequences.</p>
+              <div class="gdpr-status status-ok">&#10003; Configured</div>
+            </div>
+          </div>
+          <div class="gdpr-rule">
+            <div class="gdpr-rule-icon" style="background:var(--accent-light);">&#128196;</div>
+            <div>
+              <h4>Explicit Consent Fields in CRM</h4>
+              <p>Each contact record stores: consent date, consent source (form URL), consent type (event-specific or community). This provides an audit trail if ever required by authorities.</p>
+              <div class="gdpr-status status-ok">&#10003; Configured</div>
+            </div>
+          </div>
+          <div class="gdpr-rule">
+            <div class="gdpr-rule-icon" style="background:var(--orange-light);">&#9888;</div>
+            <div>
+              <h4>Data Retention Policy</h4>
+              <p>Contacts who never confirmed GDPR are auto-deleted after 30 days. Community members who disengage are flagged for review at 12 months. Retention rules are enforced via CRM automation.</p>
+              <div class="gdpr-status status-warn">&#9998; Needs your input on retention period</div>
+            </div>
+          </div>
+          <div class="gdpr-rule">
+            <div class="gdpr-rule-icon" style="background:var(--red-light);">&#128683;</div>
+            <div>
+              <h4>Right to Erasure (Right to Be Forgotten)</h4>
+              <p>One-click unsubscribe on every email. Unsubscribe triggers an automatic CRM workflow: contact is tagged Opted Out, removed from all sequences, and data is anonymised within 72 hours.</p>
+              <div class="gdpr-status status-ok">&#10003; Configured</div>
+            </div>
+          </div>
+          <div class="gdpr-rule">
+            <div class="gdpr-rule-icon" style="background:var(--purple-light);">&#127758;</div>
+            <div>
+              <h4>Third-Party Processor Compliance</h4>
+              <p>Any tool used (email platform, Zoom, analytics) is documented as a data processor. CRM stores which tools have access to which contact data to maintain a full data processing register.</p>
+              <div class="gdpr-status status-ok">&#10003; Documented</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT MODAL -->
+  <div class="contact-modal-overlay" id="contactOverlay" onclick="handleOverlay(event)">
+    <div class="contact-modal">
+      <button class="modal-close" onclick="closeContact()">&#10005;</button>
+      <div class="modal-avatar-row">
+        <div class="modal-avatar" id="m-avatar"></div>
+        <div>
+          <div class="modal-name" id="m-name"></div>
+          <div class="modal-sub" id="m-sub"></div>
+        </div>
+      </div>
+      <div class="modal-fields" id="m-fields"></div>
+      <div class="modal-tags-row" id="m-tags"></div>
+      <div class="modal-section-title">Activity Timeline</div>
+      <div class="modal-timeline" id="m-timeline"></div>
+    </div>
+  </div>
+
+  <script>
+    // TAB SWITCH
+    function switchTab(id, btn) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+      document.getElementById('tab-' + id).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    // FLOW NODE DETAILS
+    const nodeData = {
+      landing: {
+        icon: '&#127758;', iconBg: '#eef1fe',
+        title: 'Landing Page — Form Submission',
+        tag: 'Trigger',
+        body: 'The visitor fills in the registration form on the existing landing page. The form captures name, email, country, event selection, and a mandatory GDPR consent checkbox.',
+        items: [
+          'Form fields: name, email, phone (optional), country, event type',
+          'Mandatory GDPR checkbox with link to privacy policy',
+          'On submit: webhook fires to CRM (HubSpot, Notion, GoHighLevel — your choice)',
+          'Confirmation page shown immediately with next steps'
+        ]
+      },
+      gdpr_check: {
+        icon: '&#128275;', iconBg: '#fef3c7',
+        title: 'GDPR Consent Check',
+        tag: 'Compliance Gate',
+        body: 'Immediately after the form is submitted, the automation checks whether the GDPR checkbox was confirmed. This is the gate that separates compliant contacts from those who need follow-up.',
+        items: [
+          'If checkbox checked: proceed to double opt-in confirmation email',
+          'If checkbox unchecked (bypass attempt): contact is created with tag GDPR-Blocked, no sequences triggered',
+          'Confirmation email sent from verified domain with consent proof in footer',
+          'All consent timestamps stored in CRM contact record as custom field'
+        ]
+      },
+      confirmed: {
+        icon: '&#10003;', iconBg: '#dcfce7',
+        title: 'Consent Confirmed — GDPR OK',
+        tag: 'Happy Path',
+        body: 'Contact clicked the confirmation link in their email. They are now fully opted in and enter the main event sequence.',
+        items: [
+          'Contact tagged: GDPR-OK, Event: [Name], Status: Confirmed',
+          'Welcome email sent within 5 minutes',
+          'Contact added to event segment for targeted communications',
+          'Consent date and source URL logged in CRM'
+        ]
+      },
+      pending: {
+        icon: '&#9888;', iconBg: '#fef3c7',
+        title: 'Consent Pending — Re-confirmation',
+        tag: 'Fallback Path',
+        body: 'The contact registered but did not click the confirmation email within 24 hours. A single reminder is sent. If still unconfirmed after 72 hours, the contact is archived — not deleted — for compliance records.',
+        items: [
+          'Reminder email sent at +24h with a new confirmation link',
+          'If confirmed after reminder: joins main sequence as normal',
+          'If no action at +72h: tagged Unconfirmed, moved out of all active sequences',
+          'Record retained for 30 days then anonymised per GDPR data retention policy'
+        ]
+      },
+      crm_contact: {
+        icon: '&#128101;', iconBg: '#eef1fe',
+        title: 'CRM Contact Created with Tags',
+        tag: 'Data Layer',
+        body: 'A clean contact record is created or updated in the CRM with all event-relevant data structured for segmentation and reporting.',
+        items: [
+          'Fields: name, email, country, event name, event date, attendance type (in-person/virtual)',
+          'Custom fields: GDPR status, consent date, consent source, sequence stage',
+          'Tags: auto-applied based on event selected, country, and attendance type',
+          'Contact is de-duplicated before creation — existing contacts are updated, not duplicated'
+        ]
+      },
+      reminder: {
+        icon: '&#128203;', iconBg: '#ede9fe',
+        title: 'Pre-Event Email Sequence',
+        tag: 'Nurture',
+        body: 'A 3-email sequence goes out in the days before the event to confirmed attendees. Each email is personalised with event details and builds anticipation.',
+        items: [
+          'Email 1 (T-7 days): "You\'re in — here\'s what to expect"',
+          'Email 2 (T-2 days): Logistics, agenda, who else is attending',
+          'Email 3 (T-1 day): Final reminder + what to bring / download',
+          'Each email has one-click unsubscribe that triggers GDPR opt-out workflow'
+        ]
+      },
+      virtual: {
+        icon: '&#128250;', iconBg: '#fce7f3',
+        title: 'Virtual Event Link — Auto-Send',
+        tag: 'Virtual Path',
+        body: 'For virtual attendees, a unique access link (Zoom, StreamYard, or your platform) is sent automatically at a defined time before the event — no manual work needed.',
+        items: [
+          'Zoom / virtual link generated or fetched from integration',
+          'Sent at T-24h and T-1h before event start',
+          'If attendee does not join within 15 min of start time: tagged No-Show automatically',
+          'Recording link sent post-event to all registered (with separate GDPR consent for recordings if required)'
+        ]
+      },
+      attended: {
+        icon: '&#9733;', iconBg: '#ccfbf1',
+        title: 'Attended / No-Show Check',
+        tag: 'Post-Event',
+        body: 'After the event, the CRM is updated to reflect who actually attended. This is either imported from the check-in system or updated via a post-event form.',
+        items: [
+          'Attended: tagged Attended + event name, enters community nurture sequence',
+          'No-show: tagged No-Show, receives a short "we missed you" email with recording or next event info',
+          'Attendance data used for reporting and future event segmentation',
+          'Feedback survey triggered 24h after event via email automation'
+        ]
+      },
+      community: {
+        icon: '&#128101;', iconBg: '#ccfbf1',
+        title: 'Community Nurture Sequence',
+        tag: 'Long-term Retention',
+        body: 'Attendees who completed an event are onboarded into the community — a long-term nurture sequence designed to keep them engaged and convert them into repeat attendees.',
+        items: [
+          'Welcome to community email with resources and next event preview',
+          'Monthly digest: upcoming events, community updates, exclusive content',
+          'Re-engagement trigger if contact goes 60 days without opening any email',
+          'VIP tag applied after 3 events attended — unlocks early-bird access flow'
+        ]
+      }
+    };
+
+    function showDetail(key) {
+      const d = nodeData[key];
+      if (!d) return;
+      document.querySelectorAll('.flow-node').forEach(n => n.classList.remove('active-node'));
+      event.currentTarget.classList.add('active-node');
+
+      document.getElementById('detailIcon').style.background = d.iconBg;
+      document.getElementById('detailIcon').innerHTML = d.icon;
+      document.getElementById('detailTitle').textContent = d.title;
+      document.getElementById('detailTag').textContent = d.tag;
+      document.getElementById('detailBody').textContent = d.body;
+
+      const itemsEl = document.getElementById('detailItems');
+      itemsEl.innerHTML = d.items.map((item, i) =>
+        `<div class="node-detail-item"><div class="item-dot">${i+1}</div><span>${item}</span></div>`
+      ).join('');
+
+      const panel = document.getElementById('nodeDetail');
+      panel.classList.add('show');
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // CONTACTS
+    const contacts = {
+      anna: {
+        name: 'Anna Kowalski', initials: 'A', color: 'linear-gradient(135deg,#4f6ef7,#2d4278)',
+        sub: 'Tech Summit 2026 — Barcelona',
+        fields: [
+          { label: 'Email', val: 'anna@email.com' },
+          { label: 'Country', val: 'Spain' },
+          { label: 'Event', val: 'Tech Summit 2026 (In-person)' },
+          { label: 'GDPR', val: 'Pending — confirmation email sent 2h ago' },
+          { label: 'Source', val: 'Landing page / organic search' }
+        ],
+        tags: ['Tech Summit 2026', 'GDPR Pending', 'In-Person'],
+        tagStyles: ['tag-event', 'tag-gdpr-pending', ''],
+        timeline: [
+          { icon: '&#127758;', bg: '#eef1fe', event: 'Registered via landing page', time: '2 hours ago' },
+          { icon: '&#128275;', bg: '#fef3c7', event: 'GDPR confirmation email sent', time: '2 hours ago' },
+          { icon: '&#9888;', bg: '#fef3c7', event: 'Awaiting consent confirmation', time: 'Pending' }
+        ]
+      },
+      james: {
+        name: 'James Carter', initials: 'J', color: 'linear-gradient(135deg,#22c55e,#15803d)',
+        sub: 'Tech Summit 2026 — VIP Attendee',
+        fields: [
+          { label: 'Email', val: 'james@startup.io' },
+          { label: 'Country', val: 'United Kingdom' },
+          { label: 'Event', val: 'Tech Summit 2026 (In-person)' },
+          { label: 'GDPR', val: 'Confirmed — April 14, 2026' },
+          { label: 'Source', val: 'Landing page / LinkedIn ad' }
+        ],
+        tags: ['Tech Summit 2026', 'GDPR OK', 'VIP', 'In-Person'],
+        tagStyles: ['tag-event', 'tag-gdpr-ok', 'tag-vip', ''],
+        timeline: [
+          { icon: '&#127758;', bg: '#eef1fe', event: 'Registered via landing page', time: 'Apr 14, 2026' },
+          { icon: '&#10003;', bg: '#dcfce7', event: 'GDPR consent confirmed', time: 'Apr 14, 2026' },
+          { icon: '&#128203;', bg: '#ede9fe', event: 'Pre-event email sequence started', time: 'Apr 14, 2026' },
+          { icon: '&#9733;', bg: '#ccfbf1', event: 'VIP tag applied (referral)', time: 'Apr 15, 2026' }
+        ]
+      },
+      peter: {
+        name: 'Peter Novak', initials: 'P', color: 'linear-gradient(135deg,#14b8a6,#0f766e)',
+        sub: 'Community Member — 3 events attended',
+        fields: [
+          { label: 'Email', val: 'peter@tech.cz' },
+          { label: 'Country', val: 'Czech Republic' },
+          { label: 'Events', val: '3 attended (2024–2026)' },
+          { label: 'GDPR', val: 'Confirmed — Jan 10, 2024' },
+          { label: 'Next event', val: 'Early-bird access unlocked' }
+        ],
+        tags: ['Community', 'GDPR OK', 'VIP', '3 Events'],
+        tagStyles: ['tag-community', 'tag-gdpr-ok', 'tag-vip', ''],
+        timeline: [
+          { icon: '&#127758;', bg: '#eef1fe', event: 'First registration — Winter Summit 2024', time: 'Jan 10, 2024' },
+          { icon: '&#9733;', bg: '#ccfbf1', event: 'Attended — Winter Summit 2024', time: 'Jan 25, 2024' },
+          { icon: '&#127775;', bg: '#ede9fe', event: 'Attended — Spring Forum 2025', time: 'Apr 12, 2025' },
+          { icon: '&#128101;', bg: '#ccfbf1', event: 'Community member — ongoing nurture', time: 'Apr 13, 2025' },
+          { icon: '&#9733;', bg: '#ccfbf1', event: 'VIP tag — early-bird access unlocked', time: 'Apr 14, 2025' }
+        ]
+      },
+      marc: { name: 'Marc Dubois', initials: 'M', color: 'linear-gradient(135deg,#8b5cf6,#6d28d9)', sub: 'Tech Summit 2026', fields: [{ label: 'Email', val: 'marc@dubois.fr' }, { label: 'Country', val: 'France' }, { label: 'GDPR', val: 'Pending' }], tags: ['GDPR Pending', 'In-Person'], tagStyles: ['tag-gdpr-pending', ''], timeline: [{ icon: '&#127758;', bg: '#eef1fe', event: 'Registered', time: '5h ago' }, { icon: '&#9888;', bg: '#fef3c7', event: 'Confirmation email sent', time: '5h ago' }] },
+      elena: { name: 'Elena Moreno', initials: 'E', color: 'linear-gradient(135deg,#f59e0b,#d97706)', sub: 'Virtual Summit', fields: [{ label: 'Email', val: 'elena@company.es' }, { label: 'Country', val: 'Spain' }, { label: 'GDPR', val: 'Reminder sent — 1 day ago' }], tags: ['Virtual', 'GDPR Pending'], tagStyles: ['tag-virtual', 'tag-gdpr-pending'], timeline: [{ icon: '&#127758;', bg: '#eef1fe', event: 'Registered', time: '2 days ago' }, { icon: '&#9888;', bg: '#fef3c7', event: 'Reminder sent', time: '1 day ago' }] },
+      sofia: { name: 'Sofia Reyes', initials: 'S', color: 'linear-gradient(135deg,#14b8a6,#0f766e)', sub: 'Virtual Summit — Confirmed', fields: [{ label: 'Email', val: 'sofia@brand.com' }, { label: 'Country', val: 'Spain' }, { label: 'GDPR', val: 'Confirmed' }, { label: 'Access', val: 'Zoom link sent' }], tags: ['Virtual', 'GDPR OK'], tagStyles: ['tag-virtual', 'tag-gdpr-ok'], timeline: [{ icon: '&#127758;', bg: '#eef1fe', event: 'Registered', time: '3 days ago' }, { icon: '&#10003;', bg: '#dcfce7', event: 'GDPR confirmed', time: '3 days ago' }, { icon: '&#128250;', bg: '#fce7f3', event: 'Zoom link sent', time: '1 day ago' }] },
+      luca: { name: 'Luca Bianchi', initials: 'L', color: 'linear-gradient(135deg,#8b5cf6,#5b21b6)', sub: 'Attended — Tech Summit 2026', fields: [{ label: 'Email', val: 'luca@design.it' }, { label: 'Country', val: 'Italy' }, { label: 'GDPR', val: 'Confirmed' }, { label: 'Status', val: 'Attended Apr 10' }], tags: ['Attended', 'GDPR OK'], tagStyles: ['tag-community', 'tag-gdpr-ok'], timeline: [{ icon: '&#127758;', bg: '#eef1fe', event: 'Registered', time: 'Apr 1' }, { icon: '&#10003;', bg: '#dcfce7', event: 'Confirmed', time: 'Apr 1' }, { icon: '&#9733;', bg: '#ccfbf1', event: 'Attended event', time: 'Apr 10' }, { icon: '&#128101;', bg: '#ccfbf1', event: 'Community nurture started', time: 'Apr 11' }] },
+      claire: { name: 'Claire Fontaine', initials: 'C', color: 'linear-gradient(135deg,#ec4899,#9d174d)', sub: 'Community Member — 2 events', fields: [{ label: 'Email', val: 'claire@agency.fr' }, { label: 'Country', val: 'France' }, { label: 'GDPR', val: 'Confirmed' }, { label: 'Events', val: '2 attended' }], tags: ['Community', 'GDPR OK'], tagStyles: ['tag-community', 'tag-gdpr-ok'], timeline: [{ icon: '&#9733;', bg: '#ccfbf1', event: 'Attended Summit 2025', time: 'Mar 2025' }, { icon: '&#9733;', bg: '#ccfbf1', event: 'Attended Forum 2025', time: 'Oct 2025' }, { icon: '&#128101;', bg: '#ccfbf1', event: 'Community member', time: 'Oct 2025' }] }
+    };
+
+    function openContact(key) {
+      const c = contacts[key];
+      if (!c) return;
+      document.getElementById('m-avatar').style.background = c.color;
+      document.getElementById('m-avatar').textContent = c.initials;
+      document.getElementById('m-name').textContent = c.name;
+      document.getElementById('m-sub').textContent = c.sub;
+
+      document.getElementById('m-fields').innerHTML = c.fields.map(f =>
+        `<div class="modal-field-row"><span class="mf-label">${f.label}</span><span class="mf-val">${f.val}</span></div>`
+      ).join('');
+
+      document.getElementById('m-tags').innerHTML = c.tags.map((t, i) =>
+        `<span class="tag ${c.tagStyles[i]}">${t}</span>`
+      ).join('');
+
+      document.getElementById('m-timeline').innerHTML = c.timeline.map(t =>
+        `<div class="timeline-item">
+          <div class="timeline-dot" style="background:${t.bg};">${t.icon}</div>
+          <div class="timeline-content">
+            <div class="timeline-event">${t.event}</div>
+            <div class="timeline-time">${t.time}</div>
+          </div>
+        </div>`
+      ).join('');
+
+      document.getElementById('contactOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeContact() {
+      document.getElementById('contactOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function handleOverlay(e) {
+      if (e.target === document.getElementById('contactOverlay')) closeContact();
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeContact(); });
+  </script>
+
+</body>
+</html>
