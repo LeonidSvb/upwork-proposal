@@ -2,7 +2,7 @@
 
 I built a working demo of your funnel — specific to Prime Weight Loss & Wellness and GLP-1.
 
-Here it is: [DEMO LINK]
+Here it is: https://leonidsvb.github.io/upwork-proposal/demos/prime-weight-loss-funnel-demo.html
 
 It includes:
 - Hero section with an inline booking form (name, phone, goal type)
