@@ -1,24 +1,18 @@
 --- UPWORK COVER LETTER: Prime Weight Loss & Wellness — GLP-1 Telehealth Funnel ---
 
-I built a working demo of your funnel — specific to Prime Weight Loss & Wellness and GLP-1.
+𝗜 𝗮𝗹𝗿𝗲𝗮𝗱𝘆 𝗯𝘂𝗶𝗹𝘁 𝘆𝗼𝘂𝗿 𝗳𝘂𝗻𝗻𝗲𝗹 - easier to show than explain: https://leonidsvb.github.io/upwork-proposal/demos/prime-weight-loss-funnel-demo.html
 
-Here it is: https://leonidsvb.github.io/upwork-proposal/demos/prime-weight-loss-funnel-demo.html
+Also recorded a quick Loom walking through the conversion flow: [LOOM LINK]
 
-It includes:
-- Hero section with an inline booking form (name, phone, goal type)
-- "Am I a Candidate?" 3-step eligibility quiz that flows directly into a consultation booking form
-- GLP-1 treatment section explaining Semaglutide vs Tirzepatide in plain language
-- BMI calculator with personalized weight loss projections based on GLP-1 clinical data
-- Patient testimonials with real-looking outcomes
-- Time-slot booking modal with confirmation
-- FAQ accordion covering cost, eligibility, delivery, FDA approval
-- Full mobile responsiveness and smooth scroll animations
+Hero with inline booking form, GLP-1 eligibility quiz, BMI calculator with weight loss projections, time-slot booking modal. Built specifically for Prime Weight Loss & Wellness - not a template.
 
-The whole thing is designed around the conversion flow you described — visitors land, qualify themselves, and book without friction.
+Since the demo is done, we start from a working base, not zero.
 
-Two questions before we go further:
-1. Are you using any existing booking tool (HighLevel, Calendly, Acuity) or do you need that built from scratch?
-2. Do you have brand colors and a logo, or should I develop the visual identity as part of this?
+Two questions:
+1 - Are you on HighLevel or another CRM, or do I need to wire up the booking from scratch?
+2 - Do you have brand guidelines, or should I develop the visual direction?
+
+Just shoot me a message here, otherwise Upwork won't let us chat :)
 
 Leo
 
