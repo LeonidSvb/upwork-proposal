@@ -1,6 +1,6 @@
 --- UPWORK COVER LETTER: Events CRM Setup — Barcelona ---
 
-𝗜 𝗮𝗹𝗿𝗲𝗮𝗱𝘆 𝗺𝗮𝗽𝗽𝗲𝗱 𝗼𝘂𝘁 𝘆𝗼𝘂𝗿 𝗖𝗥𝗠 𝘀𝗲𝘁𝘂𝗽 - easier to show than explain: https://leonidsvb.github.io/upwork-proposal/demos/events-crm-setup-demo.html
+Hey - 𝗯𝘂𝗶𝗹𝘁 𝘆𝗼𝘂 𝗮𝗻 𝗲𝘃𝗲𝗻𝘁𝘀 𝗖𝗥𝗠 𝗳𝗹𝗼𝘄 𝘄𝗶𝘁𝗵 𝗚𝗗𝗣𝗥 𝗯𝘂𝗶𝗹𝘁 𝗶𝗻 - easier to show than explain: https://leonidsvb.github.io/upwork-proposal/demos/events-crm-setup-demo.html
 
 Three tabs: the full automation flow from landing page to community nurture, a live contact pipeline with GDPR tags, and the GDPR compliance layer built specifically for EU events.
 
