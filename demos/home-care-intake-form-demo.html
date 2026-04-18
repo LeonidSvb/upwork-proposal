@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Intake Form — CareFirst Home Services</title>
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #f0f4f8;
+    color: #1a2332;
+    min-height: 100vh;
+    padding: 32px 16px 64px;
+  }
+
+  .form-wrapper {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .form-header {
+    background: #ffffff;
+    border-radius: 16px 16px 0 0;
+    padding: 36px 48px 32px;
+    border-bottom: 3px solid #2d7dd2;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .logo-mark {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #2d7dd2, #1a5fa8);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .logo-mark svg {
+    width: 30px;
+    height: 30px;
+    fill: white;
+  }
+
+  .header-text h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a2332;
+    letter-spacing: -0.3px;
+  }
+
+  .header-text p {
+    font-size: 13px;
+    color: #6b7a8d;
+    margin-top: 4px;
+  }
+
+  .form-badge {
+    margin-left: auto;
+    background: #eef6ff;
+    color: #2d7dd2;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid #c3ddf7;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Progress */
+  .progress-bar {
+    background: #fff;
+    padding: 0 48px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border-bottom: 1px solid #e8edf3;
+  }
+
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #9aa5b4;
+    flex: 1;
+    position: relative;
+  }
+
+  .step::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 20px;
+    background: #e8edf3;
+  }
+
+  .step:last-child::after { display: none; }
+
+  .step.active { color: #2d7dd2; }
+  .step.done { color: #27ae60; }
+
+  .step-num {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #e8edf3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .step.active .step-num { background: #2d7dd2; color: white; }
+  .step.done .step-num { background: #27ae60; color: white; }
+
+  /* Body */
+  .form-body {
+    background: #ffffff;
+    padding: 40px 48px;
+  }
+
+  .section {
+    margin-bottom: 40px;
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #2d7dd2;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e8edf3;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title svg {
+    width: 14px;
+    height: 14px;
+    fill: #2d7dd2;
+    flex-shrink: 0;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .form-row.single { grid-template-columns: 1fr; }
+  .form-row.triple { grid-template-columns: 1fr 1fr 1fr; }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #4a5568;
+    letter-spacing: 0.2px;
+  }
+
+  .required { color: #e53e3e; margin-left: 2px; }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  select,
+  textarea {
+    border: 1.5px solid #dde3eb;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #1a2332;
+    background: #fafbfc;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+    width: 100%;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: #2d7dd2;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(45, 125, 210, 0.1);
+  }
+
+  textarea { resize: vertical; min-height: 80px; }
+
+  select { cursor: pointer; }
+
+  /* Checkboxes */
+  .checkbox-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border: 1.5px solid #dde3eb;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: #fafbfc;
+  }
+
+  .checkbox-item:hover { border-color: #2d7dd2; background: #f0f7ff; }
+
+  .checkbox-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #2d7dd2;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .checkbox-item span {
+    font-size: 13px;
+    color: #2d3748;
+    font-weight: 500;
+  }
+
+  /* Signature */
+  .signature-section {
+    background: #fafbfc;
+    border: 1.5px solid #dde3eb;
+    border-radius: 12px;
+    padding: 24px;
+  }
+
+  .signature-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .sig-hint {
+    font-size: 11px;
+    color: #9aa5b4;
+    font-weight: 400;
+  }
+
+  .canvas-wrapper {
+    position: relative;
+    background: white;
+    border: 1.5px dashed #b8c7d9;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  #signatureCanvas {
+    display: block;
+    width: 100%;
+    height: 140px;
+    cursor: crosshair;
+    touch-action: none;
+  }
+
+  .canvas-placeholder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+
+  .canvas-placeholder svg {
+    width: 28px;
+    height: 28px;
+    fill: #c8d5e3;
+    margin-bottom: 6px;
+  }
+
+  .canvas-placeholder p {
+    font-size: 12px;
+    color: #b8c7d9;
+  }
+
+  .sig-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+  }
+
+  .sig-date {
+    font-size: 12px;
+    color: #6b7a8d;
+  }
+
+  .sig-date span {
+    font-weight: 600;
+    color: #2d3748;
+  }
+
+  .btn-clear {
+    background: none;
+    border: 1px solid #dde3eb;
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: 12px;
+    color: #6b7a8d;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+
+  .btn-clear:hover { border-color: #e53e3e; color: #e53e3e; }
+
+  /* Consent */
+  .consent-box {
+    background: #f7faff;
+    border: 1px solid #c3ddf7;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-top: 20px;
+  }
+
+  .consent-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .consent-row input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    margin-top: 2px;
+    accent-color: #2d7dd2;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .consent-text {
+    font-size: 12.5px;
+    color: #4a5568;
+    line-height: 1.6;
+  }
+
+  .consent-text a { color: #2d7dd2; text-decoration: none; }
+  .consent-text a:hover { text-decoration: underline; }
+
+  /* Footer */
+  .form-footer {
+    background: #ffffff;
+    padding: 28px 48px 36px;
+    border-top: 1px solid #e8edf3;
+    border-radius: 0 0 16px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .secure-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #6b7a8d;
+  }
+
+  .secure-badge svg { width: 14px; height: 14px; fill: #27ae60; }
+
+  .btn-submit {
+    background: linear-gradient(135deg, #2d7dd2, #1a5fa8);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 36px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+    letter-spacing: 0.2px;
+    box-shadow: 0 4px 12px rgba(45, 125, 210, 0.3);
+  }
+
+  .btn-submit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(45, 125, 210, 0.4);
+  }
+
+  .btn-submit:active { transform: translateY(0); }
+
+  /* Success */
+  .success-screen {
+    display: none;
+    background: #ffffff;
+    border-radius: 0 0 16px 16px;
+    padding: 64px 48px;
+    text-align: center;
+  }
+
+  .success-icon {
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, #27ae60, #1e8449);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    box-shadow: 0 8px 24px rgba(39, 174, 96, 0.25);
+  }
+
+  .success-icon svg { width: 36px; height: 36px; fill: white; }
+
+  .success-screen h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a2332;
+    margin-bottom: 10px;
+  }
+
+  .success-screen p {
+    font-size: 14px;
+    color: #6b7a8d;
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0 auto 28px;
+  }
+
+  .success-detail {
+    background: #f0f9f4;
+    border: 1px solid #a9dfbf;
+    border-radius: 10px;
+    padding: 16px 24px;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+    min-width: 280px;
+  }
+
+  .success-detail span {
+    font-size: 12px;
+    color: #27ae60;
+    font-weight: 600;
+  }
+
+  .success-detail p {
+    font-size: 13px;
+    color: #2d3748;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .form-header, .form-body, .form-footer { padding-left: 24px; padding-right: 24px; }
+    .progress-bar { padding: 0 24px; }
+    .form-row { grid-template-columns: 1fr; }
+    .form-row.triple { grid-template-columns: 1fr 1fr; }
+    .checkbox-grid { grid-template-columns: 1fr; }
+    .form-header { flex-wrap: wrap; }
+    .form-badge { margin-left: 0; }
+    .step-label { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="form-wrapper">
+
+  <!-- Header -->
+  <div class="form-header">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+    </div>
+    <div class="header-text">
+      <h1>Client Intake Form</h1>
+      <p>CareFirst Home Services — New Client Onboarding</p>
+    </div>
+    <div class="form-badge">CONFIDENTIAL</div>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-bar">
+    <div class="step active">
+      <div class="step-num">1</div>
+      <span class="step-label">Personal Info</span>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <span class="step-label">Emergency Contact</span>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <span class="step-label">Care Needs</span>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <span class="step-label">Signature</span>
+    </div>
+  </div>
+
+  <!-- Form Body -->
+  <div class="form-body" id="formBody">
+    <form id="intakeForm" novalidate>
+
+      <!-- Section 1: Personal Information -->
+      <div class="section">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+          Personal Information
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label>First Name <span class="required">*</span></label>
+            <input type="text" placeholder="e.g. Margaret" required>
+          </div>
+          <div class="field">
+            <label>Last Name <span class="required">*</span></label>
+            <input type="text" placeholder="e.g. Thompson" required>
+          </div>
+        </div>
+
+        <div class="form-row triple">
+          <div class="field">
+            <label>Date of Birth <span class="required">*</span></label>
+            <input type="date" required>
+          </div>
+          <div class="field">
+            <label>Gender</label>
+            <select>
+              <option value="">Select...</option>
+              <option>Female</option>
+              <option>Male</option>
+              <option>Prefer not to say</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Marital Status</label>
+            <select>
+              <option value="">Select...</option>
+              <option>Single</option>
+              <option>Married</option>
+              <option>Widowed</option>
+              <option>Divorced</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label>Phone Number <span class="required">*</span></label>
+            <input type="tel" placeholder="(555) 000-0000" required>
+          </div>
+          <div class="field">
+            <label>Email Address</label>
+            <input type="email" placeholder="margaret@email.com">
+          </div>
+        </div>
+
+        <div class="form-row single">
+          <div class="field">
+            <label>Home Address <span class="required">*</span></label>
+            <input type="text" placeholder="Street address, City, State, ZIP" required>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Emergency Contact -->
+      <div class="section">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+          Emergency Contact
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label>Contact Full Name <span class="required">*</span></label>
+            <input type="text" placeholder="Full name" required>
+          </div>
+          <div class="field">
+            <label>Relationship <span class="required">*</span></label>
+            <select required>
+              <option value="">Select...</option>
+              <option>Spouse / Partner</option>
+              <option>Adult Child</option>
+              <option>Sibling</option>
+              <option>Parent</option>
+              <option>Friend</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label>Phone (Primary) <span class="required">*</span></label>
+            <input type="tel" placeholder="(555) 000-0000" required>
+          </div>
+          <div class="field">
+            <label>Phone (Alternate)</label>
+            <input type="tel" placeholder="(555) 000-0000">
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Care Needs -->
+      <div class="section">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+          Care Needs &amp; Medical Information
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label>Primary Care Physician</label>
+            <input type="text" placeholder="Dr. full name">
+          </div>
+          <div class="field">
+            <label>Physician Phone</label>
+            <input type="tel" placeholder="(555) 000-0000">
+          </div>
+        </div>
+
+        <div class="form-row single">
+          <div class="field">
+            <label>Current Diagnoses / Medical Conditions</label>
+            <textarea placeholder="e.g. Diabetes Type 2, Hypertension, Alzheimer's..."></textarea>
+          </div>
+        </div>
+
+        <div class="form-row single">
+          <div class="field">
+            <label>Current Medications</label>
+            <textarea placeholder="List medications, dosages if known..."></textarea>
+          </div>
+        </div>
+
+        <div class="form-row single">
+          <div class="field">
+            <label>Allergies</label>
+            <input type="text" placeholder="e.g. Penicillin, Latex, None known">
+          </div>
+        </div>
+
+        <div class="form-row single">
+          <div class="field">
+            <label>Services Needed <span class="required">*</span></label>
+            <div class="checkbox-grid">
+              <label class="checkbox-item">
+                <input type="checkbox">
+                <span>Personal Care & Hygiene</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox">
+                <span>Meal Preparation</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox">
+                <span>Medication Reminders</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox">
+                <span>Light Housekeeping</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox">
+                <span>Transportation & Errands</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox">
+                <span>Companionship</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox">
+                <span>Skilled Nursing Care</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox">
+                <span>Memory Care Support</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label>Preferred Schedule</label>
+            <select>
+              <option value="">Select...</option>
+              <option>Full-time (40+ hrs/week)</option>
+              <option>Part-time (20–39 hrs/week)</option>
+              <option>Few hours per day</option>
+              <option>Live-in care</option>
+              <option>Flexible / As needed</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Care Start Date</label>
+            <input type="date">
+          </div>
+        </div>
+
+        <div class="form-row single">
+          <div class="field">
+            <label>Additional Notes or Special Requests</label>
+            <textarea placeholder="Any preferences, restrictions, or information our caregivers should know..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 4: Signature -->
+      <div class="section" style="margin-bottom: 0;">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+          Authorization &amp; Signature
+        </div>
+
+        <div class="consent-box" style="margin-bottom: 20px;">
+          <div class="consent-row">
+            <input type="checkbox" id="consent1" required>
+            <label for="consent1" class="consent-text" style="cursor:pointer;">
+              I authorize CareFirst Home Services to collect and use the information provided in this form for the purpose of delivering home care services. I confirm that all information provided is accurate and complete.
+            </label>
+          </div>
+        </div>
+
+        <div class="consent-box" style="margin-bottom: 24px;">
+          <div class="consent-row">
+            <input type="checkbox" id="consent2" required>
+            <label for="consent2" class="consent-text" style="cursor:pointer;">
+              I have read and agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. I understand that my signature below constitutes a legally binding electronic signature.
+            </label>
+          </div>
+        </div>
+
+        <div class="signature-section">
+          <div class="signature-label">
+            <span>Client or Authorized Representative Signature <span class="required">*</span></span>
+            <span class="sig-hint">Draw your signature below</span>
+          </div>
+          <div class="canvas-wrapper">
+            <canvas id="signatureCanvas"></canvas>
+            <div class="canvas-placeholder" id="sigPlaceholder">
+              <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+              <p>Sign here with your mouse or finger</p>
+            </div>
+          </div>
+          <div class="sig-actions">
+            <div class="sig-date">Date: <span id="currentDate"></span></div>
+            <button type="button" class="btn-clear" id="clearSig">Clear Signature</button>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <div class="form-footer" id="formFooter">
+    <div class="secure-badge">
+      <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+      256-bit SSL encrypted · HIPAA-compliant
+    </div>
+    <button type="button" class="btn-submit" id="submitBtn">Submit Form</button>
+  </div>
+
+  <!-- Success -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">
+      <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+    </div>
+    <h2>Form Submitted Successfully</h2>
+    <p>Thank you. Your intake form has been received. A member of our care team will contact you within 24 hours to confirm your care plan and next steps.</p>
+    <div class="success-detail">
+      <span>Confirmation sent to</span>
+      <p id="confirmEmail">your email address</p>
+      <span style="margin-top:8px;">Reference ID</span>
+      <p id="refId"></p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Date
+  const today = new Date();
+  document.getElementById('currentDate').textContent = today.toLocaleDateString('en-US', {
+    month: 'long', day: 'numeric', year: 'numeric'
+  });
+
+  // Signature pad
+  const canvas = document.getElementById('signatureCanvas');
+  const wrapper = canvas.parentElement;
+
+  function resizeCanvas() {
+    const ratio = Math.max(window.devicePixelRatio || 1, 1);
+    canvas.width = wrapper.offsetWidth * ratio;
+    canvas.height = 140 * ratio;
+    canvas.getContext('2d').scale(ratio, ratio);
+    canvas.style.height = '140px';
+  }
+
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  const signaturePad = new SignaturePad(canvas, {
+    minWidth: 1.2,
+    maxWidth: 3,
+    penColor: '#1a2332',
+    backgroundColor: 'rgb(255,255,255)'
+  });
+
+  const placeholder = document.getElementById('sigPlaceholder');
+
+  signaturePad.addEventListener('beginStroke', () => {
+    placeholder.style.opacity = '0';
+  });
+
+  document.getElementById('clearSig').addEventListener('click', () => {
+    signaturePad.clear();
+    placeholder.style.opacity = '1';
+  });
+
+  // Submit
+  document.getElementById('submitBtn').addEventListener('click', () => {
+    const emailInput = document.querySelector('input[type="email"]');
+    const email = emailInput && emailInput.value ? emailInput.value : 'your email address';
+
+    document.getElementById('formBody').style.display = 'none';
+    document.getElementById('formFooter').style.display = 'none';
+
+    const progress = document.querySelector('.progress-bar');
+    progress.querySelectorAll('.step').forEach(s => {
+      s.className = 'step done';
+      s.querySelector('.step-num').textContent = '✓';
+    });
+
+    const refId = 'CF-' + Date.now().toString(36).toUpperCase();
+    document.getElementById('confirmEmail').textContent = email;
+    document.getElementById('refId').textContent = refId;
+
+    const success = document.getElementById('successScreen');
+    success.style.display = 'block';
+    success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+</script>
+
+</body>
+</html>
