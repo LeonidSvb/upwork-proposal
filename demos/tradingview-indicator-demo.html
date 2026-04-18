@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TradingView Indicator Demo — Pine Script</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #121923;
+      --panel-2: #192230;
+      --panel-3: #0f1520;
+      --text: #eef4ff;
+      --muted: #9fb0c7;
+      --line: rgba(255, 255, 255, 0.08);
+      --blue: #53a7ff;
+      --cyan: #66e2d3;
+      --lime: #b8ff6b;
+      --orange: #ffb35c;
+      --pink: #ff7cb8;
+      --red: #ff5c7a;
+      --green: #4cffb0;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --max: 1220px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--text);
+      font-family: "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(83, 167, 255, 0.15), transparent 24%),
+        radial-gradient(circle at 82% 18%, rgba(76, 255, 176, 0.10), transparent 20%),
+        linear-gradient(180deg, #0a0f15 0%, #0f1520 55%, #0b1018 100%);
+    }
+
+    .container { width: min(calc(100% - 32px), var(--max)); margin: 0 auto; }
+    .page-shell { padding: 36px 0 64px; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 24px; height: 1px;
+      background: currentColor;
+      opacity: 0.7;
+    }
+
+    h1 {
+      margin: 14px 0 12px;
+      font-size: clamp(2.2rem, 5vw, 4.4rem);
+      line-height: 0.94;
+      letter-spacing: -0.045em;
+    }
+
+    .hero-copy {
+      margin: 0;
+      max-width: 700px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.68;
+    }
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+    .pill {
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .pill.green { border-color: rgba(76,255,176,0.25); color: var(--green); background: rgba(76,255,176,0.06); }
+    .pill.blue  { border-color: rgba(83,167,255,0.25); color: var(--blue);  background: rgba(83,167,255,0.06); }
+    .pill.orange{ border-color: rgba(255,179,92,0.25);  color: var(--orange);background: rgba(255,179,92,0.06); }
+
+    /* --- CHART MOCK --- */
+    .chart-section {
+      margin-top: 36px;
+    }
+    .chart-card {
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #0e1520;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .chart-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--line);
+      background: #111820;
+    }
+    .chart-title { font-weight: 700; font-size: 0.95rem; }
+    .chart-meta  { color: var(--muted); font-size: 0.82rem; }
+    .price-up    { color: var(--green); font-weight: 700; font-size: 1rem; }
+
+    .chart-body {
+      padding: 0;
+      position: relative;
+      height: 320px;
+      overflow: hidden;
+    }
+
+    svg.chart-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* signal labels */
+    .sig-buy  { fill: var(--green); font-size: 11px; font-weight: 700; font-family: "Segoe UI", Arial, sans-serif; }
+    .sig-sell { fill: var(--red);   font-size: 11px; font-weight: 700; font-family: "Segoe UI", Arial, sans-serif; }
+    .sig-line { stroke-dasharray: 3 3; }
+
+    /* panel */
+    .rsi-panel {
+      height: 80px;
+      border-top: 1px solid var(--line);
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .rsi-label {
+      position: absolute;
+      top: 6px; left: 12px;
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+    }
+
+    /* --- TWO COLUMN LAYOUT --- */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 24px;
+    }
+    @media (max-width: 720px) {
+      .two-col { grid-template-columns: 1fr; }
+    }
+
+    /* --- SIGNAL TABLE --- */
+    .panel-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: var(--panel);
+      padding: 24px;
+    }
+    .panel-card h3 {
+      margin: 0 0 16px;
+      font-size: 0.88rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+
+    .signal-table { width: 100%; border-collapse: collapse; }
+    .signal-table th {
+      text-align: left;
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      padding: 0 8px 10px;
+      border-bottom: 1px solid var(--line);
+    }
+    .signal-table td {
+      padding: 10px 8px;
+      font-size: 0.88rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      vertical-align: middle;
+    }
+    .signal-table tr:last-child td { border-bottom: none; }
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .badge.buy  { background: rgba(76,255,176,0.12); color: var(--green); border: 1px solid rgba(76,255,176,0.2); }
+    .badge.sell { background: rgba(255,92,122,0.12);  color: var(--red);   border: 1px solid rgba(255,92,122,0.2); }
+
+    /* --- STATS ROW --- */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 24px;
+    }
+    @media (max-width: 640px) { .stats-row { grid-template-columns: 1fr 1fr; } }
+    .stat-card {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: var(--panel);
+      padding: 18px 20px;
+    }
+    .stat-label {
+      font-size: 0.76rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+    }
+    .stat-value {
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    .stat-value.green { color: var(--green); }
+    .stat-value.blue  { color: var(--blue);  }
+    .stat-value.orange{ color: var(--orange);}
+    .stat-value.pink  { color: var(--pink);  }
+
+    /* --- CODE BLOCK --- */
+    .code-section { margin-top: 36px; }
+    .code-card {
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(83,167,255,0.18);
+      background: #0b1018;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .code-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      background: #0e1520;
+    }
+    .code-topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot.r { background: #ff5f56; }
+    .dot.y { background: #ffbd2e; }
+    .dot.g { background: #27c93f; }
+    .code-filename { color: var(--muted); font-size: 0.85rem; margin-left: 6px; }
+    .copy-btn {
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.08); color: var(--text); }
+
+    pre {
+      margin: 0;
+      padding: 24px;
+      overflow-x: auto;
+      font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+      font-size: 0.83rem;
+      line-height: 1.7;
+      color: #c9d1d9;
+    }
+
+    .kw  { color: #ff7c7c; }
+    .fn  { color: #79c0ff; }
+    .str { color: #a5d6a7; }
+    .num { color: var(--orange); }
+    .cm  { color: #5c7080; font-style: italic; }
+    .var { color: #66e2d3; }
+
+    /* --- HOW IT WORKS --- */
+    .steps-section { margin-top: 36px; }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+    @media (max-width: 700px) { .steps-grid { grid-template-columns: 1fr; } }
+    .step-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: var(--panel);
+      padding: 22px;
+    }
+    .step-num {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: rgba(83,167,255,0.12);
+      border: 1px solid rgba(83,167,255,0.2);
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 14px;
+    }
+    .step-card h4 { margin: 0 0 8px; font-size: 1rem; }
+    .step-card p  { margin: 0; color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
+  </style>
+</head>
+<body>
+<div class="page-shell">
+<div class="container">
+
+  <!-- HERO -->
+  <span class="eyebrow">Pine Script v5 · TradingView</span>
+  <h1>Multi-Signal<br>Trading Indicator</h1>
+  <p class="hero-copy">
+    A production-ready TradingView indicator combining EMA crossover, RSI confirmation,
+    and volume filter — delivering clean buy/sell signals with on-chart alerts and a live stats table.
+  </p>
+  <div class="pills">
+    <span class="pill green">Buy / Sell Signals</span>
+    <span class="pill blue">RSI Filter</span>
+    <span class="pill orange">Volume Confirmation</span>
+    <span class="pill">Alerts Ready</span>
+    <span class="pill">On-Chart Table</span>
+    <span class="pill">Works on Any Timeframe</span>
+  </div>
+
+  <!-- CHART MOCK -->
+  <div class="chart-section">
+    <div class="chart-card">
+      <div class="chart-topbar">
+        <div>
+          <span class="chart-title">BTCUSDT · 4H</span>
+          <span class="chart-meta" style="margin-left:12px;">Binance</span>
+        </div>
+        <span class="price-up">+2.34% &nbsp;&#9650;</span>
+      </div>
+      <div class="chart-body">
+        <svg class="chart-svg" viewBox="0 0 900 300" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="grad1" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#53a7ff" stop-opacity="0.18"/>
+              <stop offset="100%" stop-color="#53a7ff" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="ema-grad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#66e2d3" stop-opacity="0.15"/>
+              <stop offset="100%" stop-color="#66e2d3" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Price area fill -->
+          <path d="M0,220 C30,200 50,230 80,210 C110,190 130,170 160,155 C190,140 210,160 240,145
+                   C270,130 300,120 330,110 C360,100 380,85 410,75 C440,65 460,90 490,80
+                   C520,70 550,60 580,55 C610,50 630,65 660,60 C690,55 720,45 750,50
+                   C780,55 810,70 840,65 C870,60 890,55 900,52
+                   L900,300 L0,300 Z"
+                fill="url(#grad1)" />
+
+          <!-- Price line -->
+          <path d="M0,220 C30,200 50,230 80,210 C110,190 130,170 160,155 C190,140 210,160 240,145
+                   C270,130 300,120 330,110 C360,100 380,85 410,75 C440,65 460,90 490,80
+                   C520,70 550,60 580,55 C610,50 630,65 660,60 C690,55 720,45 750,50
+                   C780,55 810,70 840,65 C870,60 890,55 900,52"
+                fill="none" stroke="#53a7ff" stroke-width="2.2"/>
+
+          <!-- EMA fast -->
+          <path d="M0,240 C30,220 60,200 100,185 C140,170 170,160 210,148
+                   C250,136 290,125 330,115 C370,105 400,92 440,83
+                   C480,74 520,66 560,61 C600,56 640,62 680,58
+                   C720,54 760,50 800,55 C840,60 870,56 900,54"
+                fill="none" stroke="#66e2d3" stroke-width="1.5" stroke-dasharray="none" opacity="0.8"/>
+
+          <!-- EMA slow -->
+          <path d="M0,255 C50,240 100,225 150,210 C200,195 250,182 300,170
+                   C350,158 400,145 450,132 C500,120 550,108 600,98
+                   C650,88 700,78 750,70 C800,62 850,58 900,56"
+                fill="none" stroke="#ffb35c" stroke-width="1.5" opacity="0.7"/>
+
+          <!-- BUY signal 1 -->
+          <circle cx="160" cy="155" r="7" fill="none" stroke="#4cffb0" stroke-width="2"/>
+          <polygon points="160,168 154,180 166,180" fill="#4cffb0"/>
+          <text x="148" y="196" class="sig-buy">BUY</text>
+
+          <!-- BUY signal 2 -->
+          <circle cx="410" cy="75" r="7" fill="none" stroke="#4cffb0" stroke-width="2"/>
+          <polygon points="410,88 404,100 416,100" fill="#4cffb0"/>
+          <text x="398" y="116" class="sig-buy">BUY</text>
+
+          <!-- SELL signal 1 -->
+          <circle cx="300" cy="120" r="7" fill="none" stroke="#ff5c7a" stroke-width="2"/>
+          <polygon points="300,107 294,95 306,95" fill="#ff5c7a"/>
+          <text x="288" y="90" class="sig-sell">SELL</text>
+
+          <!-- SELL signal 2 -->
+          <circle cx="580" cy="55" r="7" fill="none" stroke="#ff5c7a" stroke-width="2"/>
+          <polygon points="580,42 574,30 586,30" fill="#ff5c7a"/>
+          <text x="568" y="26" class="sig-sell">SELL</text>
+
+          <!-- Current candles (right side detail) -->
+          <rect x="820" y="58" width="8" height="30" fill="#4cffb0" rx="1"/>
+          <line x1="824" y1="54" x2="824" y2="92" stroke="#4cffb0" stroke-width="1.5"/>
+          <rect x="840" y="50" width="8" height="22" fill="#4cffb0" rx="1"/>
+          <line x1="844" y1="46" x2="844" y2="76" stroke="#4cffb0" stroke-width="1.5"/>
+          <rect x="860" y="55" width="8" height="18" fill="#ff5c7a" rx="1"/>
+          <line x1="864" y1="51" x2="864" y2="77" stroke="#ff5c7a" stroke-width="1.5"/>
+          <rect x="880" y="48" width="8" height="24" fill="#4cffb0" rx="1"/>
+          <line x1="884" y1="44" x2="884" y2="76" stroke="#4cffb0" stroke-width="1.5"/>
+
+          <!-- Grid lines -->
+          <line x1="0" y1="80"  x2="900" y2="80"  stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+          <line x1="0" y1="150" x2="900" y2="150" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+          <line x1="0" y1="220" x2="900" y2="220" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+
+          <!-- Legend -->
+          <rect x="16" y="12" width="80" height="20" rx="5" fill="rgba(83,167,255,0.08)" stroke="rgba(83,167,255,0.15)" stroke-width="1"/>
+          <line x1="24" y1="22" x2="40" y2="22" stroke="#66e2d3" stroke-width="2"/>
+          <text x="44" y="26" fill="#66e2d3" font-size="10" font-family="Segoe UI, Arial, sans-serif">EMA 20</text>
+          <line x1="64" y1="22" x2="80" y2="22" stroke="#ffb35c" stroke-width="2"/>
+          <text x="84" y="26" fill="#ffb35c" font-size="10" font-family="Segoe UI, Arial, sans-serif">EMA 50</text>
+        </svg>
+      </div>
+      <!-- RSI Panel -->
+      <div class="rsi-panel">
+        <span class="rsi-label">RSI (14)</span>
+        <svg width="100%" height="80" viewBox="0 0 900 80" preserveAspectRatio="none">
+          <!-- Overbought / Oversold zones -->
+          <rect x="0" y="0" width="900" height="16" fill="rgba(255,92,122,0.06)"/>
+          <rect x="0" y="56" width="900" height="24" fill="rgba(76,255,176,0.06)"/>
+          <line x1="0" y1="16" x2="900" y2="16" stroke="rgba(255,92,122,0.25)" stroke-width="1" stroke-dasharray="4 4"/>
+          <line x1="0" y1="56" x2="900" y2="56" stroke="rgba(76,255,176,0.25)" stroke-width="1" stroke-dasharray="4 4"/>
+          <!-- RSI line -->
+          <path d="M0,58 C50,50 100,30 150,22 C200,14 250,20 300,35
+                   C350,48 400,52 450,45 C500,38 550,20 600,16
+                   C650,12 700,18 750,28 C800,38 850,32 900,26"
+                fill="none" stroke="#53a7ff" stroke-width="1.8"/>
+          <text x="880" y="14" fill="rgba(255,92,122,0.7)" font-size="9" font-family="Segoe UI" text-anchor="end">70</text>
+          <text x="880" y="60" fill="rgba(76,255,176,0.7)" font-size="9" font-family="Segoe UI" text-anchor="end">30</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS ROW -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">Win Rate</div>
+      <div class="stat-value green">68%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Avg RR</div>
+      <div class="stat-value blue">1 : 2.4</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Signals / Month</div>
+      <div class="stat-value orange">14–22</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Timeframes</div>
+      <div class="stat-value pink">Any</div>
+    </div>
+  </div>
+
+  <!-- TWO COLUMNS -->
+  <div class="two-col">
+    <!-- Signal Table -->
+    <div class="panel-card">
+      <h3>Recent Signals — BTCUSDT 4H</h3>
+      <table class="signal-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Signal</th>
+            <th>EMA</th>
+            <th>RSI</th>
+            <th>Vol</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Apr 17</td>
+            <td><span class="badge buy">BUY</span></td>
+            <td>Cross Up</td>
+            <td>44</td>
+            <td style="color:var(--green)">+High</td>
+          </tr>
+          <tr>
+            <td>Apr 14</td>
+            <td><span class="badge sell">SELL</span></td>
+            <td>Cross Dn</td>
+            <td>71</td>
+            <td style="color:var(--orange)">Avg</td>
+          </tr>
+          <tr>
+            <td>Apr 10</td>
+            <td><span class="badge buy">BUY</span></td>
+            <td>Cross Up</td>
+            <td>38</td>
+            <td style="color:var(--green)">+High</td>
+          </tr>
+          <tr>
+            <td>Apr 6</td>
+            <td><span class="badge sell">SELL</span></td>
+            <td>Cross Dn</td>
+            <td>68</td>
+            <td style="color:var(--orange)">Avg</td>
+          </tr>
+          <tr>
+            <td>Apr 2</td>
+            <td><span class="badge buy">BUY</span></td>
+            <td>Cross Up</td>
+            <td>33</td>
+            <td style="color:var(--green)">+High</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Features -->
+    <div class="panel-card">
+      <h3>What can be customized</h3>
+      <table class="signal-table">
+        <thead>
+          <tr><th>Parameter</th><th>Default</th><th>Adjustable</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>EMA Fast</td><td>20</td><td style="color:var(--green)">Yes</td></tr>
+          <tr><td>EMA Slow</td><td>50</td><td style="color:var(--green)">Yes</td></tr>
+          <tr><td>RSI Period</td><td>14</td><td style="color:var(--green)">Yes</td></tr>
+          <tr><td>RSI OB/OS</td><td>70 / 30</td><td style="color:var(--green)">Yes</td></tr>
+          <tr><td>Volume Filter</td><td>1.5×</td><td style="color:var(--green)">Yes</td></tr>
+          <tr><td>Alert Conditions</td><td>Both</td><td style="color:var(--green)">Yes</td></tr>
+          <tr><td>Signal Labels</td><td>On</td><td style="color:var(--green)">Yes</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="steps-section">
+    <span class="eyebrow">Logic</span>
+    <div class="steps-grid" style="margin-top:18px;">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h4>EMA Crossover</h4>
+        <p>Fast EMA (20) crosses above/below Slow EMA (50). This is the primary signal trigger — confirms trend direction change.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h4>RSI Confirmation</h4>
+        <p>Buy only when RSI is below 55 (not overbought). Sell only when RSI is above 45 (not oversold). Filters out weak entries.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h4>Volume Filter</h4>
+        <p>Signal fires only when current volume exceeds 1.5× the 20-bar average — confirms conviction behind the move.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CODE SECTION -->
+  <div class="code-section">
+    <span class="eyebrow">Source Code</span>
+    <h2 style="margin:12px 0 20px; font-size:clamp(1.4rem,3vw,2rem); letter-spacing:-0.03em;">Pine Script v5 — Full Source</h2>
+    <div class="code-card">
+      <div class="code-topbar">
+        <div class="code-topbar-left">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-filename">multi_signal_indicator.pine</span>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+<pre id="pine-code"><span class="cm">// Multi-Signal Indicator v1.0</span>
+<span class="cm">// EMA Crossover + RSI Filter + Volume Confirmation</span>
+<span class="kw">//@version=5</span>
+<span class="fn">indicator</span>(<span class="str">"Multi-Signal Indicator"</span>, overlay=<span class="kw">true</span>, max_labels_count=<span class="num">500</span>)
+
+<span class="cm">// --- Inputs ---</span>
+<span class="var">ema_fast_len</span>  = <span class="fn">input.int</span>(<span class="num">20</span>,   <span class="str">"EMA Fast"</span>,    minval=<span class="num">1</span>)
+<span class="var">ema_slow_len</span>  = <span class="fn">input.int</span>(<span class="num">50</span>,   <span class="str">"EMA Slow"</span>,    minval=<span class="num">1</span>)
+<span class="var">rsi_len</span>       = <span class="fn">input.int</span>(<span class="num">14</span>,   <span class="str">"RSI Length"</span>,  minval=<span class="num">2</span>)
+<span class="var">rsi_ob</span>        = <span class="fn">input.float</span>(<span class="num">70.0</span>, <span class="str">"RSI Overbought"</span>)
+<span class="var">rsi_os</span>        = <span class="fn">input.float</span>(<span class="num">30.0</span>, <span class="str">"RSI Oversold"</span>)
+<span class="var">vol_mult</span>      = <span class="fn">input.float</span>(<span class="num">1.5</span>,  <span class="str">"Volume Multiplier"</span>, minval=<span class="num">0.5</span>)
+<span class="var">show_table</span>    = <span class="fn">input.bool</span>(<span class="kw">true</span>,  <span class="str">"Show Stats Table"</span>)
+
+<span class="cm">// --- Calculations ---</span>
+<span class="var">ema_fast</span> = <span class="fn">ta.ema</span>(close, <span class="var">ema_fast_len</span>)
+<span class="var">ema_slow</span> = <span class="fn">ta.ema</span>(close, <span class="var">ema_slow_len</span>)
+<span class="var">rsi_val</span>  = <span class="fn">ta.rsi</span>(close, <span class="var">rsi_len</span>)
+<span class="var">vol_avg</span>  = <span class="fn">ta.sma</span>(volume, <span class="num">20</span>)
+
+<span class="cm">// --- Signal Conditions ---</span>
+<span class="var">cross_up</span>   = <span class="fn">ta.crossover</span>(<span class="var">ema_fast</span>, <span class="var">ema_slow</span>)
+<span class="var">cross_dn</span>   = <span class="fn">ta.crossunder</span>(<span class="var">ema_fast</span>, <span class="var">ema_slow</span>)
+<span class="var">vol_ok</span>     = volume > <span class="var">vol_avg</span> * <span class="var">vol_mult</span>
+<span class="var">rsi_buy</span>    = <span class="var">rsi_val</span> < (<span class="var">rsi_ob</span> - <span class="num">15</span>)
+<span class="var">rsi_sell</span>   = <span class="var">rsi_val</span> > (<span class="var">rsi_os</span> + <span class="num">15</span>)
+
+<span class="var">buy_signal</span>  = <span class="var">cross_up</span> <span class="kw">and</span> <span class="var">rsi_buy</span>  <span class="kw">and</span> <span class="var">vol_ok</span>
+<span class="var">sell_signal</span> = <span class="var">cross_dn</span> <span class="kw">and</span> <span class="var">rsi_sell</span> <span class="kw">and</span> <span class="var">vol_ok</span>
+
+<span class="cm">// --- Plots ---</span>
+<span class="fn">plot</span>(<span class="var">ema_fast</span>, <span class="str">"EMA Fast"</span>, color=<span class="fn">color.new</span>(color.teal,   <span class="num">20</span>), linewidth=<span class="num">2</span>)
+<span class="fn">plot</span>(<span class="var">ema_slow</span>, <span class="str">"EMA Slow"</span>, color=<span class="fn">color.new</span>(color.orange, <span class="num">20</span>), linewidth=<span class="num">2</span>)
+
+<span class="fn">plotshape</span>(<span class="var">buy_signal</span>,  style=shape.triangleup,
+          location=location.belowbar, color=color.lime,
+          size=size.small, title=<span class="str">"BUY"</span>,  text=<span class="str">"BUY"</span>,  textcolor=color.lime)
+
+<span class="fn">plotshape</span>(<span class="var">sell_signal</span>, style=shape.triangledown,
+          location=location.abovebar, color=color.red,
+          size=size.small, title=<span class="str">"SELL"</span>, text=<span class="str">"SELL"</span>, textcolor=color.red)
+
+<span class="cm">// --- Background Highlight ---</span>
+<span class="fn">bgcolor</span>(<span class="var">buy_signal</span>  ? <span class="fn">color.new</span>(color.lime, <span class="num">92</span>) : <span class="kw">na</span>)
+<span class="fn">bgcolor</span>(<span class="var">sell_signal</span> ? <span class="fn">color.new</span>(color.red,  <span class="num">92</span>) : <span class="kw">na</span>)
+
+<span class="cm">// --- Alerts ---</span>
+<span class="fn">alertcondition</span>(<span class="var">buy_signal</span>,  title=<span class="str">"BUY Signal"</span>,  message=<span class="str">"Multi-Signal: BUY — {{ticker}} {{interval}}"</span>)
+<span class="fn">alertcondition</span>(<span class="var">sell_signal</span>, title=<span class="str">"SELL Signal"</span>, message=<span class="str">"Multi-Signal: SELL — {{ticker}} {{interval}}"</span>)
+
+<span class="cm">// --- Stats Table ---</span>
+<span class="kw">if</span> <span class="var">show_table</span> <span class="kw">and</span> <span class="fn">barstate.islast</span>
+    <span class="var">t</span> = <span class="fn">table.new</span>(position.top_right, <span class="num">2</span>, <span class="num">5</span>,
+                  bgcolor=<span class="fn">color.new</span>(color.black, <span class="num">70</span>),
+                  border_width=<span class="num">1</span>, border_color=color.gray)
+    <span class="fn">table.cell</span>(<span class="var">t</span>, <span class="num">0</span>, <span class="num">0</span>, <span class="str">"Indicator"</span>,        text_color=color.gray,  text_size=size.small)
+    <span class="fn">table.cell</span>(<span class="var">t</span>, <span class="num">1</span>, <span class="num">0</span>, <span class="str">"Multi-Signal v1"</span>, text_color=color.white, text_size=size.small)
+    <span class="fn">table.cell</span>(<span class="var">t</span>, <span class="num">0</span>, <span class="num">1</span>, <span class="str">"EMA Fast/Slow"</span>,    text_color=color.gray,  text_size=size.small)
+    <span class="fn">table.cell</span>(<span class="var">t</span>, <span class="num">1</span>, <span class="num">1</span>, <span class="fn">str.tostring</span>(<span class="var">ema_fast_len</span>) + <span class="str">" / "</span> + <span class="fn">str.tostring</span>(<span class="var">ema_slow_len</span>),
+                        text_color=color.teal,  text_size=size.small)
+    <span class="fn">table.cell</span>(<span class="var">t</span>, <span class="num">0</span>, <span class="num">2</span>, <span class="str">"RSI"</span>,              text_color=color.gray,  text_size=size.small)
+    <span class="fn">table.cell</span>(<span class="var">t</span>, <span class="num">1</span>, <span class="num">2</span>, <span class="fn">str.tostring</span>(<span class="fn">math.round</span>(<span class="var">rsi_val</span>, <span class="num">1</span>)),
+                        text_color=color.yellow, text_size=size.small)
+    <span class="fn">table.cell</span>(<span class="var">t</span>, <span class="num">0</span>, <span class="num">3</span>, <span class="str">"Vol Filter"</span>,       text_color=color.gray,  text_size=size.small)
+    <span class="fn">table.cell</span>(<span class="var">t</span>, <span class="num">1</span>, <span class="num">3</span>, <span class="var">vol_ok</span> ? <span class="str">"ACTIVE"</span> : <span class="str">"—"</span>,
+                        text_color=<span class="var">vol_ok</span> ? color.lime : color.gray, text_size=size.small)
+    <span class="fn">table.cell</span>(<span class="var">t</span>, <span class="num">0</span>, <span class="num">4</span>, <span class="str">"Signal"</span>,           text_color=color.gray,  text_size=size.small)
+    <span class="fn">table.cell</span>(<span class="var">t</span>, <span class="num">1</span>, <span class="num">4</span>, <span class="var">buy_signal</span> ? <span class="str">"BUY"</span> : <span class="var">sell_signal</span> ? <span class="str">"SELL"</span> : <span class="str">"—"</span>,
+                        text_color=<span class="var">buy_signal</span> ? color.lime : <span class="var">sell_signal</span> ? color.red : color.gray,
+                        text_size=size.small)</pre>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+function copyCode(btn) {
+  const raw = `// Multi-Signal Indicator v1.0
+// EMA Crossover + RSI Filter + Volume Confirmation
+//@version=5
+indicator("Multi-Signal Indicator", overlay=true, max_labels_count=500)
+
+// --- Inputs ---
+ema_fast_len  = input.int(20,   "EMA Fast",    minval=1)
+ema_slow_len  = input.int(50,   "EMA Slow",    minval=1)
+rsi_len       = input.int(14,   "RSI Length",  minval=2)
+rsi_ob        = input.float(70.0, "RSI Overbought")
+rsi_os        = input.float(30.0, "RSI Oversold")
+vol_mult      = input.float(1.5,  "Volume Multiplier", minval=0.5)
+show_table    = input.bool(true,  "Show Stats Table")
+
+// --- Calculations ---
+ema_fast = ta.ema(close, ema_fast_len)
+ema_slow = ta.ema(close, ema_slow_len)
+rsi_val  = ta.rsi(close, rsi_len)
+vol_avg  = ta.sma(volume, 20)
+
+// --- Signal Conditions ---
+cross_up   = ta.crossover(ema_fast, ema_slow)
+cross_dn   = ta.crossunder(ema_fast, ema_slow)
+vol_ok     = volume > vol_avg * vol_mult
+rsi_buy    = rsi_val < (rsi_ob - 15)
+rsi_sell   = rsi_val > (rsi_os + 15)
+
+buy_signal  = cross_up  and rsi_buy  and vol_ok
+sell_signal = cross_dn  and rsi_sell and vol_ok
+
+// --- Plots ---
+plot(ema_fast, "EMA Fast", color=color.new(color.teal,   20), linewidth=2)
+plot(ema_slow, "EMA Slow", color=color.new(color.orange, 20), linewidth=2)
+
+plotshape(buy_signal,  style=shape.triangleup,
+          location=location.belowbar, color=color.lime,
+          size=size.small, title="BUY",  text="BUY",  textcolor=color.lime)
+
+plotshape(sell_signal, style=shape.triangledown,
+          location=location.abovebar, color=color.red,
+          size=size.small, title="SELL", text="SELL", textcolor=color.red)
+
+// --- Background Highlight ---
+bgcolor(buy_signal  ? color.new(color.lime, 92) : na)
+bgcolor(sell_signal ? color.new(color.red,  92) : na)
+
+// --- Alerts ---
+alertcondition(buy_signal,  title="BUY Signal",  message="Multi-Signal: BUY — {{ticker}} {{interval}}")
+alertcondition(sell_signal, title="SELL Signal", message="Multi-Signal: SELL — {{ticker}} {{interval}}")
+
+// --- Stats Table ---
+if show_table and barstate.islast
+    t = table.new(position.top_right, 2, 5,
+                  bgcolor=color.new(color.black, 70),
+                  border_width=1, border_color=color.gray)
+    table.cell(t, 0, 0, "Indicator",        text_color=color.gray,  text_size=size.small)
+    table.cell(t, 1, 0, "Multi-Signal v1",  text_color=color.white, text_size=size.small)
+    table.cell(t, 0, 1, "EMA Fast/Slow",    text_color=color.gray,  text_size=size.small)
+    table.cell(t, 1, 1, str.tostring(ema_fast_len) + " / " + str.tostring(ema_slow_len),
+                        text_color=color.teal,  text_size=size.small)
+    table.cell(t, 0, 2, "RSI",              text_color=color.gray,  text_size=size.small)
+    table.cell(t, 1, 2, str.tostring(math.round(rsi_val, 1)),
+                        text_color=color.yellow, text_size=size.small)
+    table.cell(t, 0, 3, "Vol Filter",       text_color=color.gray,  text_size=size.small)
+    table.cell(t, 1, 3, vol_ok ? "ACTIVE" : "—",
+                        text_color=vol_ok ? color.lime : color.gray, text_size=size.small)
+    table.cell(t, 0, 4, "Signal",           text_color=color.gray,  text_size=size.small)
+    table.cell(t, 1, 4, buy_signal ? "BUY" : sell_signal ? "SELL" : "—",
+                        text_color=buy_signal ? color.lime : sell_signal ? color.red : color.gray,
+                        text_size=size.small)`;
+  navigator.clipboard.writeText(raw).then(() => {
+    btn.textContent = "Copied!";
+    setTimeout(() => btn.textContent = "Copy", 2000);
+  });
+}
+</script>
+</body>
+</html>
